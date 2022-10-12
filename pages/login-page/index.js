@@ -109,10 +109,7 @@ export default function LoginPage() {
       <Head>
         <meta charSet='utf-8' />
         <title>Bakarya - Login Page</title>
-        <meta
-          name='description'
-          content='Create account to connect with bakers'
-        />
+        <meta name='description' content='Join to share with others bakers' />
       </Head>
       <Grid container component='main' sx={{ height: "100vh" }}>
         <CssBaseline />
