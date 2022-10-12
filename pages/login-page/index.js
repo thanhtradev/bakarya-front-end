@@ -17,8 +17,14 @@ import NextLink from "next/link";
 import classes from "./../../styles/login-page.module.css";
 import useValidInput from "../../hooks/use-valid-input";
 import Head from "next/head";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useRouter } from "next/router";
+import AuthContext from "../../store/auth-context";
+import { useContext } from "react";
 const { src: Pic } = SigninPic;
 
 function Copyright(props) {
@@ -40,6 +46,10 @@ function Copyright(props) {
 }
 
 export default function LoginPage() {
+  const authCtx = useContext(AuthContext);
+  const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+
   const {
     value: userNameValue,
     isValid: userNameIsValid,
@@ -62,6 +72,11 @@ export default function LoginPage() {
     return userNameIsValid && passwordIsValid;
   };
 
+  const Clear = () => {
+    resetUsername();
+    resetPassword();
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const validForm = isFormValid();
@@ -76,27 +91,85 @@ export default function LoginPage() {
     // resetPassword();
   };
 
-  const SignIn = (email, pwd) => {
-    var data = {
-      username: email,
-      password: pwd,
-      email: email,
-    };
+  const handleToggle = () => {
+    setOpen((prev) => !prev);
+  };
 
+  const handleFetchAxios = async () => {
     var config = {
       method: "post",
       url: "http://api.bakarya.com/api/auth/signin",
       headers: {},
       data: data,
     };
+    try {
+      const res = await axios(config);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      return res.data;
+    }
+  };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        alert(error);
-      });
+  const SignIn = async (email, pwd) => {
+    try {
+      handleToggle();
+      const data = {
+        username: email,
+        password: pwd,
+      };
+
+      const result = await handleFetchAxios();
+      handleToggle();
+      Clear();
+
+      // router.replace("/");
+      console.log(result);
+      // let message = "Something went wrong";
+
+      // axios(config)
+      //   .then(function (response) {
+      //     if (response.data.status === 200) {
+      //       authCtx.login(response.data.accessToken);
+      //       handleToggle();
+      //       router.replace("/");
+      //     }
+      //     console.log(JSON.stringify(response.data));
+      //   })
+      //   .catch(function (error) {
+      //     handleToggle();
+      //     message = error.response.data.message;
+      //     notifyError(message);
+      //     Clear();
+      //   });
+    } catch (error) {
+    } finally {
+    }
+  };
+
+  const Loading = () => {
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color='inherit' />
+      </Backdrop>
+    );
+  };
+
+  const notifyError = (message) => {
+    return toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
   return (
     <React.Fragment>
@@ -105,6 +178,10 @@ export default function LoginPage() {
         <title>Bakarya - Login Page</title>
         <meta name='description' content='Join to share with others bakers' />
       </Head>
+      <div>
+        <Loading />
+        <ToastContainer />
+      </div>
       <Grid container component='main' sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid

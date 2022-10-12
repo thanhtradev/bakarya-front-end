@@ -50,7 +50,6 @@ const theme = createTheme();
 export default function SignUpPage() {
   //? Backdrop's state
   const [open, setOpen] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(false);
 
   const {
     value: emailValue,
@@ -152,10 +151,10 @@ export default function SignUpPage() {
     // resetConfirmPwd();
   };
 
-  const SignUp = async ({ username, pwd }) => {
+  const SignUp = ({ username, pwd }) => {
     handleToggle();
 
-    var data = {
+    const data = {
       username: username,
       password: pwd,
       email: username,
@@ -163,7 +162,7 @@ export default function SignUpPage() {
 
     var config = {
       method: "post",
-      url: "http://api.bakarya.com/api/auth/signup",
+      url: "http://api.bakarya.com/api/auth/signin",
       headers: {},
       data: data,
     };
@@ -172,13 +171,12 @@ export default function SignUpPage() {
     axios(config)
       .then(function (response) {
         if (response.status === 200) {
-          setIsSuccess((prev) => true);
           message = response.data.message;
           notifyOk(message);
         }
       })
       .catch(function (error) {
-        setIsSuccess((prev) => false);
+        console.log(error);
         message = error.response.data.message;
         notifyError(message);
       });

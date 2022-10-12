@@ -1,8 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import AuthContext from "../store/auth-context";
+import { useContext } from "react";
 
 export default function Home() {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
+
   return (
     <div className={styles.container}>
       <Head>
