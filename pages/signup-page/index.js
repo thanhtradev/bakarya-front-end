@@ -18,6 +18,8 @@ import ValidateInput from "../../components/ValidateInput/ValidateInput";
 import classes from "../../styles/signup-page.module.css";
 import dynamic from "next/dynamic";
 import axios from "axios";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const PasswordChecklist = dynamic(() => import("react-password-checklist"), {
   ssr: false,
@@ -44,6 +46,7 @@ const theme = createTheme();
 
 export default function SignUpPage() {
   const [open, setOpen] = React.useState(false);
+
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -110,7 +113,22 @@ export default function SignUpPage() {
       ) && value.localeCompare(pwdValue) === 0
   );
 
-  React.useEffect(() => {}, []);
+  const isSuccess = false;
+
+  const Loading = () => {
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color='inherit' />
+      </Backdrop>
+    );
+  };
+
+  const handleToggle = () => {
+    setOpen((prev) => !prev);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -133,9 +151,15 @@ export default function SignUpPage() {
     // resetConfirmPwd();
   };
 
-  const SignUp = ({ username, pwd }) => {
-    var data =
-      '{\n    "username": "test2da",\n    "password": "!wetyqwqytw7676S",\n    "email": "thahsaas"\n}';
+  const SignUp = async ({ username, pwd }) => {
+    handleToggle();
+    console.log("open backdrop");
+
+    var data = {
+      username: username,
+      password: pwd,
+      email: username,
+    };
 
     var config = {
       method: "post",
@@ -146,11 +170,16 @@ export default function SignUpPage() {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        if (response.status === 200) {
+          isSuccess = true;
+        }
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
+    handleToggle();
+    console.log("closed backdrop");
   };
 
   const isFormValid =
@@ -168,6 +197,9 @@ export default function SignUpPage() {
           content='Create account to connect with bakers'
         />
       </Head>
+      <div>
+        <Loading />
+      </div>
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <Box
@@ -354,3 +386,7 @@ export default function SignUpPage() {
     </ThemeProvider>
   );
 }
+
+// export async function getServerSideProps() {
+//   const res = await fetch("/api/");
+// }

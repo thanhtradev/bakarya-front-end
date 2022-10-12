@@ -20,7 +20,6 @@ import Head from "next/head";
 import axios from "axios";
 
 const { src: Pic } = SigninPic;
-const API_KEY = "AIzaSyBmAVs5sXUk8CSXLAYqNOkyr2ATRewsD44";
 
 function Copyright(props) {
   return (
@@ -78,8 +77,11 @@ export default function LoginPage() {
   };
 
   const SignIn = (email, pwd) => {
-    var data =
-      '{\n    "username":"test",\n    "password":"!wetyqwqytw7676S"\n}';
+    var data = {
+      username: email,
+      password: pwd,
+      email: email,
+    };
 
     var config = {
       method: "post",
@@ -93,7 +95,7 @@ export default function LoginPage() {
         console.log(JSON.stringify(response.data));
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error);
       });
   };
   return (
@@ -220,3 +222,5 @@ export default function LoginPage() {
     </React.Fragment>
   );
 }
+
+// export async function getServerSideProps(context) {}
