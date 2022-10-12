@@ -33,7 +33,7 @@ function Copyright(props) {
       {"Copyright © "}
       <Link color='inherit' href='https://bakarya.com/'>
         Bakarya
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -134,12 +134,6 @@ export default function SignUpPage() {
   };
 
   const SignUp = ({ username, pwd }) => {
-    var data = {
-      email: username,
-      password: pwd,
-      returnSecureToken: true,
-    };
-
     var data =
       '{\n    "username": "test2da",\n    "password": "!wetyqwqytw7676S",\n    "email": "thahsaas"\n}';
 
@@ -157,18 +151,6 @@ export default function SignUpPage() {
       .catch(function (error) {
         console.log(error);
       });
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const handleSuccess = () => {
-    setOpen(true);
   };
 
   const isFormValid =
@@ -360,7 +342,7 @@ export default function SignUpPage() {
             </Button>
             <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link to='/login-page' variant='body2' component={SignInLink}>
+                <Link href='/login-page' variant='body2' component={SignInLink}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

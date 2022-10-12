@@ -17,6 +17,7 @@ import NextLink from "next/link";
 import classes from "./../../styles/login-page.module.css";
 import useValidInput from "../../hooks/use-valid-input";
 import Head from "next/head";
+import axios from "axios";
 
 const { src: Pic } = SigninPic;
 const API_KEY = "AIzaSyBmAVs5sXUk8CSXLAYqNOkyr2ATRewsD44";
@@ -65,45 +66,36 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const validForm = isFormValid();
+    const data = new FormData(event.currentTarget);
+    const email = data.get("username");
+    const pwd = data.get("password");
     if (validForm) {
-      fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: userNameValue,
-            password: passwordValue,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            res.json().then((data) => {
-              // console.log(data);
-            });
-          }
-        })
-        .then((data) => {
-          authContext.login(data.idToken);
-        })
-        .catch((error) => alert(error));
-      const data = new FormData(event.currentTarget);
-      console.log({
-        email: data.get("username"),
-        password: data.get("password"),
-      });
+      SignIn(email, pwd);
     }
 
-    resetUsername();
-    resetPassword();
+    // resetUsername();
+    // resetPassword();
   };
 
+  const SignIn = (email, pwd) => {
+    var data =
+      '{\n    "username":"test",\n    "password":"!wetyqwqytw7676S"\n}';
+
+    var config = {
+      method: "post",
+      url: "http://api.bakarya.com/api/auth/signin",
+      headers: {},
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <React.Fragment>
       <Head>
