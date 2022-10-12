@@ -17,7 +17,8 @@
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-password-checklist": "^1.4.2"
+    "react-password-checklist": "^1.4.2",
+    "react-toastify": "^9.0.8"
   },
   "devDependencies": {
     "eslint": "8.25.0",

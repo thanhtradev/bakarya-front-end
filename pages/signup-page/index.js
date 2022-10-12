@@ -20,7 +20,10 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+//? Server-side import Password checklist components
 const PasswordChecklist = dynamic(() => import("react-password-checklist"), {
   ssr: false,
 });
@@ -45,7 +48,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUpPage() {
+  //? Backdrop's state
   const [open, setOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   const {
     value: emailValue,
@@ -113,8 +118,6 @@ export default function SignUpPage() {
       ) && value.localeCompare(pwdValue) === 0
   );
 
-  const isSuccess = false;
-
   const Loading = () => {
     return (
       <Backdrop
@@ -153,7 +156,6 @@ export default function SignUpPage() {
 
   const SignUp = async ({ username, pwd }) => {
     handleToggle();
-    console.log("open backdrop");
 
     var data = {
       username: username,
@@ -168,18 +170,48 @@ export default function SignUpPage() {
       data: data,
     };
 
+    let message = "Something went wrong";
     axios(config)
       .then(function (response) {
         if (response.status === 200) {
-          isSuccess = true;
+          setIsSuccess((prev) => true);
+          message = response.data.message;
+          notifyOk(message);
         }
-        console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error.response);
+        setIsSuccess((prev) => false);
+        message = error.response.data.message;
+        notifyError(message);
       });
     handleToggle();
-    console.log("closed backdrop");
+    // notify(isSuccess, message);
+  };
+  const notifyOk = (message) => {
+    return toast.success(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notifyError = (message) => {
+    return toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   const isFormValid =
@@ -188,6 +220,7 @@ export default function SignUpPage() {
     lastNameIsValid &&
     pwdIsValid &&
     confirmPwdIsValid;
+
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -199,6 +232,7 @@ export default function SignUpPage() {
       </Head>
       <div>
         <Loading />
+        <ToastContainer />
       </div>
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
