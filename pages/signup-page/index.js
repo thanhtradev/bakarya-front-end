@@ -141,8 +141,6 @@ export default function SignUpPage() {
         username: data.get("email"),
         pwd: data.get("password"),
       });
-
-      // SignUp();
     } else {
       alert("non");
     }
@@ -180,14 +178,13 @@ export default function SignUpPage() {
         }
       })
       .catch(function (error) {
-        // console.log(error.response);
         setIsSuccess((prev) => false);
         message = error.response.data.message;
         notifyError(message);
       });
     handleToggle();
-    // notify(isSuccess, message);
   };
+
   const notifyOk = (message) => {
     return toast.success(message, {
       position: "top-right",
@@ -420,7 +417,3 @@ export default function SignUpPage() {
     </ThemeProvider>
   );
 }
-
-// export async function getServerSideProps() {
-//   const res = await fetch("/api/");
-// }
