@@ -10,7 +10,7 @@ const SideBar = (props) => {
         left: props.left,
       }}
     >
-      <Stack direction='row' justifyContent='center' alignItems='center'>
+      <Stack direction='column' justifyContent='center' alignItems='center'>
         {props.children}
       </Stack>
     </aside>
