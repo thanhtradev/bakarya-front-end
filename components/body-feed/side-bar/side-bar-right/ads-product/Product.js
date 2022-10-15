@@ -4,7 +4,6 @@ import {
   CardMedia,
   CardHeader,
   Card,
-  Divider,
   CardActionArea,
 } from "@mui/material";
 
@@ -12,7 +11,12 @@ const Product = (props) => {
   return (
     <Card
       elevation={0}
-      sx={{ width: "0.9", height: "0.36", marginBottom: "20px" }}
+      sx={{
+        width: "1",
+        height: "9rem",
+        marginBottom: "8px",
+        bgcolor: "transparent",
+      }}
     >
       <CardActionArea
         sx={{
@@ -22,7 +26,7 @@ const Product = (props) => {
           alignItems: "center",
           width: "1",
           height: "1",
-          borderBottom: "1px solid #888",
+          // borderBottom: "1px solid #888",
           padding: "5px",
         }}
       >
@@ -30,27 +34,28 @@ const Product = (props) => {
           component='img'
           image={props.img}
           src={props.img}
-          sx={{ width: "0.6", height: "0.95" }}
+          sx={{ width: "0.6", height: "8rem" }}
         />
         <CardHeader
           title={props.title}
           titleTypographyProps={{
-            fontSize: "1.13em",
+            fontSize: "0.98em",
           }}
           subheader={
             <React.Fragment>
-              <Typography sx={{ fontSize: "1em" }}>{props.subtitle}</Typography>
+              <Typography sx={{ fontSize: "0.8rem" }}>
+                {props.subtitle}
+              </Typography>
               <Typography
                 sx={{ fontSize: "1em" }}
               >{`${props.price}$`}</Typography>
             </React.Fragment>
           }
           subheaderTypographyProps={{
-            fontSize: "1em",
+            fontSize: "1rem",
           }}
         />
       </CardActionArea>
-      <Divider variant='fullWidth' />
     </Card>
   );
 };

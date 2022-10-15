@@ -1,4 +1,5 @@
 import SideBar from "../SideBar";
+import Footer from "./Footer";
 import * as React from "react";
 import Trends from "./Trends";
 import AdList from "./AdList";
@@ -18,6 +19,7 @@ const SideBarRight = () => {
     <SideBar right={30}>
       <Trends categories={Categories} />
       <AdList />
+      <Footer />
     </SideBar>
   );
 };

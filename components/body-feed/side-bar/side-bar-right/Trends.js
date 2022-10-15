@@ -9,6 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import ItemContainer from "../ItemContainer";
 
 const Suggestion = ({ categories }) => {
   const router = useRouter();
@@ -64,21 +65,7 @@ const Suggestion = ({ categories }) => {
   });
 
   return (
-    <Box
-      className='row'
-      sx={{
-        // height: "0.6",
-        width: "0.8",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "300px",
-        borderRadius: "18px",
-        // backgroundColor: "indigo",
-        border: "1px solid rgba(106, 125, 155, 0.4)",
-      }}
-    >
+    <ItemContainer>
       <Stack
         direction='row'
         justifyContent='flex-start'
@@ -119,7 +106,7 @@ const Suggestion = ({ categories }) => {
           {listItems}
         </List>
       </Box>
-    </Box>
+    </ItemContainer>
   );
 };
 
