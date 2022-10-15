@@ -2,7 +2,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Container } from "react-bootstrap";
 import MainFeed from "./MainFeed";
-import SideBarRight from "./side-bar/SideBarRight";
+import SideBarRight from "./side-bar/side-bar-right/SideBarRight";
 import SideBar from "./side-bar/SideBar";
 
 const Body = () => {

@@ -1,6 +1,7 @@
-import SideBar from "./SideBar";
+import SideBar from "../SideBar";
 import * as React from "react";
-import Suggestion from "./Suggestion";
+import Trends from "./Trends";
+import AdList from "./AdList";
 
 const Categories = [
   "Birthday cake",
@@ -15,7 +16,8 @@ const Categories = [
 const SideBarRight = () => {
   return (
     <SideBar right={30}>
-      <Suggestion categories={Categories} />
+      <Trends categories={Categories} />
+      <AdList />
     </SideBar>
   );
 };

@@ -1,13 +1,14 @@
 .sidenav {
-  /* height: 100%; */
-  width: 300px;
-  position: fixed;
+  position: sticky;
+  display: flex;
+  direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
   top: 77px;
-  background-color: white;
   overflow-x: hidden;
-  border-radius: 18px;
-  border: 1px solid rgba(106, 125, 155, 0.4);
+  /* border-radius: 18px; */
+  background-color: aqua;
 }
 
 .sidenav a {
