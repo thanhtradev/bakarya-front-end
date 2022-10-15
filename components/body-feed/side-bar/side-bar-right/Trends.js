@@ -35,6 +35,7 @@ const Suggestion = ({ categories }) => {
             alignItems: "flex-start",
             justifyContent: "center",
             padding: "0 4px",
+            borderRadius: "10px",
             fontSize: "1rem",
             height: "3.1rem",
           }}
