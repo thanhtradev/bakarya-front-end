@@ -6,6 +6,7 @@ const SideBar = (props) => {
     <aside
       className={classes["sidenav"]}
       style={{
+        position: props.position ?? "fixed",
         right: props.right,
         left: props.left,
       }}
