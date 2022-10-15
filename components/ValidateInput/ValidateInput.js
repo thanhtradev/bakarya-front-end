@@ -14,6 +14,7 @@ export default function ValidateInput(props) {
       autoFocus={props.autoFocus ?? false}
       value={props.enteredValue}
       onChange={props.inputChangeHandler}
+      placeholder={props.placeholder}
       onBlur={props.inputBlurHandler}
       helperText={`${
         props.hasError ? props.errorMsg ?? "" : props.helperText ?? ""

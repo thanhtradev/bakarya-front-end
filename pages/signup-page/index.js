@@ -130,6 +130,7 @@ export default function SignUpPage() {
 
   const handleToggle = () => {
     setOpen((prev) => !prev);
+    console.log(open);
   };
 
   const handleSubmit = (event) => {
@@ -162,7 +163,7 @@ export default function SignUpPage() {
 
     var config = {
       method: "post",
-      url: "http://api.bakarya.com/api/auth/signin",
+      url: "http://api.bakarya.com/api/auth/signup",
       headers: {},
       data: data,
     };
@@ -239,7 +240,7 @@ export default function SignUpPage() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#3971b3" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
@@ -259,27 +260,13 @@ export default function SignUpPage() {
                   name='firstname'
                   autoFocus={true}
                   validate={(value) => value.trim() !== ""}
-                  helperText='Example : John'
                   autoComplete='first-name'
                   enteredValue={firstNameValue}
+                  placeholder='Ex: John'
                   hasError={hasErrorFirstName}
                   inputChangeHandler={firstNameChangeHandler}
                   inputBlurHandler={firstNameBlurHandler}
                   type='text'
-                />
-                <PasswordChecklist
-                  rules={["minLength", "maxLength"]}
-                  minLength={1}
-                  maxLength={50}
-                  value={firstNameValue}
-                  messages={{
-                    minLength: "Last name length > 0",
-                    maxLength: "Last name length < 50",
-                  }}
-                  style={{ fontSize: "12px" }}
-                  className={classes["center-checklist"]}
-                  onChange={(isValid) => {}}
-                  iconSize={10}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -290,27 +277,13 @@ export default function SignUpPage() {
                   validate={(value) =>
                     value.trim.length > 0 && value.trim.length < 50
                   }
-                  helperText='Example : Wick'
                   autoComplete='family-name'
                   enteredValue={lastNameValue}
+                  placeholder='Ex: Wick'
                   hasError={hasErrorLastName}
                   inputChangeHandler={lastNameChangeHandler}
                   inputBlurHandler={lastNameBlurHandler}
                   type='text'
-                />
-                <PasswordChecklist
-                  rules={["minLength", "maxLength"]}
-                  minLength={1}
-                  maxLength={50}
-                  value={lastNameValue}
-                  messages={{
-                    minLength: "Last name length > 0",
-                    maxLength: "Last name length < 50",
-                  }}
-                  className={classes["center-checklist"]}
-                  style={{ fontSize: "12px" }}
-                  onChange={(isValid) => {}}
-                  iconSize={10}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -319,11 +292,11 @@ export default function SignUpPage() {
                   label='Email'
                   name='email'
                   autoComplete='email'
+                  placeholder='Ex: JohnWick@abcxyz.com'
                   enteredValue={emailValue}
                   inputChangeHandler={emailChangeHandler}
                   inputBlurHandler={emailBlurHandler}
                   errorMsg='Ex: JohnWick@abcxyz.com'
-                  helperText='Ex: JohnWick@abcxyz.com'
                   hasError={hasErrorEmail}
                   type='text'
                 />
