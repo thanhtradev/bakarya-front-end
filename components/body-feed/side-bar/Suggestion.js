@@ -84,6 +84,8 @@ const Suggestion = ({ categories }) => {
           // backgroundColor: "aquamarine",
         }}
       >
+        {""}
+        {""}
         <Typography
           variant='h5'
           sx={{
