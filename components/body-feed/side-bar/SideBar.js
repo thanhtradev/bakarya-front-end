@@ -7,6 +7,7 @@ const SideBar = (props) => {
       className={classes["sidenav"]}
       style={{
         position: props.position ?? "fixed",
+        top: props.stickyTop ?? "77px",
         right: props.right,
         left: props.left,
       }}

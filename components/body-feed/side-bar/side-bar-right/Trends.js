@@ -74,6 +74,7 @@ const Suggestion = ({ categories }) => {
         sx={{
           width: "1",
           // backgroundColor: "aquamarine",
+          borderBottom: "1px solid #c6bdbdba",
         }}
       >
         <Typography
@@ -81,6 +82,7 @@ const Suggestion = ({ categories }) => {
           sx={{
             fontWeight: "bolder",
             lineHeight: "1.4",
+            paddingBottom: "10px",
           }}
         >
           Maybe you'll like

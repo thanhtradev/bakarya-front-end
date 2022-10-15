@@ -13,7 +13,7 @@ const Product = (props) => {
       elevation={0}
       sx={{
         width: "1",
-        height: "9rem",
+        height: "7rem",
         marginBottom: "8px",
         bgcolor: "transparent",
       }}
@@ -34,7 +34,7 @@ const Product = (props) => {
           component='img'
           image={props.img}
           src={props.img}
-          sx={{ width: "0.6", height: "8rem" }}
+          sx={{ width: "0.6", height: "6.3rem" }}
         />
         <CardHeader
           title={props.title}
