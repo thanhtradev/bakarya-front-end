@@ -85,6 +85,7 @@ const Suggestion = ({ categories }) => {
         }}
       >
         {""}
+        {""}
         <Typography
           variant='h5'
           sx={{
