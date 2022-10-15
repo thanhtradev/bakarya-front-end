@@ -7,21 +7,29 @@ import SideBar from "./side-bar/SideBar";
 
 const Body = () => {
   return (
-    <Row style={{ paddingTop: "20px", backgroundColor: "#f4f4f4" }}>
-      {/* //? SideBar Left */}
-      <Col
+    <Container fluid>
+      <Row
         style={{
-          backgroundColor: "red",
+          paddingTop: "20px",
+          backgroundColor: "#f4f4f4",
+          padding: "20px 0 0 0",
         }}
       >
-        <SideBar right={0} />
-      </Col>
-      <MainFeed />
-      {/* //? SideBar Right */}
-      <Col>
-        <SideBarRight />
-      </Col>
-    </Row>
+        {/* //? SideBar Left */}
+        <Col
+          style={{
+            backgroundColor: "red",
+          }}
+        >
+          <SideBar right={0} />
+        </Col>
+        <MainFeed />
+        {/* //? SideBar Right */}
+        <Col>
+          <SideBarRight />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
