@@ -1,0 +1,39 @@
+.post {
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 14px;
+  /* border: 1px solid rgb(106, 104, 104); */
+  border: 1px solid rgba(130, 138, 157, 0.414);
+  padding: 8px 0;
+  /* height: 38.15rem; */
+  margin-bottom: 20px;
+}
+
+.post-header__user {
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rgba(116, 154, 113, 0.414);
+}
+
+.post-header__more {
+  align-items: center;
+  background-color: rgba(113, 125, 154, 0.414);
+}
+
+.post-media {
+  height: 400px;
+  width: 100%;
+}
+
+.post-interaction {
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(136, 113, 154, 0.414);
+}
+
+.interaction-content {
+  justify-content: space-between;
+  align-items: center;
+  width: 31%;
+} /*# sourceMappingURL=RecipePost.module.css.map */

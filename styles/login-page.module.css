@@ -1,0 +1,5 @@
+.btn-invalid {
+  pointer-events: none !important;
+  background-color: grey !important;
+  color: white !important;
+}
