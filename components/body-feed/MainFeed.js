@@ -19,6 +19,8 @@ const MainFeed = () => {
         <CreatePost />
         <Post />
         <Post />
+        <Post />
+        <Post />
 
         {/* <InfiniteScroll
           dataLength={items.length} //This is important field to render the next data

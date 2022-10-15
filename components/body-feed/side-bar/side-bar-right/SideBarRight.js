@@ -16,7 +16,7 @@ const Categories = [
 
 const SideBarRight = () => {
   return (
-    <SideBar right={30}>
+    <SideBar right={30} position='sticky'>
       <Trends categories={Categories} />
       <AdList />
       <Footer />
