@@ -17,24 +17,26 @@ import React, { useState } from "react";
 
 const infoIconColor = "#7db9be";
 
-const infoIcons = [
-  {
-    icon: <NotLikeIcon fontSize='small' sx={{ fontSize: "17px" }} />,
-    quantity: 3,
-  },
-  {
-    icon: <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "15px" }} />,
-    quantity: 6,
-  },
-  {
-    icon: <StarOutlineIcon fontSize='small' sx={{ fontSize: "19px" }} />,
-    quantity: 10,
-  },
-];
-
-export default function Interaction() {
+export default function Interaction(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+
+  const infoIcons = [
+    {
+      icon: <NotLikeIcon fontSize='small' sx={{ fontSize: "17px" }} />,
+      quantity: props.numberOfLike,
+    },
+    {
+      icon: (
+        <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "15px" }} />
+      ),
+      quantity: props.numberOfComment,
+    },
+    {
+      icon: <StarOutlineIcon fontSize='small' sx={{ fontSize: "19px" }} />,
+      quantity: 10,
+    },
+  ];
 
   const likeHandler = () => {
     setIsLiked((prev) => !prev);
