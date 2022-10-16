@@ -16,6 +16,7 @@ const MainFeed = ({ posts: recipePost }) => {
     return (
       <Post
         key={post._id}
+        author={post.author}
         category={post.categories}
         createAt={post.createdAt}
         directions={post.directions}

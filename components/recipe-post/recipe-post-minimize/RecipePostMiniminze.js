@@ -54,7 +54,6 @@ const MiniRecipePost = (props) => {
     );
   });
 
-  console.log(props);
   return (
     <Box className={classes.post}>
       <Stack sx={{ paddingX: "13px", paddingTop: "4px" }} spacing={1.5}>
@@ -65,11 +64,11 @@ const MiniRecipePost = (props) => {
           alignItems='center'
           sx={{ width: "100%" }}
         >
-          <PostHeader createAt={props.createAt} />
+          <PostHeader createAt={props.createAt} author={props.author} />
         </Stack>
         <Stack justifyContent='flex-start' alignItems='flex-start'>
           <Typography variant='h5' fontWeight='bold' fontSize='18x'>
-            {categoryName}
+            {props.name}
           </Typography>
           <Stack
             direction='row'

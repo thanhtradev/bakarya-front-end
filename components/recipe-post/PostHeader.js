@@ -54,7 +54,7 @@ const User = (props) => {
       }
       title={
         <React.Fragment>
-          <Typography>Thanh Tu</Typography>
+          <Typography textTransform='capitalize'>{props.author}</Typography>
           <Button
             ref={followRef}
             disableElevation

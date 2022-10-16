@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import MainFeed from "./MainFeed";
 import SideBarRight from "./side-bar/side-bar-right/SideBarRight";
 import SideBar from "./side-bar/SideBar";
-
+import SideBarLeft from "./side-bar/side-bar-left/SideBarLeft";
 const Body = ({ posts }) => {
   return (
     <Container fluid>
@@ -17,11 +17,13 @@ const Body = ({ posts }) => {
       >
         {/* //? SideBar Left */}
         <Col
-          style={{
-            backgroundColor: "red",
-          }}
+          style={
+            {
+              // backgroundColor: "red",
+            }
+          }
         >
-          <SideBar right={0} />
+          <SideBarLeft />
         </Col>
         <MainFeed posts={posts} />
         {/* //? SideBar Right */}
