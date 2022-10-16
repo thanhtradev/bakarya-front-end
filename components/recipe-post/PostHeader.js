@@ -4,9 +4,30 @@ import { Typography, Stack } from "@mui/material";
 import { useRef } from "react";
 import PostSetting from "./PostSetting";
 
-const User = () => {
+const User = (props) => {
   const [isFollow, setIsFollow] = useState(false);
   const followRef = useRef();
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const rawDate = new Date(props.createAt);
+  const month = monthNames[rawDate.getMonth()];
+  const date = rawDate.getDate().toString();
+  const year = rawDate.getFullYear().toString();
+  const time = date.concat(" ", month).concat(", ", year);
 
   useEffect(() => {
     if (isFollow) {
@@ -23,6 +44,7 @@ const User = () => {
       setIsFollow(true);
     }
   };
+
   return (
     <CardHeader
       avatar={
@@ -55,7 +77,7 @@ const User = () => {
         width: "fit-content",
         alignItems: "center",
       }}
-      subheader='25 September, 2022'
+      subheader={time}
       action={
         <React.Fragment>
           <PostSetting />

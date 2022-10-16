@@ -7,8 +7,9 @@ import HeaderNewsFeed from "../components/header/header-new-feed/header";
 import Post from "../components/recipe-post/recipe-post-minimize/RecipePostMiniminze";
 import Body from "../components/body-feed/Body";
 import { Box } from "@mui/material";
+import axios from "axios";
 
-export default function Home() {
+export default function Home({ posts }) {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
 
@@ -35,7 +36,28 @@ export default function Home() {
         <HeaderNewsFeed />
       </Box>
 
-      <Body />
+      <Body posts={posts} />
     </div>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    var config = {
+      method: "GET",
+      url: "http://api.bakarya.com/api/recipes",
+      headers: {},
+    };
+
+    const res = await axios.get("http://api.bakarya.com/api/recipes");
+    // const datas = await res.data.json();
+
+    return {
+      props: {
+        posts: res.data,
+      },
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
 }

@@ -4,37 +4,33 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../recipe-post/recipe-post-minimize/RecipePostMiniminze";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const MainFeed = () => {
+const MainFeed = ({ posts: recipePost }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    FetchPost();
-  }, []);
+  const [posts, setPosts] = useState(recipePost);
 
   const { category } = router.query;
-  console.log(category);
-
-  function FetchPost() {
-    var config = {
-      method: "get",
-      url: "http://api.bakarya.com/api/recipes",
-      headers: {},
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  useEffect(() => {
-    FetchPost();
-  }, []);
+  console.log(recipePost);
+  const recipePosts = recipePost.map((post) => {
+    return (
+      <Post
+        key={post._id}
+        category={post.categories}
+        createAt={post.createdAt}
+        directions={post.directions}
+        expert={post.expert}
+        ingredient={post.ingredients}
+        makes={post.makes}
+        name={post.name}
+        numberOfComment={post.number_of_comments}
+        numberOfLike={post.number_of_mlems}
+        nutrition={post.nutrition}
+        makingTime={post.time}
+        updateAt={post.updatedAt}
+      />
+    );
+  });
 
   return (
     <Col xl={6} fluid='true'>
@@ -45,7 +41,7 @@ const MainFeed = () => {
         }}
       >
         <CreatePost />
-        <Post />
+        {recipePosts}
 
         {/* <InfiniteScroll
           dataLength={items.length} //This is important field to render the next data

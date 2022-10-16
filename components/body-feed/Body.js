@@ -5,7 +5,7 @@ import MainFeed from "./MainFeed";
 import SideBarRight from "./side-bar/side-bar-right/SideBarRight";
 import SideBar from "./side-bar/SideBar";
 
-const Body = () => {
+const Body = ({ posts }) => {
   return (
     <Container fluid>
       <Row
@@ -23,7 +23,7 @@ const Body = () => {
         >
           <SideBar right={0} />
         </Col>
-        <MainFeed />
+        <MainFeed posts={posts} />
         {/* //? SideBar Right */}
         <Col>
           <SideBarRight />

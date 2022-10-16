@@ -45,12 +45,6 @@ const AdList = () => {
     setIsLoading(false);
   };
 
-  if (!isLoading) {
-    console.log("not loading");
-  } else {
-    console.log("loading");
-  }
-
   return (
     <ItemContainer>
       <Typography
