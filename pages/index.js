@@ -9,7 +9,7 @@ import Body from "../components/body-feed/Body";
 import { Box } from "@mui/material";
 import axios from "axios";
 
-export default function Home({ posts }) {
+export default function Home({ posts, top10Posts }) {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
 
@@ -36,25 +36,24 @@ export default function Home({ posts }) {
         <HeaderNewsFeed />
       </Box>
 
-      <Body posts={posts} />
+      <Body posts={posts} top10Posts={top10Posts} />
     </div>
   );
 }
 
 export async function getStaticProps() {
   try {
-    var config = {
-      method: "GET",
-      url: "http://api.bakarya.com/api/recipes",
-      headers: {},
-    };
+    const allPostURL = "http://api.bakarya.com/api/recipes";
+    const top10PostURL = "http://api.bakarya.com/api/recipes/top10";
 
-    const res = await axios.get("http://api.bakarya.com/api/recipes");
+    const postData = await axios.get(allPostURL);
+    const top10PostData = await axios.get(top10PostURL);
     // const datas = await res.data.json();
 
     return {
       props: {
-        posts: res.data,
+        posts: postData.data,
+        top10Posts: top10PostData.data,
       },
     };
   } catch (error) {
