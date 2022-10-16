@@ -94,7 +94,7 @@ const MiniRecipePost = (props) => {
           >
             {props.expert}
           </Typography>
-          {isShowMore && (
+          {!isShowMore && (
             <Chip
               label='Show more'
               variant='outlined'
@@ -105,7 +105,7 @@ const MiniRecipePost = (props) => {
               sx={{ marginTop: "8px" }}
             />
           )}
-          {!isShowMore && (
+          {isShowMore && (
             <React.Fragment>
               <Typography variant='h6'>Ingredients</Typography>
               <Box component='ul'>{ingredientList}</Box>
@@ -118,7 +118,7 @@ const MiniRecipePost = (props) => {
             </React.Fragment>
           )}
         </Stack>
-        {!isShowMore && (
+        {isShowMore && (
           <Chip
             label='Show less'
             variant='outlined'
