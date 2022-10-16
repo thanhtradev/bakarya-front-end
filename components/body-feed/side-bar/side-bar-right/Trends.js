@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import ItemContainer from "../ItemContainer";
+import Link from "next/link";
 
 const Suggestion = ({ categories }) => {
   const router = useRouter();
@@ -18,49 +19,54 @@ const Suggestion = ({ categories }) => {
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
-    router.push(`/${categories[index]}`);
+    // router.push(`/${categories[index]}`);
   };
 
   const listItems = categories.map((cate, index) => {
     return (
-      <React.Fragment key={index}>
+      <React.Fragment>
         {index !== 0 && <Divider component='li' sx={{ margin: "4px 0" }} />}
-        <ListItemButton
+        <Link
           key={index}
-          selected={selectedIndex === index}
-          onClick={(event) => handleListItemClick(event, index)}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            padding: "0 4px",
-            borderRadius: "10px",
-            fontSize: "1rem",
-            height: "3.1rem",
-          }}
+          href={`/trends/${cate.replace(/ /g, "").toLowerCase()}`}
         >
-          <ListItemText
-            primary={`#${cate}`}
+          <ListItemButton
+            key={index}
+            selected={selectedIndex === index}
+            onClick={(event) => handleListItemClick(event, index)}
             sx={{
-              pointerEvents: "none",
-              ".MuiTypography-root": {
-                fontSize: "0.98rem",
-                fontWeight: "600",
-                lineHeight: "1",
-              },
-              maxHeight: "23px",
-              margin: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              padding: "0 4px",
+              fontSize: "1rem",
+              height: "3.1rem",
             }}
-          />
-          <Typography
-            variant='caption'
-            fontSize='12px'
-            sx={{ color: "#959292", lineHeight: "1" }}
           >
-            3 Posts
-          </Typography>
-        </ListItemButton>
+            <ListItemText
+              primary={`#${cate}`}
+              sx={{
+                pointerEvents: "none",
+                ".MuiTypography-root": {
+                  fontSize: "0.98rem",
+                  fontWeight: "600",
+                  lineHeight: "1",
+                },
+                color: "black",
+                maxHeight: "23px",
+                margin: 0,
+              }}
+            />
+            <Typography
+              variant='caption'
+              fontSize='12px'
+              sx={{ color: "#959292", lineHeight: "1" }}
+            >
+              3 Posts
+            </Typography>
+          </ListItemButton>
+        </Link>
       </React.Fragment>
     );
   });
@@ -74,7 +80,6 @@ const Suggestion = ({ categories }) => {
         sx={{
           width: "1",
           // backgroundColor: "aquamarine",
-          borderBottom: "1px solid #c6bdbdba",
         }}
       >
         <Typography
@@ -82,7 +87,6 @@ const Suggestion = ({ categories }) => {
           sx={{
             fontWeight: "bolder",
             lineHeight: "1.4",
-            paddingBottom: "10px",
           }}
         >
           Maybe you'll like
