@@ -32,7 +32,6 @@ const Suggestion = ({ categories }) => {
         >
           <ListItemButton
             key={index}
-            component='a'
             selected={selectedIndex === index}
             onClick={(event) => handleListItemClick(event, index)}
             sx={{
@@ -107,7 +106,7 @@ const Suggestion = ({ categories }) => {
             "&& .Mui-selected": {
               backgroundColor: "#2a9fe994",
             },
-            "&&:not(&&.Mui-selected):hover": {
+            "&&:not(&&.Mui-selected) :hover": {
               backgroundColor: "#2a9fe994",
             },
           }}

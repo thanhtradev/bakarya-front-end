@@ -5,6 +5,7 @@ import SideBarRight from "../../components/body-feed/side-bar/side-bar-right/Sid
 export default function TrendPage() {
   const router = useRouter();
   const { title } = router.query;
+  console.log(title);
 
   return (
     <React.Fragment>
