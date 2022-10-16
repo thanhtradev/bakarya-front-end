@@ -32,6 +32,7 @@ const Suggestion = ({ categories }) => {
         >
           <ListItemButton
             key={index}
+            component='a'
             selected={selectedIndex === index}
             onClick={(event) => handleListItemClick(event, index)}
             sx={{
@@ -39,6 +40,7 @@ const Suggestion = ({ categories }) => {
               flexDirection: "column",
               alignItems: "flex-start",
               justifyContent: "center",
+              borderRadius: "10px",
               padding: "0 4px",
               fontSize: "1rem",
               height: "3.1rem",
