@@ -1,18 +1,22 @@
 import { Box, Typography, Stack, Chip } from "@mui/material";
 import PostHeader from "../PostHeader";
 import classes from "./../RecipePost.module.css";
-import Pic from "../../../assets/logo.png";
+import Pic from "../../../assets/Demo.jpg";
 import Interactions from "../Interaction";
 import React, { useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const MiniRecipePost = (props) => {
   const categoryName = props.category[0].name;
   const [isShowMore, setIsShowMore] = useState(false);
 
   const infos = [
+    {
+      content: props.category,
+      icon: <MenuBookIcon />,
+    },
     {
       content: props.makes,
       icon: <TakeoutDiningIcon />,
@@ -129,7 +133,7 @@ const MiniRecipePost = (props) => {
           />
         )}
         <Box className={classes["post-media"]}>
-          <img src={Pic} className={classes["post-media"]} />
+          <img src={Pic.src} className={classes["post-media"]} />
         </Box>
         <Interactions
           numberOfLike={props.numberOfLike}
