@@ -17,6 +17,27 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import React from "react";
 
 const PostItem = (props) => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const rawDate = new Date(props.createAt);
+  const month = monthNames[rawDate.getMonth()];
+  const date = rawDate.getDate().toString();
+  const year = rawDate.getFullYear().toString();
+  const time = date.concat(" ", month).concat(", ", year);
+
   return (
     <React.Fragment>
       <ListItemButton alignItems='flex-start' sx={{ borderRadius: "10px" }}>
@@ -28,29 +49,24 @@ const PostItem = (props) => {
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography sx={{ textTransform: "capitalize" }}>
-              {`${props.name} - ${props.author}`}
-            </Typography>
+            <Stack>
+              <Typography sx={{ textTransform: "capitalize" }}>
+                {`${props.name} - ${props.author}`}
+              </Typography>
+              <Typography variant='caption' fontWeight='bold'>
+                {time}
+              </Typography>
+            </Stack>
           }
           secondary={
-            <Stack>
-              <Typography
-                sx={{ textTransform: "capitalize" }}
-                component='span'
-                variant='body2'
-                color='text.primary'
-              >
-                <NotLikeIcon sx={{ fontSize: "17px", marginRight: "10px" }} />
+            <Stack direction='row' spacing={2}>
+              <Typography component='span' variant='body2' color='text.primary'>
+                <NotLikeIcon sx={{ fontSize: "17px", marginRight: "8px" }} />
                 {props.numberOfLike}
               </Typography>
-              <Typography
-                sx={{ textTransform: "capitalize" }}
-                component='span'
-                variant='body2'
-                color='text.primary'
-              >
+              <Typography component='span' variant='body2' color='text.primary'>
                 <ChatBubbleOutlineIcon
-                  sx={{ fontSize: "17px", marginRight: "10px" }}
+                  sx={{ fontSize: "17px", marginRight: "8px" }}
                 />
                 {props.numberOfComment}
               </Typography>
@@ -73,6 +89,7 @@ const TopPost = ({ top10Posts }) => {
       <PostItem
         author={post.author}
         name={post.name}
+        createAt={post.createdAt}
         numberOfLike={post.number_of_mlems}
         numberOfComment={post.number_of_comments}
       />
@@ -88,7 +105,7 @@ const TopPost = ({ top10Posts }) => {
           lineHeight: "1.4",
         }}
       >
-        most liked posts
+        most mlem posts
       </Typography>
       <List>{postList}</List>
     </ItemContainer>
