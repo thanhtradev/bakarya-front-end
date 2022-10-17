@@ -14,7 +14,8 @@
 
 /* Track */
 .sidenav::-webkit-scrollbar-track {
-  background: #77777761;
+  background: #7777772e;
+  border-radius: 5px;
 }
 
 /* Handle */
