@@ -3,19 +3,15 @@ import CreatePost from "./create-post/CreatePost";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../recipe-post/recipe-post-minimize/RecipePostMiniminze";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 const MainFeed = ({ posts: recipePost }) => {
   const router = useRouter();
-  const [posts, setPosts] = useState(recipePost);
 
-  const { category } = router.query;
-  console.log(recipePost);
   const recipePosts = recipePost.map((post) => {
     return (
       <Post
-        key={post._id}
+        key={post.id}
         author={post.author}
         category={post.categories}
         createAt={post.createdAt}

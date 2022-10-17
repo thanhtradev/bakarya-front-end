@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { alpha, Avatar, Button, CardHeader } from "@mui/material";
-import { Typography, Stack } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useRef } from "react";
 import PostSetting from "./PostSetting";
 
@@ -54,7 +54,9 @@ const User = (props) => {
       }
       title={
         <React.Fragment>
-          <Typography textTransform='capitalize'>{props.author}</Typography>
+          <Typography textTransform='capitalize' sx={{ fontWeight: "bold" }}>
+            {props.author}
+          </Typography>
           <Button
             ref={followRef}
             disableElevation

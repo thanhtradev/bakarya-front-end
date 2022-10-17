@@ -1,6 +1,5 @@
-import { Box, Chip, Avatar } from "@mui/material";
+import { Box, Chip, Avatar, Button } from "@mui/material";
 import * as React from "react";
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import ItemContainer from "../ItemContainer";
@@ -30,7 +29,6 @@ const Navigation = () => {
         {...a11yProps(i)}
         icon={item.icon}
         iconPosition='start'
-        disableRipple={true}
         sx={{
           borderRadius: "14px",
           "&.MuiTab-root": {
@@ -42,11 +40,14 @@ const Navigation = () => {
             fontWeight: "bold",
             color: "unset",
           },
+          "&.Mui-focusVisible": {
+            display: "none",
+          },
         }}
       />
     );
   });
-        
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -58,50 +59,58 @@ const Navigation = () => {
     };
   }
 
+  const handleClick = () => {
+    console.log("hi");
+  };
   return (
-    <Tabs
-      component={ItemContainer}
-      orientation='vertical'
-      value={value}
-      onChange={handleChange}
-      aria-label='Navigation Bar'
-      TabIndicatorProps={{
-        style: {
-          display: "none",
-        },
-      }}
-      sx={{
-        borderRight: 1,
-        borderColor: "divider",
-      }}
-    >
-      <Chip
-        clickable={true}
-        component='button'
-        avatar={<Avatar alt='Thanh Tu'>TT</Avatar>}
-        label={
-          <Typography variant='subtitle1' fontWeight='bold' fontSize='19px'>
-            Thanh Tu
-          </Typography>
+    <ItemContainer>
+      <Button
+        variant='outlined'
+        onClick={handleClick}
+        startIcon={
+          <Avatar alt='Thanh Tu' sx={{ width: "38px", height: "38px" }}>
+            TT
+          </Avatar>
         }
         sx={{
           height: "40px",
-          "& .MuiChip-avatar": {
-            width: "38px",
-            height: "38px",
-            fontSize: "20px",
-          },
-          "&.MuiChip-root": {
-            paddingLeft: "10px",
-            height: "50px",
-            justifyContent: "flex-start",
-            bgcolor: "#c0d2ee",
-          },
+          color: "unset",
+          textTransform: "capitalize",
+          fontSize: "19px",
+          paddingLeft: "10px",
+          height: "50px",
+          justifyContent: "flex-start",
+          bgcolor: "#c0d2ee",
+          borderRadius: "15px",
           marginBottom: "10px",
+          "&.MuiButton-root": {
+            width: "0.9",
+          },
         }}
-      />
-      {tabItems}
-    </Tabs>
+      >
+        <Typography variant='subtitle1' fontWeight='bold'>
+          Thanh Tu
+        </Typography>
+      </Button>
+      <Tabs
+        orientation='vertical'
+        value={value}
+        onChange={handleChange}
+        aria-label='Navigation Bar'
+        TabIndicatorProps={{
+          style: {
+            display: "none",
+          },
+        }}
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          width: "1",
+        }}
+      >
+        {tabItems}
+      </Tabs>
+    </ItemContainer>
   );
 };
 

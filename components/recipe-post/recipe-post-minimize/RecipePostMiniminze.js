@@ -9,7 +9,6 @@ import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const MiniRecipePost = (props) => {
-  const categoryName = props.category[0].name;
   const [isShowMore, setIsShowMore] = useState(false);
 
   const infos = [
@@ -27,9 +26,10 @@ const MiniRecipePost = (props) => {
     },
   ];
 
-  const infoList = infos.map((info) => {
+  const infoList = infos.map((info, i) => {
     return (
       <Chip
+        key={i}
         variant='outlined'
         size='small'
         label={info.content}
@@ -71,7 +71,7 @@ const MiniRecipePost = (props) => {
           <PostHeader createAt={props.createAt} author={props.author} />
         </Stack>
         <Stack justifyContent='flex-start' alignItems='flex-start'>
-          <Typography variant='h5' fontWeight='bold' fontSize='18x'>
+          <Typography variant='h6' fontWeight='bold' fontSize='15x'>
             {props.name}
           </Typography>
           <Stack

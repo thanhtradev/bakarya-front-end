@@ -24,7 +24,7 @@ const Suggestion = ({ categories }) => {
 
   const listItems = categories.map((cate, index) => {
     return (
-      <React.Fragment>
+      <React.Fragment key={index}>
         {index !== 0 && <Divider component='li' sx={{ margin: "4px 0" }} />}
         <Link
           key={index}

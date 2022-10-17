@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Cart from "./Cart";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import logo from "../../../assets/logo.png";
@@ -21,6 +20,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import Avatar from "./Avatar";
+
 const MyBtn = styled(Button)({
   height: "40px",
   width: "40px",
@@ -92,7 +92,7 @@ function HeaderNewsFeed() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "50px",
+            width: "55px",
             height: "50px",
             minWidth: 40,
           }}
@@ -143,7 +143,6 @@ function HeaderNewsFeed() {
                 padding: "3px 40px 3px 10px",
                 minWidth: "150px",
                 height: "30px",
-                backgroundColor: "wheat",
                 borderRadius: "20px",
               }}
             >

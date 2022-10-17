@@ -1,10 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import AuthContext from "../store/auth-context";
 import { useContext } from "react";
 import HeaderNewsFeed from "../components/header/header-new-feed/header";
-import Post from "../components/recipe-post/recipe-post-minimize/RecipePostMiniminze";
 import Body from "../components/body-feed/Body";
 import { Box } from "@mui/material";
 import axios from "axios";

@@ -1,12 +1,4 @@
-import {
-  Box,
-  IconButton,
-  Stack,
-  Tooltip,
-  Avatar,
-  Badge,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import NotLikeIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";

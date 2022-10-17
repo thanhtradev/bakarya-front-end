@@ -1,12 +1,11 @@
-.sidenav {
+/* .sidenav {
   display: flex;
   direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1;
   overflow-x: hidden;
-  /* background-color: aqua; */
-}
+} */
 
 /* width */
 .sidenav::-webkit-scrollbar {
@@ -28,16 +27,4 @@
 /* Handle on hover */
 .sidenav::-webkit-scrollbar-thumb:hover {
   background-color: #555;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
 }

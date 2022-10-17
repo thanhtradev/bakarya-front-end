@@ -19,6 +19,7 @@ const SideBar = (props) => {
             ? "280px"
             : props.paddingTop
         }`,
+        paddingBottom: "10px",
       }}
     >
       <Stack

@@ -1,4 +1,4 @@
-import { Badge, Box, Container } from "@mui/material";
+import { Badge, Box } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";

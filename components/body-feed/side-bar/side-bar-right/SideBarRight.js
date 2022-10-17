@@ -18,7 +18,6 @@ const Categories = [
 const SideBarRight = () => {
   return (
     <SideBar right={30} position='fixed' bottom='0' overflowY='scroll'>
-      <Box sx={{ height: "132px", width: "1" }} />
       <Trends categories={Categories} />
       <AdList />
       <Footer />

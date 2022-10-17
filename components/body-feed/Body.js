@@ -3,7 +3,6 @@ import Col from "react-bootstrap/Col";
 import { Container } from "react-bootstrap";
 import MainFeed from "./MainFeed";
 import SideBarRight from "./side-bar/side-bar-right/SideBarRight";
-import SideBar from "./side-bar/SideBar";
 import SideBarLeft from "./side-bar/side-bar-left/SideBarLeft";
 const Body = ({ posts, top10Posts }) => {
   return (
@@ -16,13 +15,7 @@ const Body = ({ posts, top10Posts }) => {
         }}
       >
         {/* //? SideBar Left */}
-        <Col
-          style={
-            {
-              // backgroundColor: "red",
-            }
-          }
-        >
+        <Col>
           <SideBarLeft top10Posts={top10Posts} />
         </Col>
         <MainFeed posts={posts} />

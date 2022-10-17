@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "Brave",
+            "type": "chrome",
             "request": "launch",
-            "name": "Launch Brave against localhost",
+            "name": "Launch chrome against localhost",
             "url": "http://localhost:8081",
             "webRoot": "${workspaceFolder}"
         }
