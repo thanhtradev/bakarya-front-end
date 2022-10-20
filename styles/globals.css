@@ -31,3 +31,10 @@ a {
     background-color: #f4f4f4;
   }
 }
+
+div.DraftEditor-root {
+  width: 100%;
+  margin: auto;
+  min-height: 50px;
+  font-size: 18px;
+}

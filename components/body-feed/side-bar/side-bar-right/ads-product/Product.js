@@ -39,7 +39,7 @@ const Product = (props) => {
         <CardHeader
           title={props.title}
           titleTypographyProps={{
-            fontSize: "0.98em",
+            fontSize: "0.85em",
           }}
           subheader={
             <React.Fragment>
@@ -47,7 +47,7 @@ const Product = (props) => {
                 {props.subtitle}
               </Typography>
               <Typography
-                sx={{ fontSize: "1em" }}
+                sx={{ fontSize: "0.75em" }}
               >{`${props.price}$`}</Typography>
             </React.Fragment>
           }

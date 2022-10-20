@@ -1,30 +1,15 @@
 import * as React from "react";
-import {
-  Stack,
-  Tab,
-  Tabs,
-  Button,
-  Box,
-  Avatar,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Stack, Tab, Tabs, Box, Avatar } from "@mui/material";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import CreatePostForm from "./CreatePostForm";
 
 const icons = [
   { icon: <EventOutlinedIcon />, title: "Post a recipe" },
   { icon: <LiveTvOutlinedIcon />, title: "Livestream" },
   { icon: <ModeEditOutlineOutlinedIcon />, title: "Events" },
 ];
-
-const MyTabs = styled(Tabs)({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
 const tabs = icons.map((icon, i) => {
   if (icon === icons[0]) {
     return (
@@ -84,9 +69,13 @@ const CreatePost = () => {
         >
           <Avatar />
         </Stack>
-        <Box component={Button} sx={{ width: "0.9", color: "grey" }}>
-          <Typography sx={{ color: "#444" }}>Share your recipes....</Typography>
-        </Box>
+        <Stack
+          alignItems='flex-start'
+          justifyContent='center'
+          sx={{ width: "1", height: "1" }}
+        >
+          <CreatePostForm />
+        </Stack>
       </Stack>
     </Stack>
   );
