@@ -16,7 +16,7 @@ const bullet = "\u2022 ";
 
 export default function FormDialog(props) {
   const ingrdRef = React.useRef();
-  const [formOpen, setFormOpen] = React.useState(true);
+  const [formOpen, setFormOpen] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
 
   const handleQuit = () => {
