@@ -3,13 +3,15 @@ import PostHeader from "../PostHeader";
 import classes from "./../RecipePost.module.css";
 import Pic from "../../../assets/Demo.jpg";
 import Interactions from "../Interaction";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-
+import AuthContext from "../../../store/auth-context";
 const MiniRecipePost = (props) => {
+  const authCtx = useContext(AuthContext);
   const [isShowMore, setIsShowMore] = useState(false);
+  const isLoggedIn = authCtx.isLoggedIn;
 
   const infos = [
     {
@@ -136,6 +138,7 @@ const MiniRecipePost = (props) => {
           <img src={Pic.src} className={classes["post-media"]} />
         </Box>
         <Interactions
+          isLoggedIn={isLoggedIn}
           numberOfLike={props.numberOfLike}
           numberOfComment={props.numberOfComment}
         />

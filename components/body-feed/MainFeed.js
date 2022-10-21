@@ -3,9 +3,11 @@ import CreatePost from "./create-post/CreatePost";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../recipe-post/recipe-post-minimize/RecipePostMiniminze";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../../store/auth-context";
 const MainFeed = ({ posts: recipePost }) => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
   const router = useRouter();
 
   const recipePosts = recipePost.map((post) => {
@@ -37,11 +39,12 @@ const MainFeed = ({ posts: recipePost }) => {
           padding: "0 20px",
         }}
       >
-        <CreatePost />
+        {isLoggedIn && <CreatePost />}
+
         {recipePosts}
 
         {/* <InfiniteScroll
-          dataLength={items.length} //This is important field to render the next data
+          dataLength={post.length} //This is important field to render the next data
           next={fetchData}
           hasMore={true}
           loader={<h4>Loading...</h4>}

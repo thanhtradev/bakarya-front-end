@@ -5,7 +5,7 @@ export default function ValidateInput(props) {
   return (
     <TextField
       margin='normal'
-      required
+      required={props.required ?? true}
       fullWidth
       id={props.id}
       label={props.label}
@@ -19,8 +19,11 @@ export default function ValidateInput(props) {
       helperText={`${
         props.hasError ? props.errorMsg ?? "" : props.helperText ?? ""
       }`}
+      multiline={props.multiline ?? false}
       error={props.hasError}
       type={props.type}
+      variant={props.variant ?? "outlined"}
+      sx={{ marginBottom: props.marginBottom ?? "" }}
     />
   );
 }
