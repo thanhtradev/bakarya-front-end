@@ -9,7 +9,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 import AuthContext from "../../../store/auth-context";
 
-const logginedSettings = ["Profile", "Account", "Dashboard", "Logout"];
+const logginedSettings = ["Profile", "Account", "Dashboard"];
 const notLogginSetting = [
   { title: "Sign in", link: "/login-page" },
   { title: "Sign up", link: "/signup-page" },
@@ -28,6 +28,10 @@ const HeaderAvatar = () => {
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleLogOut = () => {
+    authCtx.logout();
   };
 
   const settingList = () => {
@@ -85,6 +89,11 @@ const HeaderAvatar = () => {
         onClose={handleCloseUserMenu}
       >
         {settingList()}
+        {isLoggined && (
+          <MenuItem onClick={handleLogOut}>
+            <Typography textAlign='center'>Log out</Typography>
+          </MenuItem>
+        )}
       </Menu>
     </React.Fragment>
   );
