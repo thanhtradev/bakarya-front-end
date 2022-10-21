@@ -1,16 +1,13 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import AuthContext from "../store/auth-context";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import HeaderNewsFeed from "../components/header/header-new-feed/header";
 import Body from "../components/body-feed/Body";
 import { Box } from "@mui/material";
 import axios from "axios";
 
 export default function Home({ posts, top10Posts }) {
-  const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggedIn;
-
   return (
     <div className={styles.container} style={{ padding: 0 }}>
       <Head>
@@ -34,19 +31,18 @@ export default function Home({ posts, top10Posts }) {
         <HeaderNewsFeed />
       </Box>
 
-      <Body posts={posts} top10Posts={top10Posts} />
+      <Body posts={posts.reverse()} top10Posts={top10Posts} />
     </div>
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const allPostURL = "http://api.bakarya.com/api/recipes";
     const top10PostURL = "http://api.bakarya.com/api/recipes/top10";
 
     const postData = await axios.get(allPostURL);
     const top10PostData = await axios.get(top10PostURL);
-    // const datas = await res.data.json();
 
     return {
       props: {
@@ -55,6 +51,12 @@ export async function getStaticProps() {
       },
     };
   } catch (error) {
-    throw new Error(error);
+    console.log(error);
   }
+  return {
+    props: {
+      posts: [],
+      top10Posts: [],
+    },
+  };
 }

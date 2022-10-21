@@ -47,6 +47,7 @@ function Copyright(props) {
 
 export default function LoginPage() {
   const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -95,22 +96,22 @@ export default function LoginPage() {
     setOpen((prev) => !prev);
   };
 
-  const handleFetchAxios = async () => {
-    var config = {
-      method: "post",
-      url: "http://api.bakarya.com/api/auth/signin",
-      headers: {},
-      data: data,
-    };
-    try {
-      const res = await axios(config);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      return res.data;
-    }
-  };
+  // const handleFetchAxios = async () => {
+  //   var config = {
+  //     method: "post",
+  //     url: "http://api.bakarya.com/api/auth/signin",
+  //     headers: {},
+  //     data: data,
+  //   };
+  //   try {
+  //     const res = await axios(config);
+  //     return res.data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     return res.data;
+  //   }
+  // };
 
   const SignIn = async (email, pwd) => {
     try {
@@ -120,31 +121,34 @@ export default function LoginPage() {
         password: pwd,
       };
 
-      const result = await handleFetchAxios();
-      handleToggle();
+      // const result = await handleFetchAxios();
+      // handleToggle();
       Clear();
 
       // router.replace("/");
-      console.log(result);
-      // let message = "Something went wrong";
+      let message = "Something went wrong";
 
-      // axios(config)
-      //   .then(function (response) {
-      //     if (response.data.status === 200) {
-      //       authCtx.login(response.data.accessToken);
-      //       handleToggle();
-      //       router.replace("/");
-      //     }
-      //     console.log(JSON.stringify(response.data));
-      //   })
-      //   .catch(function (error) {
-      //     handleToggle();
-      //     message = error.response.data.message;
-      //     notifyError(message);
-      //     Clear();
-      //   });
+      var config = {
+        method: "post",
+        url: "http://api.bakarya.com/api/auth/signin",
+        headers: {},
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          authCtx.login(response.data.accessToken, response.data.id);
+          console.log(JSON.stringify(response.data));
+          router.replace("/");
+        })
+        .catch(function (error) {
+          handleToggle();
+          message = error.response.data.message;
+          notifyError(message);
+          Clear();
+        });
     } catch (error) {
-    } finally {
+      console.log(error);
     }
   };
 

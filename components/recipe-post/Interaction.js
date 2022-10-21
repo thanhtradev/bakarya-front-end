@@ -71,91 +71,97 @@ export default function Interaction(props) {
       >
         {infoIconList}
       </Stack>
-      <Stack
-        position='absolute'
-        justifyContent='space-between'
-        alignItems='center'
-        direction='row'
-        sx={{
-          width: "120px",
-          height: "40px",
-          top: -38,
-          left: 0,
-          // backgroundColor: "blanchedalmond",
-        }}
-      >
-        <IconButton
-          onClick={likeHandler}
+      {props.isLoggedIn && (
+        <Stack
+          position='absolute'
+          justifyContent='space-between'
+          alignItems='center'
+          direction='row'
           sx={{
-            backgroundColor: infoIconColor,
-            backgroundColor: `${isLiked ? infoIconColor : "#8dd0b3"}`,
-            color: `${isLiked ? "#FEFFF6" : ""}`,
-            "&:hover": {
+            width: "120px",
+            height: "40px",
+            top: -38,
+            left: 0,
+            // backgroundColor: "blanchedalmond",
+          }}
+        >
+          <IconButton
+            onClick={likeHandler}
+            sx={{
               backgroundColor: infoIconColor,
-            },
-            width: "35px",
-            height: "35px",
-            boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
-          }}
-        >
-          {isLiked ? (
-            <FavoriteIcon
-              fontSize='small'
-              sx={{ fontSize: "20px", pointerEvents: "none" }}
-            />
-          ) : (
-            <NotLikeIcon
-              fontSize='small'
-              sx={{ fontSize: "20px", pointerEvents: "none" }}
-            />
-          )}
-        </IconButton>
-        <IconButton
-          sx={{
-            backgroundColor: infoIconColor,
-            backgroundColor: "#8dd0b3",
-            "&:hover": {
+              backgroundColor: `${isLiked ? infoIconColor : "#8dd0b3"}`,
+              color: `${isLiked ? "#FEFFF6" : ""}`,
+              "&:hover": {
+                backgroundColor: infoIconColor,
+              },
+              width: "35px",
+              height: "35px",
+              boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
+            }}
+          >
+            {isLiked ? (
+              <FavoriteIcon
+                fontSize='small'
+                sx={{ fontSize: "20px", pointerEvents: "none" }}
+              />
+            ) : (
+              <NotLikeIcon
+                fontSize='small'
+                sx={{ fontSize: "20px", pointerEvents: "none" }}
+              />
+            )}
+          </IconButton>
+          <IconButton
+            sx={{
+              backgroundColor: infoIconColor,
               backgroundColor: "#8dd0b3",
-            },
-            width: "35px",
-            height: "35px",
-            boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
-          }}
-        >
-          <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "20px" }} />
-        </IconButton>
-        <IconButton
-          onClick={saveHandler}
-          sx={{
-            backgroundColor: infoIconColor,
-            backgroundColor: `${isSaved ? infoIconColor : "#8dd0b3"}`,
-            width: "35px",
-            height: "35px",
-            "&:hover": {
-              backgroundColor: "#8dd0b3",
-            },
-            boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
-          }}
-        >
-          {isSaved ? (
-            <SavedIcon
-              viewBox='2 8 21 10'
-              height='13px'
-              width='13px'
-              fontSize='small'
-              sx={{ fontSize: "20px", pointerEvents: "none", color: "#e1c693" }}
-            />
-          ) : (
-            <StarOutlineIcon
-              viewBox='2 8 20 10'
-              height='13px'
-              width='13px'
-              fontSize='small'
-              sx={{ fontSize: "20px", pointerEvents: "none" }}
-            />
-          )}
-        </IconButton>
-      </Stack>
+              "&:hover": {
+                backgroundColor: "#8dd0b3",
+              },
+              width: "35px",
+              height: "35px",
+              boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
+            }}
+          >
+            <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "20px" }} />
+          </IconButton>
+          <IconButton
+            onClick={saveHandler}
+            sx={{
+              backgroundColor: infoIconColor,
+              backgroundColor: `${isSaved ? infoIconColor : "#8dd0b3"}`,
+              width: "35px",
+              height: "35px",
+              "&:hover": {
+                backgroundColor: "#8dd0b3",
+              },
+              boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
+            }}
+          >
+            {isSaved ? (
+              <SavedIcon
+                viewBox='2 8 21 10'
+                height='13px'
+                width='13px'
+                fontSize='small'
+                sx={{
+                  fontSize: "20px",
+                  pointerEvents: "none",
+                  color: "#e1c693",
+                }}
+              />
+            ) : (
+              <StarOutlineIcon
+                viewBox='2 8 20 10'
+                height='13px'
+                width='13px'
+                fontSize='small'
+                sx={{ fontSize: "20px", pointerEvents: "none" }}
+              />
+            )}
+          </IconButton>
+        </Stack>
+      )}
     </Box>
   );
 }
