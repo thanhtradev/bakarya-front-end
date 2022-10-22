@@ -154,4 +154,4 @@ const MiniRecipePost = (props) => {
   );
 };
 
-export default React.memo(MiniRecipePost);
+export default MiniRecipePost;

@@ -12,6 +12,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 import AuthContext from "../../../store/auth-context";
 import { Button } from "@mui/material";
+import { useRouter } from "next/router";
 const logginedSettings = ["Profile", "Account", "Dashboard"];
 const notLogginSetting = [
   { title: "Sign in", link: "/login-page" },
@@ -19,6 +20,7 @@ const notLogginSetting = [
 ];
 
 const HeaderAvatar = () => {
+  const router = useRouter();
   const authCtx = React.useContext(AuthContext);
   const isLoggined = authCtx.isLoggedIn;
   const settings = isLoggined ? logginedSettings : notLogginSetting;

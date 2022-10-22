@@ -85,7 +85,6 @@ export default function FormDialog(props) {
 
   const getIngrdData = React.useCallback((data) => {
     setIngrdData(data);
-    console.log("data: " + data);
   }, []);
 
   const getDirectionData = (data) => {
@@ -141,6 +140,8 @@ export default function FormDialog(props) {
     //** toggle loading on*/
     handleToggle();
     var data = {
+      author: authCtx.username,
+      createdAt: new Date(),
       name: cakeName,
       expert: cakeBrief,
       time: prepTime,
@@ -167,9 +168,16 @@ export default function FormDialog(props) {
         console.log(response);
         if (response.status === 200) {
           setFormOpen(false);
-          //** toggle loading off */
-          handleToggle();
+          resetCakeName();
+          resetcakeBrief();
+          resetPrep();
+          resetServe();
+          resetNutrition();
         }
+        //** toggle loading off */
+        handleToggle();
+
+        props.handleCreatedPost(data);
       })
       .catch(function (error) {
         console.log(error);

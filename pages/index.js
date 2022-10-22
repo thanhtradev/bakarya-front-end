@@ -31,7 +31,7 @@ export default function Home({ posts, top10Posts }) {
         <HeaderNewsFeed />
       </Box>
 
-      <Body posts={posts.reverse()} top10Posts={top10Posts} />
+      <Body posts={posts} top10Posts={top10Posts} />
     </div>
   );
 }

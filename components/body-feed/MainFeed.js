@@ -5,20 +5,31 @@ import Post from "../recipe-post/recipe-post-minimize/RecipePostMiniminze";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
+import axios from "axios";
+
 const MainFeed = ({ posts: recipePost }) => {
   const authCtx = useContext(AuthContext);
   const router = useRouter();
+  const [posts, setPosts] = useState(recipePost);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
+    setPosts((prev) => prev.reverse());
   }, []);
 
-  console.log(authCtx);
-  useEffect(() => {
-    isLoggedIn = authCtx.isLoggedIn;
-  }, []);
+  const handleCreatedPost = async (newPosts) => {
+    console.log("i ran");
+    console.log(newPosts);
+    const allPostURL = "http://api.bakarya.com/api/recipes";
+    const postData = await axios.get(allPostURL);
 
-  const recipePosts = recipePost.map((post) => {
+    postData.data, setPosts((prev) => [newPosts, ...postData.data]);
+  };
+
+  console.log(posts);
+
+  const recipePosts = posts.map((post) => {
     return (
       <Post
         key={post.id}
@@ -48,7 +59,7 @@ const MainFeed = ({ posts: recipePost }) => {
           padding: "0 20px",
         }}
       >
-        {isLoggedIn && <CreatePost />}
+        {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
 
         {recipePosts}
 

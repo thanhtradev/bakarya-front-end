@@ -29,7 +29,7 @@ const tabs = icons.map((icon, i) => {
   );
 });
 
-const CreatePost = () => {
+const CreatePost = (props) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -74,7 +74,7 @@ const CreatePost = () => {
           justifyContent='center'
           sx={{ width: "1", height: "1" }}
         >
-          <CreatePostForm />
+          <CreatePostForm handleCreatedPost={props.handleCreatedPost} />
         </Stack>
       </Stack>
     </Stack>

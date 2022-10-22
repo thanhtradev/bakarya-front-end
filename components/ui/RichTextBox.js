@@ -30,13 +30,12 @@ function MyEditor({ type, getData }) {
     } else if (value.join().trim() === "") {
       isDiffEmptyFirstTime.current = true;
     }
-  }, [value]);
+    getData(value);
+  }, [JSON.stringify(value)]);
 
   const blurHandler = () => {
     setIsTouched(false);
-    if (!hasError) {
-      getData(value);
-    }
+    console.log(hasError);
   };
 
   const focusHandler = () => {
@@ -71,4 +70,4 @@ function MyEditor({ type, getData }) {
   );
 }
 
-export default MyEditor;
+export default React.memo(MyEditor);
