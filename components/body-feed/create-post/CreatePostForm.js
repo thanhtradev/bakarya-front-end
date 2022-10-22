@@ -24,6 +24,8 @@ export default function FormDialog(props) {
   const [ingrdData, setIngrdData] = React.useState([]);
   const [directionData, setDirectionData] = React.useState([]);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [logined, setLogined] = React.useState(false);
+
   const {
     value: cakeNameValue,
     isValid: cakeNameIsValid,
@@ -71,15 +73,20 @@ export default function FormDialog(props) {
     reset: resetNutrition,
   } = useValidInput((value) => value.trim().length < 300);
 
+  React.useEffect(() => {
+    setLogined(authCtx.isLoggedIn);
+  }, []);
+
   const handleToggle = () => {
     setIsLoading((prev) => !prev);
   };
 
   const token = authCtx.token;
 
-  const getIngrdData = (data) => {
+  const getIngrdData = React.useCallback((data) => {
     setIngrdData(data);
-  };
+    console.log("data: " + data);
+  }, []);
 
   const getDirectionData = (data) => {
     setDirectionData(data);
@@ -152,6 +159,8 @@ export default function FormDialog(props) {
       },
       data: data,
     };
+
+    console.log(ingrdData);
 
     axios(config)
       .then(function (response) {
