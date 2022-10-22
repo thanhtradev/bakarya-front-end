@@ -5,18 +5,26 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import SavedIcon from "@mui/icons-material/Star";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AuthContext from "../../store/auth-context";
+import axios from "axios";
 
 const infoIconColor = "#7db9be";
-
-export default function Interaction(props) {
+function Interaction(props) {
+  const authCtx = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [numberOfLike, setNumberOfLike] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const userID = authCtx.userID;
 
+  useEffect(() => {
+    setIsLoggedIn(authCtx.isLoggedIn);
+  }, []);
   const infoIcons = [
     {
       icon: <NotLikeIcon fontSize='small' sx={{ fontSize: "17px" }} />,
-      quantity: props.numberOfLike,
+      quantity: numberOfLike,
     },
     {
       icon: (
@@ -32,6 +40,26 @@ export default function Interaction(props) {
 
   const likeHandler = () => {
     setIsLiked((prev) => !prev);
+
+    const data = {
+      userid: userID,
+      recipeid: props.postId,
+    };
+
+    var config = {
+      method: "post",
+      url: "http://api.bakarya.com/api/mlem",
+      headers: { "x-access-token": authCtx.token },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        setNumberOfLike(numberOfLike + 1);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const saveHandler = () => {
@@ -71,7 +99,7 @@ export default function Interaction(props) {
       >
         {infoIconList}
       </Stack>
-      {props.isLoggedIn && (
+      {isLoggedIn && (
         <Stack
           position='absolute'
           justifyContent='space-between'
@@ -165,3 +193,5 @@ export default function Interaction(props) {
     </Box>
   );
 }
+
+export default React.memo(Interaction);

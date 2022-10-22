@@ -7,13 +7,22 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 const MainFeed = ({ posts: recipePost }) => {
   const authCtx = useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggedIn;
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    setIsLoggedIn(authCtx.isLoggedIn);
+  }, []);
+
+  console.log(authCtx);
+  useEffect(() => {
+    isLoggedIn = authCtx.isLoggedIn;
+  }, []);
 
   const recipePosts = recipePost.map((post) => {
     return (
       <Post
         key={post.id}
+        postID={post.id}
         author={post.author}
         category={post.categories}
         createAt={post.createdAt}

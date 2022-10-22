@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Box, Typography, Stack, Chip } from "@mui/material";
 import PostHeader from "../PostHeader";
 import classes from "./../RecipePost.module.css";
@@ -8,10 +9,16 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AuthContext from "../../../store/auth-context";
+
 const MiniRecipePost = (props) => {
   const authCtx = useContext(AuthContext);
   const [isShowMore, setIsShowMore] = useState(false);
-  const isLoggedIn = authCtx.isLoggedIn;
+  let isLoggedIn = false;
+
+  useEffect(() => {
+    isLoggedIn = authCtx.isLoggedIn;
+    console.log(isLoggedIn);
+  }, []);
 
   const infos = [
     {
@@ -40,9 +47,9 @@ const MiniRecipePost = (props) => {
     );
   });
 
-  const ingredientList = props.ingredient.map((ingrd) => {
+  const ingredientList = props.ingredient.map((ingrd, i) => {
     return (
-      <React.Fragment>
+      <React.Fragment key={i}>
         <Typography component='li' variant='body2'>
           {ingrd}
         </Typography>
@@ -50,9 +57,9 @@ const MiniRecipePost = (props) => {
     );
   });
 
-  const directionList = props.directions.map((dir) => {
+  const directionList = props.directions.map((dir, i) => {
     return (
-      <React.Fragment>
+      <React.Fragment key={i}>
         <Typography component='li' variant='body2'>
           {dir}
         </Typography>
@@ -138,7 +145,7 @@ const MiniRecipePost = (props) => {
           <img src={Pic.src} className={classes["post-media"]} />
         </Box>
         <Interactions
-          isLoggedIn={isLoggedIn}
+          postId={props.postID}
           numberOfLike={props.numberOfLike}
           numberOfComment={props.numberOfComment}
         />
@@ -147,4 +154,4 @@ const MiniRecipePost = (props) => {
   );
 };
 
-export default MiniRecipePost;
+export default React.memo(MiniRecipePost);
