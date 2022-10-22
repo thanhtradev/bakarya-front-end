@@ -96,6 +96,11 @@ export default function FormDialog(props) {
     setFormOpen(false);
     //* handle close form
     setOpenConfirm(false);
+    resetCakeName();
+    resetcakeBrief();
+    resetPrep();
+    resetServe();
+    resetNutrition();
   };
   const handleContinue = () => {
     //* do not quit
