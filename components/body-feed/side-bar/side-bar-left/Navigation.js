@@ -16,13 +16,19 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AuthContext from "../../../../store/auth-context";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Navigation = () => {
+  const authCtx = React.useContext(AuthContext);
   const [value, setValue] = React.useState(0);
   const [openLogoutForm, setOpenLogoutForm] = React.useState(false);
-  const authCtx = React.useContext(AuthContext);
+  const [logined, setLogined] = useState(false);
   const router = useRouter();
-  const isLoggedIn = authCtx.isLoggedIn;
+
+  React.useEffect(() => {
+    setLogined(authCtx.isLoggedIn);
+  }, []);
+
   const navTabs = [
     { title: "Home", icon: <HomeIcon /> },
     { title: "Shopping", icon: <ShoppingCartIcon /> },
@@ -135,7 +141,7 @@ const Navigation = () => {
           }}
         >
           {tabItems}
-          {isLoggedIn && (
+          {logined && (
             <Tab
               label='log out'
               {...a11yProps(5)}

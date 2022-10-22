@@ -1,14 +1,17 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
+import Dialog from "@mui/material/Dialog";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
+import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
+import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
 import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 import AuthContext from "../../../store/auth-context";
-
+import { Button } from "@mui/material";
 const logginedSettings = ["Profile", "Account", "Dashboard"];
 const notLogginSetting = [
   { title: "Sign in", link: "/login-page" },
@@ -19,7 +22,7 @@ const HeaderAvatar = () => {
   const authCtx = React.useContext(AuthContext);
   const isLoggined = authCtx.isLoggedIn;
   const settings = isLoggined ? logginedSettings : notLogginSetting;
-
+  const [openLogoutForm, setOpenLogoutForm] = React.useState(false);
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -30,8 +33,22 @@ const HeaderAvatar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
+  // const handleLogOut = () => {
+  //   authCtx.logout();
+  // };
+
+  const handleOpenLogOut = () => {
+    setOpenLogoutForm(true);
+  };
   const handleLogOut = () => {
     authCtx.logout();
+    router.push("/login-page");
+  };
+  const handleClose = () => {
+    setOpenLogoutForm(false);
+  };
+  const handleContinue = () => {
+    setOpenLogoutForm(false);
   };
 
   const settingList = () => {
@@ -90,11 +107,29 @@ const HeaderAvatar = () => {
       >
         {settingList()}
         {isLoggined && (
-          <MenuItem onClick={handleLogOut}>
+          <MenuItem onClick={handleOpenLogOut}>
             <Typography textAlign='center'>Log out</Typography>
           </MenuItem>
         )}
       </Menu>
+      <div>
+        <Dialog
+          open={openLogoutForm}
+          onClose={handleClose}
+          aria-labelledby='alert-log-out'
+          aria-describedby='alert-log-out-form'
+        >
+          <DialogTitle id='alert-dialog-title'>
+            Do you want to log out ?
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={handleLogOut} autoFocus>
+              Yes, I am
+            </Button>
+            <Button onClick={handleContinue}>No, I don't</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </React.Fragment>
   );
 };
