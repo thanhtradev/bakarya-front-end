@@ -3,6 +3,7 @@ import { alpha, Avatar, Button, CardHeader } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useRef } from "react";
 import PostSetting from "./PostSetting";
+import { CatchingPokemonSharp } from "@mui/icons-material";
 
 const User = (props) => {
   const [isFollow, setIsFollow] = useState(false);

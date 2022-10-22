@@ -25,12 +25,18 @@ export const AuthContextProvider = (props) => {
     console.log(true);
   }
 
-  const loginHandler = ({ id, username, accessToken }) => {
-    setUserID(id);
-    setUsername(username);
+  const loginHandler = (obj) => {
+    // setUserID(id);
+    // setUsername(username);
+    // AuthContext.isLoggedIn = true;
+    // setToken(accessToken);
+    // localStorage.setItem("loginToken", token);
+    console.log(obj.accessToken);
+    setToken(obj.accessToken);
+    setUsername(obj.username);
+    setUserID(obj.id);
     AuthContext.isLoggedIn = true;
     localStorage.setItem("loginToken", token);
-    setToken(accessToken);
   };
   const logoutHandler = () => {
     setUserID("");

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Typography, Stack, Chip } from "@mui/material";
+import { Box, Typography, Stack, Chip, Divider } from "@mui/material";
 import PostHeader from "../PostHeader";
 import classes from "./../RecipePost.module.css";
 import Pic from "../../../assets/Demo.jpg";
@@ -9,16 +9,45 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AuthContext from "../../../store/auth-context";
+import Comments from "../Comments";
+import axios from "axios";
+import CenteredLoadingCircular from "../../ui/CenteredLoadingCircular";
 
 const MiniRecipePost = (props) => {
   const authCtx = useContext(AuthContext);
   const [isShowMore, setIsShowMore] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [showComments, setShowComments] = useState(false);
+  const [isLoadingComment, setIsLoadingComment] = useState(false);
+
   let isLoggedIn = false;
 
   useEffect(() => {
     isLoggedIn = authCtx.isLoggedIn;
     console.log(isLoggedIn);
   }, []);
+
+  const handleShowComments = () => {
+    setShowComments((prev) => !prev);
+  };
+
+  const getComments = () => {
+    setIsLoadingComment(true);
+    var config = {
+      method: "get",
+      url: `http://api.bakarya.com/api/comments/${props.postID}`,
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        setComments((prev) => response.data);
+        setIsLoadingComment(false);
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  };
 
   const infos = [
     {
@@ -145,10 +174,29 @@ const MiniRecipePost = (props) => {
           <img src={Pic.src} className={classes["post-media"]} />
         </Box>
         <Interactions
+          onShowComments={handleShowComments}
+          getComments={getComments}
           postId={props.postID}
           numberOfLike={props.numberOfLike}
-          numberOfComment={props.numberOfComment}
+          numberOfComment={comments.length}
         />
+        {isLoadingComment && (
+          <Box sx={{ width: "1", height: "40px" }}>
+            <CenteredLoadingCircular />
+          </Box>
+        )}
+        {showComments && (
+          <React.Fragment>
+            <Divider sx={{ color: "#a1a1a1", fontSize: "14px" }}>
+              Comment
+            </Divider>
+            <Comments
+              recipeId={props.postID}
+              comments={comments}
+              onGetComments={getComments}
+            />
+          </React.Fragment>
+        )}
       </Stack>
     </Box>
   );

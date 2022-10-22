@@ -138,7 +138,7 @@ export default function LoginPage() {
       axios(config)
         .then(function (response) {
           authCtx.login(response.data);
-          console.log(JSON.stringify(response.data));
+          console.log(response.data);
           router.replace("/");
         })
         .catch(function (error) {

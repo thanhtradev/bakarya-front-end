@@ -19,15 +19,11 @@ const MainFeed = ({ posts: recipePost }) => {
   }, []);
 
   const handleCreatedPost = async (newPosts) => {
-    console.log("i ran");
-    console.log(newPosts);
     const allPostURL = "http://api.bakarya.com/api/recipes";
     const postData = await axios.get(allPostURL);
 
     postData.data, setPosts((prev) => [newPosts, ...postData.data]);
   };
-
-  console.log(posts);
 
   const recipePosts = posts.map((post) => {
     return (

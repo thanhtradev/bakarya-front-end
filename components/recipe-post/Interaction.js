@@ -7,20 +7,22 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import SavedIcon from "@mui/icons-material/Star";
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
+import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 
-const infoIconColor = "#7db9be";
+const infoIconColor = "#84b6e9";
 function Interaction(props) {
   const authCtx = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [numberOfLike, setNumberOfLike] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const userID = authCtx.userID;
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
   }, []);
+
   const infoIcons = [
     {
       icon: <NotLikeIcon fontSize='small' sx={{ fontSize: "17px" }} />,
@@ -38,11 +40,16 @@ function Interaction(props) {
     },
   ];
 
+  const handleGetComments = () => {
+    props.getComments();
+    props.onShowComments();
+  };
+
   const likeHandler = () => {
-    setIsLiked((prev) => !prev);
+    setIsLoading(true);
 
     const data = {
-      userid: userID,
+      userid: authCtx.userID,
       recipeid: props.postId,
     };
 
@@ -55,7 +62,28 @@ function Interaction(props) {
 
     axios(config)
       .then(function (response) {
+        setIsLoading(false);
         setNumberOfLike(numberOfLike + 1);
+        setIsLiked((prev) => !prev);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const unLikeHandler = () => {
+    const data = {};
+    var config = {
+      method: "post",
+      url: "http://api.bakarya.com/api/unmlem",
+      headers: {},
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
       })
       .catch(function (error) {
         console.log(error);
@@ -113,38 +141,66 @@ function Interaction(props) {
             // backgroundColor: "blanchedalmond",
           }}
         >
-          <IconButton
-            onClick={likeHandler}
+          {/* <LoadingButton
+            loading
             sx={{
-              backgroundColor: infoIconColor,
-              backgroundColor: `${isLiked ? infoIconColor : "#8dd0b3"}`,
-              color: `${isLiked ? "#FEFFF6" : ""}`,
-              "&:hover": {
-                backgroundColor: infoIconColor,
+              "&.MuiLoadingButton-root": {
+                minWidth: "35px",
+                height: "35px",
+                borderRadius: "50%",
+                bgcolor: infoIconColor,
               },
-              width: "35px",
-              height: "35px",
-              boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
             }}
           >
-            {isLiked ? (
-              <FavoriteIcon
-                fontSize='small'
-                sx={{ fontSize: "20px", pointerEvents: "none" }}
-              />
-            ) : (
-              <NotLikeIcon
-                fontSize='small'
-                sx={{ fontSize: "20px", pointerEvents: "none" }}
-              />
-            )}
-          </IconButton>
+            Submit
+          </LoadingButton> */}
+          {isLoading ? (
+            <LoadingButton
+              loading
+              sx={{
+                "&.MuiLoadingButton-root": {
+                  minWidth: "35px",
+                  minHeight: "35px",
+                  borderRadius: "50%",
+                  bgcolor: infoIconColor,
+                },
+              }}
+            />
+          ) : (
+            <IconButton
+              onClick={likeHandler}
+              sx={{
+                backgroundColor: infoIconColor,
+                backgroundColor: `${isLiked ? infoIconColor : "#84b6e9"}`,
+                color: `${isLiked ? "#FEFFF6" : ""}`,
+                "&:hover": {
+                  backgroundColor: infoIconColor,
+                },
+                width: "35px",
+                height: "35px",
+                boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
+              }}
+            >
+              {isLiked ? (
+                <FavoriteIcon
+                  fontSize='small'
+                  sx={{ fontSize: "20px", pointerEvents: "none" }}
+                />
+              ) : (
+                <NotLikeIcon
+                  fontSize='small'
+                  sx={{ fontSize: "20px", pointerEvents: "none" }}
+                />
+              )}
+            </IconButton>
+          )}
           <IconButton
+            onClick={handleGetComments}
             sx={{
               backgroundColor: infoIconColor,
-              backgroundColor: "#8dd0b3",
+              backgroundColor: "#84b6e9",
               "&:hover": {
-                backgroundColor: "#8dd0b3",
+                backgroundColor: "#8cadcf",
               },
               width: "35px",
               height: "35px",
@@ -157,11 +213,11 @@ function Interaction(props) {
             onClick={saveHandler}
             sx={{
               backgroundColor: infoIconColor,
-              backgroundColor: `${isSaved ? infoIconColor : "#8dd0b3"}`,
+              backgroundColor: `${isSaved ? infoIconColor : "#84b6e9"}`,
               width: "35px",
               height: "35px",
               "&:hover": {
-                backgroundColor: "#8dd0b3",
+                backgroundColor: "#8cadcf",
               },
               boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
             }}
