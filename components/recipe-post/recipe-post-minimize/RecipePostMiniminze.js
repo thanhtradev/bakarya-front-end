@@ -12,6 +12,7 @@ import AuthContext from "../../../store/auth-context";
 import Comments from "../Comments";
 import axios from "axios";
 import CenteredLoadingCircular from "../../ui/CenteredLoadingCircular";
+import PostImages from "../PostImages";
 
 const MiniRecipePost = (props) => {
   const authCtx = useContext(AuthContext);
@@ -211,7 +212,7 @@ const MiniRecipePost = (props) => {
           />
         )}
         <Box className={classes["post-media"]}>
-          <img src={Pic.src} className={classes["post-media"]} />
+          <PostImages />
         </Box>
         <Interactions
           onShowComments={handleShowComments}

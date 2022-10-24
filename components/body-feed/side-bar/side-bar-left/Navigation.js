@@ -30,10 +30,35 @@ const Navigation = () => {
   }, []);
 
   const navTabs = [
-    { title: "Home", icon: <HomeIcon /> },
-    { title: "Shopping", icon: <ShoppingCartIcon /> },
-    { title: "Livestream", icon: <OndemandVideoIcon /> },
-    { title: "Saved Recipes", icon: <StarOutlineIcon /> },
+    {
+      title: "Home",
+      icon: <HomeIcon />,
+      onNavItemClick: () => {
+        router.push("/");
+      },
+    },
+    {
+      title: "Shopping",
+      icon: <ShoppingCartIcon />,
+      onNavItemClick: () => {
+        router.push("/shopping");
+      },
+    },
+    {
+      title: "Livestream",
+      icon: <OndemandVideoIcon />,
+      onNavItemClick: () => {
+        router.push("/livestream");
+      },
+    },
+    {
+      title: "Saved Recipes",
+      icon: <StarOutlineIcon />,
+      link: "saved-recipes",
+      onNavItemClick: () => {
+        router.push("/saved-recipes");
+      },
+    },
   ];
 
   const handleLogOut = () => {
@@ -48,6 +73,7 @@ const Navigation = () => {
         label={item.title}
         {...a11yProps(i)}
         icon={item.icon}
+        onClick={item.onNavItemClick}
         iconPosition='start'
         sx={{
           borderRadius: "14px",
@@ -93,6 +119,7 @@ const Navigation = () => {
   const handleContinue = () => {
     setOpenLogoutForm(false);
   };
+
   return (
     <React.Fragment>
       <ItemContainer>
