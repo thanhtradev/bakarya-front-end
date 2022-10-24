@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Box, Typography, Stack, Chip, Divider } from "@mui/material";
+import { useCallback, useEffect } from "react";
+import { Box, Typography, Stack, Chip, Divider, Button } from "@mui/material";
 import PostHeader from "../PostHeader";
 import classes from "./../RecipePost.module.css";
 import Pic from "../../../assets/Demo.jpg";
@@ -18,21 +18,39 @@ const MiniRecipePost = (props) => {
   const [isShowMore, setIsShowMore] = useState(false);
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState(false);
+  const [numberOfComments, setNumberOfComments] = useState(
+    props.numberOfComment
+  );
+  const [numberOfLikes, setNumberOfLikes] = useState(props.numberOfLike);
   const [isLoadingComment, setIsLoadingComment] = useState(false);
 
+  useEffect(() => {
+    getNumberOfLikes();
+    getNumberOfComments();
+  }, [comments]);
   let isLoggedIn = false;
 
   useEffect(() => {
     isLoggedIn = authCtx.isLoggedIn;
-    console.log(isLoggedIn);
   }, []);
 
-  const handleShowComments = () => {
-    setShowComments((prev) => !prev);
+  const getNumberOfLikes = () => {
+    var config = {
+      method: "get",
+      url: `http://api.bakarya.com/api/mlems/${props.postID}`,
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        setNumberOfLikes(response.data.length);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
-  const getComments = () => {
-    setIsLoadingComment(true);
+  const getNumberOfComments = () => {
     var config = {
       method: "get",
       url: `http://api.bakarya.com/api/comments/${props.postID}`,
@@ -41,12 +59,34 @@ const MiniRecipePost = (props) => {
 
     axios(config)
       .then(function (response) {
-        setComments((prev) => response.data);
-        setIsLoadingComment(false);
+        setNumberOfComments(response.data.length);
       })
       .catch(function (error) {
-        alert(error);
+        console.log(error);
       });
+  };
+
+  const handleShowComments = () => {
+    setShowComments((prev) => !prev);
+    getComments();
+  };
+
+  const getComments = async () => {
+    try {
+      setIsLoadingComment(true);
+
+      const comment = await axios.get(
+        `http://api.bakarya.com/api/comments/${props.postID}`
+      );
+      setComments(comment.data.reverse());
+      setIsLoadingComment(false);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const showLessComment = () => {
+    setShowComments(false);
   };
 
   const infos = [
@@ -177,14 +217,10 @@ const MiniRecipePost = (props) => {
           onShowComments={handleShowComments}
           getComments={getComments}
           postId={props.postID}
-          numberOfLike={props.numberOfLike}
-          numberOfComment={comments.length}
+          numberOfLike={numberOfLikes}
+          numberOfComment={numberOfComments}
         />
-        {isLoadingComment && (
-          <Box sx={{ width: "1", height: "40px" }}>
-            <CenteredLoadingCircular />
-          </Box>
-        )}
+
         {showComments && (
           <React.Fragment>
             <Divider sx={{ color: "#a1a1a1", fontSize: "14px" }}>
@@ -196,6 +232,16 @@ const MiniRecipePost = (props) => {
               onGetComments={getComments}
             />
           </React.Fragment>
+        )}
+        {isLoadingComment && (
+          <Box sx={{ width: "1", height: "40px" }}>
+            <CenteredLoadingCircular />
+          </Box>
+        )}
+        {showComments && comments.length !== 0 ? (
+          <Button onClick={showLessComment}>Show less</Button>
+        ) : (
+          ""
         )}
       </Stack>
     </Box>

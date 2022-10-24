@@ -41,7 +41,7 @@ const CreatePost = (props) => {
       sx={{
         backgroundColor: "#fcfcfc",
         height: "10.5rem",
-        width: "1",
+        width: "0.93",
         borderRadius: "15px",
         border: "1px solid rgb(79 79 79 / 52%)",
         marginBottom: "20px",

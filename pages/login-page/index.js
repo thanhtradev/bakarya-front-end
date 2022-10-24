@@ -96,23 +96,6 @@ export default function LoginPage() {
     setOpen((prev) => !prev);
   };
 
-  // const handleFetchAxios = async () => {
-  //   var config = {
-  //     method: "post",
-  //     url: "http://api.bakarya.com/api/auth/signin",
-  //     headers: {},
-  //     data: data,
-  //   };
-  //   try {
-  //     const res = await axios(config);
-  //     return res.data;
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     return res.data;
-  //   }
-  // };
-
   const SignIn = async (email, pwd) => {
     try {
       handleToggle();

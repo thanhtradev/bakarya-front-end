@@ -170,7 +170,6 @@ export default function FormDialog(props) {
 
     axios(config)
       .then(function (response) {
-        console.log(response);
         if (response.status === 200) {
           setFormOpen(false);
           resetCakeName();

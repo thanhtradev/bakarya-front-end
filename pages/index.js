@@ -14,12 +14,6 @@ export default function Home({ posts, top10Posts }) {
         <meta charSet='UTF-8' />
         <title>Bakarya</title>
         <meta name='description' content='A social network for bakers' />
-        <link
-          rel='stylesheet'
-          href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css'
-          integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor'
-          crossorigin='anonymous'
-        />
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Box

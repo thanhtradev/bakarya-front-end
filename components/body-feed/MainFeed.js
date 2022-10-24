@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
+import { Stack } from "@mui/material";
 
 const MainFeed = ({ posts: recipePost }) => {
   const authCtx = useContext(AuthContext);
@@ -55,9 +56,10 @@ const MainFeed = ({ posts: recipePost }) => {
           padding: "0 20px",
         }}
       >
-        {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
-
-        {recipePosts}
+        <Stack justify-content='center' alignItems='center' spacing={2}>
+          {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
+          {recipePosts}
+        </Stack>
 
         {/* <InfiniteScroll
           dataLength={post.length} //This is important field to render the next data

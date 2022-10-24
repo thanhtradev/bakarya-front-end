@@ -32,12 +32,8 @@ const monthNames = [
 const Comments = (props) => {
   const authCtx = useContext(AuthContext);
   const commentRef = useRef();
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(props.comments);
   const [isLoadingNewComment, setIsLoadingComment] = useState(false);
-
-  useEffect(() => {
-    setComments(props.comments);
-  }, []);
 
   const handleSetNewComment = async (comment) => {
     try {
@@ -45,7 +41,7 @@ const Comments = (props) => {
       const allComments = await axios.get(
         `http://api.bakarya.com/api/comments/${props.recipeId}`
       );
-      setComments((prev) => [...allComments.data].reverse());
+      setComments((prev) => [...allComments.data.reverse()]);
       props.onGetComments();
       setIsLoadingComment(false);
     } catch (err) {
@@ -53,13 +49,49 @@ const Comments = (props) => {
     }
   };
 
-  const commentList = comments.map((comment) => {
+  const handleChangeComment = () => {
+    if (commentRef.current.value.includes("\n")) {
+      handleComment();
+      handleSetNewComment();
+      commentRef.current.value = "";
+    }
+  };
+
+  const handleComment = () => {
+    if (commentRef.current.value.trim() !== "") {
+      const data = {
+        recipeid: props.recipeId,
+        userid: authCtx.userID,
+        comment: commentRef.current.value,
+        user_id: { username: authCtx.username },
+        createdAt: new Date(),
+      };
+      var config = {
+        method: "post",
+        url: "http://api.bakarya.com/api/comment",
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          handleSetNewComment(data);
+          commentRef.current.value = "";
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
+
+  const commentList = props.comments.map((comment) => {
     const rawDate = new Date(comment.createdAt);
     const month = monthNames[rawDate.getMonth()];
     const date = rawDate.getDate().toString();
     const year = rawDate.getFullYear().toString();
     const time = date.concat(" ", month).concat(", ", year);
-
     return (
       <Stack
         justifyContent='flex-start'
@@ -103,36 +135,6 @@ const Comments = (props) => {
     );
   });
 
-  const handleComment = () => {
-    if (commentRef.current.value.trim() !== "") {
-      const data = {
-        recipeid: props.recipeId,
-        userid: authCtx.userID,
-        comment: commentRef.current.value,
-        user_id: { username: authCtx.username },
-        createdAt: new Date(),
-      };
-      var config = {
-        method: "post",
-        url: "http://api.bakarya.com/api/comment",
-        headers: {
-          "x-access-token": authCtx.token,
-        },
-        data: data,
-      };
-
-      axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-          handleSetNewComment(data);
-          commentRef.current.value = "";
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
-
   return (
     <React.Fragment>
       <Stack
@@ -149,14 +151,9 @@ const Comments = (props) => {
         <Avatar sx={{ width: "35px", height: "35px" }} />
         <FilledInput
           inputRef={commentRef}
+          onChange={handleChangeComment}
           placeholder='Share your thoughts with us'
           multiline
-          inputProps={{
-            "&.MuiFilledInput-root": {
-              paddingY: 0,
-              bgcolor: "red",
-            },
-          }}
           endAdornment={
             isLoadingNewComment ? (
               <LoadingButton
@@ -170,8 +167,8 @@ const Comments = (props) => {
                 }}
               />
             ) : (
-              <InputAdornment>
-                <IconButton onClick={handleComment}>
+              <InputAdornment position='end'>
+                <IconButton onClick={handleComment} type='submit'>
                   <SendIcon />
                 </IconButton>
               </InputAdornment>
@@ -180,16 +177,12 @@ const Comments = (props) => {
           sx={{
             width: "0.8",
             height: "1",
-            "& .MuiFilledInput-input": {
-              paddingY: 0,
-            },
           }}
         />
       </Stack>
-
       {commentList}
     </React.Fragment>
   );
 };
 
-export default React.memo(Comments);
+export default Comments;

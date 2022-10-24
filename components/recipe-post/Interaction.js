@@ -15,7 +15,10 @@ function Interaction(props) {
   const authCtx = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [numberOfLike, setNumberOfLike] = useState(1);
+  const [numberOfLike, setNumberOfLike] = useState(props.numberOfLike ?? 0);
+  const [numberOfComment, setNumberOfComment] = useState(
+    props.numberOfComment ?? 0
+  );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,7 +35,7 @@ function Interaction(props) {
       icon: (
         <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "15px" }} />
       ),
-      quantity: props.numberOfComment,
+      quantity: props.numberOfComment ?? 0,
     },
     {
       icon: <StarOutlineIcon fontSize='small' sx={{ fontSize: "19px" }} />,
@@ -48,46 +51,48 @@ function Interaction(props) {
   const likeHandler = () => {
     setIsLoading(true);
 
-    const data = {
-      userid: authCtx.userID,
-      recipeid: props.postId,
-    };
+    if (!isLiked) {
+      const data = {
+        userid: authCtx.userID,
+        recipeid: props.postId,
+      };
 
-    var config = {
-      method: "post",
-      url: "http://api.bakarya.com/api/mlem",
-      headers: { "x-access-token": authCtx.token },
-      data: data,
-    };
+      var config = {
+        method: "post",
+        url: "http://api.bakarya.com/api/mlem",
+        headers: { "x-access-token": authCtx.token },
+        data: data,
+      };
 
-    axios(config)
-      .then(function (response) {
-        setIsLoading(false);
-        setNumberOfLike(numberOfLike + 1);
-        setIsLiked((prev) => !prev);
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+      axios(config)
+        .then(function (response) {
+          setIsLoading(false);
+          setNumberOfLike(numberOfLike + 1);
+          setIsLiked((prev) => !prev);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      const data = {
+        recipeid: props.postId,
+      };
+      var config = {
+        method: "post",
+        url: "http://api.bakarya.com/api/unmlem",
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+        data: data,
+      };
 
-  const unLikeHandler = () => {
-    const data = {};
-    var config = {
-      method: "post",
-      url: "http://api.bakarya.com/api/unmlem",
-      headers: {},
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      axios(config)
+        .then(function (response) {})
+        .catch(function (error) {
+          alert(error);
+        });
+    }
+    setIsLoading(false);
   };
 
   const saveHandler = () => {
@@ -141,19 +146,6 @@ function Interaction(props) {
             // backgroundColor: "blanchedalmond",
           }}
         >
-          {/* <LoadingButton
-            loading
-            sx={{
-              "&.MuiLoadingButton-root": {
-                minWidth: "35px",
-                height: "35px",
-                borderRadius: "50%",
-                bgcolor: infoIconColor,
-              },
-            }}
-          >
-            Submit
-          </LoadingButton> */}
           {isLoading ? (
             <LoadingButton
               loading
@@ -250,4 +242,4 @@ function Interaction(props) {
   );
 }
 
-export default React.memo(Interaction);
+export default Interaction;
