@@ -25,7 +25,7 @@ export default function PostImages() {
         <ImageListItem
           key={item.img}
           rows={2}
-          cols={`${itemData.length === 1 ? 2 : 1}`}
+          cols={parseInt(`${itemData.length === 1 ? Interger.P : "1"}`)}
         >
           <img
             src={`${item.img}?w=248&fit=crop&auto=format`}
