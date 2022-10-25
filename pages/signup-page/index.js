@@ -22,6 +22,8 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 //? Server-side import Password checklist components
 const PasswordChecklist = dynamic(() => import("react-password-checklist"), {
@@ -49,7 +51,9 @@ const theme = createTheme();
 
 export default function SignUpPage() {
   //? Backdrop's state
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  // const [isNotified, setIsNotified] = useState(false);
 
   const {
     value: emailValue,
@@ -128,9 +132,8 @@ export default function SignUpPage() {
     );
   };
 
-  const handleToggle = () => {
-    setOpen((prev) => !prev);
-    console.log(open);
+  const handleOpenBackDrop = () => {
+    setOpen(true);
   };
 
   const handleSubmit = (event) => {
@@ -144,17 +147,12 @@ export default function SignUpPage() {
     } else {
       alert("non");
     }
-
-    // resetEmail();
-    // resetFirstName();
-    // resetLastName();
-    // resetPwd();
-    // resetConfirmPwd();
   };
+  let isNotified = false;
 
   const SignUp = ({ username, pwd }) => {
-    handleToggle();
-
+    handleOpenBackDrop();
+    console.log(open);
     const data = {
       username: username,
       password: pwd,
@@ -173,7 +171,12 @@ export default function SignUpPage() {
       .then(function (response) {
         if (response.status === 200) {
           message = response.data.message;
-          notifyOk(message);
+        }
+        notifyOk(message);
+        if (isNotified) {
+          setTimeout(() => {
+            router.push("/login-page");
+          }, 3500);
         }
       })
       .catch(function (error) {
@@ -181,13 +184,13 @@ export default function SignUpPage() {
         message = error.response.data.message;
         notifyError(message);
       });
-    handleToggle();
   };
 
   const notifyOk = (message) => {
+    isNotified = true;
     return toast.success(message, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -200,7 +203,7 @@ export default function SignUpPage() {
   const notifyError = (message) => {
     return toast.error(message, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 3500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
