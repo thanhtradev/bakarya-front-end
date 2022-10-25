@@ -9,9 +9,15 @@ import {
 } from "@mui/material";
 import NotLikeIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 const PostItem = (props) => {
+  const [numberOfComment, setNumberOfComments] = useState(0);
+
+  useEffect(() => {
+    getNumberOfComments();
+  }, [numberOfComment]);
+
   const monthNames = [
     "January",
     "February",
@@ -26,6 +32,13 @@ const PostItem = (props) => {
     "November",
     "December",
   ];
+  const getNumberOfComments = async () => {
+    const comments = await axios.get(
+      `http://api.bakarya.com/api/comments/${props.postID}`
+    );
+
+    setNumberOfComments(comments.data.length);
+  };
 
   const rawDate = new Date(props.createAt);
   const month = monthNames[rawDate.getMonth()];
@@ -61,7 +74,7 @@ const PostItem = (props) => {
                 <ChatBubbleOutlineIcon
                   sx={{ fontSize: "17px", marginRight: "8px" }}
                 />
-                {props.numberOfComment}
+                {numberOfComment}
               </Typography>
             </Stack>
           }
