@@ -19,6 +19,7 @@ function Interaction(props) {
   const [numberOfComment, setNumberOfComment] = useState(
     props.numberOfComment ?? 0
   );
+  const [showComment, setShowComment] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,9 +44,17 @@ function Interaction(props) {
     },
   ];
 
+  useEffect(() => {
+    if (showComment) {
+      props.getComments();
+      props.onShowComments();
+    } else {
+      props.onCloseComments();
+    }
+  }, [showComment]);
+
   const handleGetComments = () => {
-    props.getComments();
-    props.onShowComments();
+    setShowComment((prev) => !prev);
   };
 
   const likeHandler = () => {

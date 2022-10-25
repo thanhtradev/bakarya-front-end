@@ -72,6 +72,10 @@ const MiniRecipePost = (props) => {
     getComments();
   };
 
+  const handleCloseComment = () => {
+    setShowComments((prev) => !prev);
+  };
+
   const getComments = async () => {
     try {
       setIsLoadingComment(true);
@@ -79,6 +83,7 @@ const MiniRecipePost = (props) => {
       const comment = await axios.get(
         `http://api.bakarya.com/api/comments/${props.postID}`
       );
+      console.log(comment.data);
       setComments(comment.data.reverse());
       setIsLoadingComment(false);
     } catch (error) {
@@ -216,6 +221,7 @@ const MiniRecipePost = (props) => {
         </Box>
         <Interactions
           onShowComments={handleShowComments}
+          onCloseComments={showLessComment}
           getComments={getComments}
           postId={props.postID}
           numberOfLike={numberOfLikes}

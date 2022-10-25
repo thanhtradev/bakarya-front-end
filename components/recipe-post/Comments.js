@@ -1,18 +1,19 @@
 import {
   Stack,
-  Box,
   InputAdornment,
   IconButton,
   FilledInput,
-  Paper,
-  Typography,
   Avatar,
+  Button,
 } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Comment from "./Comment";
+import ReplyComment from "./ReplyComment";
+import ReplyComments from "./ReplyComments";
 
 const monthNames = [
   "Jan",
@@ -94,43 +95,19 @@ const Comments = (props) => {
     const time = date.concat(" ", month).concat(", ", year);
     return (
       <Stack
-        justifyContent='flex-start'
-        alignItems='center'
-        direction='row'
-        spacing={0.8}
-        paddingX='10px'
-        width='0.7'
         key={comment._id}
+        direction='column'
+        sx={{
+          width: "fit-content",
+        }}
       >
-        <Avatar variant='circular' sx={{ width: "35px", height: "35px" }} />
-        <Stack alignItems='flex-end'>
-          <Paper
-            elevation={1}
-            component={Stack}
-            direction='row'
-            alignItems='flex-start'
-            spacing={2}
-            justifyContent={"center"}
-            paddingX='10px'
-            sx={{ width: "1", bgcolor: "#e6e6e6" }}
-          >
-            <Stack
-              justifyContent='space-evenly'
-              alignItems='flex-start'
-              sx={{ width: "fit-content" }}
-            >
-              <Typography variant='body1' fontWeight='bold' fontSize='13px'>
-                {comment.user_id.username}
-              </Typography>
-              <Typography variant='body1' fontSize='15px'>
-                {comment.comment}
-              </Typography>
-            </Stack>
-          </Paper>
-          <Typography variant='caption' fontSize='10px'>
-            {time}
-          </Typography>
-        </Stack>
+        <Comment
+          replies={comment.replies.length}
+          id={comment._id}
+          username={comment.user_id.username}
+          comment={comment.comment}
+          time={time}
+        />
       </Stack>
     );
   });
