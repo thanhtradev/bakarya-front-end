@@ -13,7 +13,12 @@ import Link from "next/link";
 import AuthContext from "../../../store/auth-context";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-const logginedSettings = ["Profile", "Account", "Dashboard"];
+
+const logginedSettings = [
+  { title: "Profile", link: "/personal-profile" },
+  { title: "Account", link: "/#" },
+  { title: "Dashboard", link: "/#" },
+];
 const notLogginSetting = [
   { title: "Sign in", link: "/login-page" },
   { title: "Sign up", link: "/signup-page" },
@@ -34,10 +39,6 @@ const HeaderAvatar = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
-  // const handleLogOut = () => {
-  //   authCtx.logout();
-  // };
 
   const handleOpenLogOut = () => {
     setOpenLogoutForm(true);
@@ -67,8 +68,13 @@ const HeaderAvatar = () => {
       ));
     } else {
       return settings.map((setting) => (
-        <MenuItem key={setting} onClick={handleCloseUserMenu}>
-          <Typography textAlign='center'>{setting}</Typography>
+        <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+          <Link
+            href={setting.link}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Typography textAlign='center'>{setting.title}</Typography>
+          </Link>
         </MenuItem>
       ));
     }

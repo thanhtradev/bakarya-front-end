@@ -106,7 +106,7 @@ const Navigation = () => {
   }
 
   const handleClick = () => {
-    console.log("hi");
+    router.push("/personal-profile");
   };
 
   const handleOpenLogOut = () => {

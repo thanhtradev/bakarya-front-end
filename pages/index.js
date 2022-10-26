@@ -16,15 +16,6 @@ export default function Home({ posts, top10Posts }) {
         <meta name='description' content='A social network for bakers' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Box
-        sx={{
-          width: "1",
-          height: "57px",
-        }}
-      >
-        <HeaderNewsFeed />
-      </Box>
-
       <Body posts={posts} top10Posts={top10Posts} />
     </div>
   );

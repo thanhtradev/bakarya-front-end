@@ -27,6 +27,7 @@ const MiniRecipePost = (props) => {
 
   useEffect(() => {
     getNumberOfLikes();
+
     getNumberOfComments();
   }, [comments]);
   let isLoggedIn = false;
