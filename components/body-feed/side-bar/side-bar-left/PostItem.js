@@ -11,8 +11,15 @@ import NotLikeIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
+
 const PostItem = (props) => {
   const [numberOfComment, setNumberOfComments] = useState(0);
+  const router = useRouter();
+
+  const handlePostClick = () => {
+    router.push(`/posts/${props.postID}`);
+  };
 
   useEffect(() => {
     getNumberOfComments();
@@ -48,7 +55,11 @@ const PostItem = (props) => {
 
   return (
     <React.Fragment>
-      <ListItemButton alignItems='flex-start' sx={{ borderRadius: "10px" }}>
+      <ListItemButton
+        onClick={handlePostClick}
+        alignItems='flex-start'
+        sx={{ borderRadius: "10px" }}
+      >
         <ListItemAvatar>
           <Avatar
             alt={props.author}

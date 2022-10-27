@@ -18,7 +18,9 @@ const MiniRecipePost = (props) => {
   const authCtx = useContext(AuthContext);
   const [isShowMore, setIsShowMore] = useState(false);
   const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(
+    props.initialShowComment ?? false
+  );
   const [numberOfComments, setNumberOfComments] = useState(
     props.numberOfComment
   );
@@ -27,7 +29,7 @@ const MiniRecipePost = (props) => {
 
   useEffect(() => {
     getNumberOfLikes();
-
+    setShowComments((prev) => props.initialShowComment ?? prev);
     getNumberOfComments();
   }, [comments]);
   let isLoggedIn = false;
