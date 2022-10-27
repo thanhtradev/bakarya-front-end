@@ -1,19 +1,46 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Head from "next/head";
-import { Avatar, Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Container,
+  Stack,
+  Typography,
+  Fade,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import ProfileNav from "../../components/personal-profile/Navigation";
 import UploadIcon from "@mui/icons-material/Upload";
 
 export default function PersonalPage() {
   const [openModal, setModal] = useState(false);
+  const wallpaperFile = useRef();
+  const avatarFile = useRef();
 
   const toggleOpenModal = () => {
     setModal((prev) => !prev);
   };
 
-  const handleUploadWallPaper = () => {};
+  const handleUploadWallPaper = () => {
+    wallpaperFile.current.click();
+    const formData = new FormData();
 
+    // Update the formData object
+  };
+
+  const onChangeWallpaper = () => {
+    console.log("changing");
+    console.log(wallpaperFile.current.files[0]);
+  };
+
+  const onChangeAvatarFile = () => {
+    console.log("changingAvatar");
+    console.log(avatarFile.current.files[0]);
+  };
+
+  const handleUploadAvatar = () => {
+    avatarFile.current.click();
+  };
   return (
     <React.Fragment>
       <Head>
@@ -46,26 +73,36 @@ export default function PersonalPage() {
           }}
         >
           {openModal === true && (
-            <Stack
-              position='absolute'
-              justifyContent='center'
-              alignItems='center'
-              onClick={handleUploadWallPaper}
-              zIndex={100}
-              right={0}
-              left={0}
-              top={0}
-              bottom={0}
-              sx={{ bgcolor: "#42403f70" }}
-            >
-              <Button
+            <Fade in={openModal}>
+              <Stack
+                position='absolute'
+                justifyContent='center'
+                alignItems='center'
                 onClick={handleUploadWallPaper}
-                startIcon={<UploadIcon sx={{ fontSize: "17px" }} />}
-                sx={{ color: "white" }}
+                zIndex={100}
+                right={0}
+                left={0}
+                top={0}
+                bottom={0}
+                sx={{ bgcolor: "#42403f70", cursor: "pointer" }}
               >
-                Upload a photo
-              </Button>
-            </Stack>
+                <Button
+                  type='file'
+                  accept='image/*'
+                  startIcon={<UploadIcon sx={{ fontSize: "17px" }} />}
+                  sx={{ color: "white" }}
+                >
+                  Upload a photo
+                </Button>
+                <input
+                  type='file'
+                  accept='image/*'
+                  ref={wallpaperFile}
+                  style={{ display: "none" }}
+                  onChange={onChangeWallpaper}
+                />
+              </Stack>
+            </Fade>
           )}
         </Container>
         <Grid
@@ -115,7 +152,14 @@ export default function PersonalPage() {
                   }}
                 />
               </Stack>
-              <Button>Upload a photo</Button>
+              <Button onClick={handleUploadAvatar}>Upload a photo</Button>
+              <input
+                type='file'
+                accept='image/*'
+                ref={avatarFile}
+                style={{ display: "none" }}
+                onChange={onChangeAvatarFile}
+              />
             </Stack>
           </Grid>
           <Grid

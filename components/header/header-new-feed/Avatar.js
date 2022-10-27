@@ -25,16 +25,18 @@ const notLogginSetting = [
 ];
 
 const HeaderAvatar = () => {
+  const linkRef = React.useRef();
   const router = useRouter();
   const authCtx = React.useContext(AuthContext);
   const isLoggined = authCtx.isLoggedIn;
   const settings = isLoggined ? logginedSettings : notLogginSetting;
   const [openLogoutForm, setOpenLogoutForm] = React.useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    console.log(linkRef);
   };
-
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -57,25 +59,37 @@ const HeaderAvatar = () => {
   const settingList = () => {
     if (settings.length === 2) {
       return settings.map((setting, i) => (
-        <MenuItem onClick={handleCloseUserMenu} key={i}>
+        <MenuItem
+          // onClick={handleCloseUserMenu}
+          key={i}
+        >
           <Link
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
             href={setting.link}
-            style={{ textDecoration: "none", color: "black" }}
           >
-            <Typography textAlign='center'>{setting.title}</Typography>
+            <Typography
+              component='a'
+              textAlign='center'
+              sx={{ width: "1", height: "1" }}
+            >
+              {setting.title}
+            </Typography>
           </Link>
         </MenuItem>
       ));
     } else {
       return settings.map((setting) => (
-        <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
-          <Link
-            href={setting.link}
-            style={{ textDecoration: "none", color: "black" }}
-          >
+        <Link
+          href={setting.link}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
             <Typography textAlign='center'>{setting.title}</Typography>
-          </Link>
-        </MenuItem>
+          </MenuItem>
+        </Link>
       ));
     }
   };
@@ -120,7 +134,7 @@ const HeaderAvatar = () => {
           </MenuItem>
         )}
       </Menu>
-      <div>
+      <React.Fragment>
         <Dialog
           open={openLogoutForm}
           onClose={handleClose}
@@ -137,7 +151,7 @@ const HeaderAvatar = () => {
             <Button onClick={handleContinue}>No, I don't</Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </React.Fragment>
     </React.Fragment>
   );
 };
