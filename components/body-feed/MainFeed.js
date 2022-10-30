@@ -27,6 +27,7 @@ const MainFeed = ({ posts: recipePost }) => {
   };
 
   const recipePosts = posts.map((post) => {
+    console.log(post);
     return (
       <Post
         key={post.id}
@@ -49,33 +50,33 @@ const MainFeed = ({ posts: recipePost }) => {
   });
 
   return (
-    <Col xl={6} fluid='true'>
-      <Container
-        fluid='lg'
-        style={{
-          padding: "0 20px",
-        }}
-      >
-        <Stack justify-content='center' alignItems='center' spacing={2}>
-          {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
-          {recipePosts}
-        </Stack>
+    // <Col xl={6} fluid='true'>
+    //   <Container
+    //     fluid='lg'
+    //     style={{
+    //       padding: "0 20px",
+    //     }}
+    //   >
 
-        {/* <InfiniteScroll
-          dataLength={post.length} //This is important field to render the next data
-          next={fetchData}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
-        >
-          {items}
-        </InfiniteScroll> */}
-      </Container>
-    </Col>
+    //     {/* <InfiniteScroll
+    //       dataLength={post.length} //This is important field to render the next data
+    //       next={fetchData}
+    //       hasMore={true}
+    //       loader={<h4>Loading...</h4>}
+    //       endMessage={
+    //         <p style={{ textAlign: "center" }}>
+    //           <b>Yay! You have seen it all</b>
+    //         </p>
+    //       }
+    //     >
+    //       {items}
+    //     </InfiniteScroll> */}
+    //   </Container>
+    // </Col>
+    <Stack justify-content='center' alignItems='center' spacing={2}>
+      {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
+      {recipePosts}
+    </Stack>
   );
 };
 

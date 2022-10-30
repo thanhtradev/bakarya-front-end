@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../SideBar";
 import Navigation from "./Navigation";
 import Top10Posts from "./TopPost";
@@ -30,7 +30,7 @@ const SideBarLeft = () => {
     <SideBar left={30} position='fixed' bottom='0' overflowY='scroll'>
       <Box>
         <Navigation />
-        {isLoading && <CenteredLoadingCircular />}
+        {/* {isLoading && <CenteredLoadingCircular />} */}
         <Top10Posts top10Posts={top10Posts} />
       </Box>
     </SideBar>

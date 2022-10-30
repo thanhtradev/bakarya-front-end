@@ -84,7 +84,11 @@ export default function PersonalPage() {
                 left={0}
                 top={0}
                 bottom={0}
-                sx={{ bgcolor: "#42403f70", cursor: "pointer" }}
+                sx={{
+                  bgcolor: "#42403f70",
+                  cursor: "pointer",
+                  borderRadius: "10px",
+                }}
               >
                 <Button
                   type='file'

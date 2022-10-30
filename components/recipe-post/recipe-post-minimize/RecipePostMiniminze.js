@@ -70,7 +70,7 @@ const MiniRecipePost = (props) => {
       });
   };
 
-  const handleShowComments = () => {
+  const handleToggleComments = () => {
     setShowComments((prev) => !prev);
     getComments();
   };
@@ -155,7 +155,11 @@ const MiniRecipePost = (props) => {
           alignItems='center'
           sx={{ width: "100%" }}
         >
-          <PostHeader createAt={props.createAt} author={props.author} />
+          <PostHeader
+            createAt={props.createAt}
+            author={props.author}
+            postID={props.postID}
+          />
         </Stack>
         <Stack justifyContent='flex-start' alignItems='flex-start'>
           <Typography variant='h6' fontWeight='bold' fontSize='15x'>
@@ -223,7 +227,7 @@ const MiniRecipePost = (props) => {
           <PostImages />
         </Box>
         <Interactions
-          onShowComments={handleShowComments}
+          onShowComments={handleToggleComments}
           onCloseComments={showLessComment}
           getComments={getComments}
           postId={props.postID}

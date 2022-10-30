@@ -1,8 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import AuthContext from "../store/auth-context";
-import { useContext, useEffect } from "react";
-import HeaderNewsFeed from "../components/header/header-new-feed/header";
 import Body from "../components/body-feed/Body";
 import { Box } from "@mui/material";
 import axios from "axios";
