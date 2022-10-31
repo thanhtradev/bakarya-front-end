@@ -116,7 +116,7 @@ export default function PersonalPage() {
           sx={{
             width: "1",
             height: "200px",
-            height: "200px",
+            height: "fit-content",
             // // bgcolor: "burlywood",
             paddingTop: "20px",
           }}
@@ -196,7 +196,6 @@ export default function PersonalPage() {
             <Button
               sx={{
                 height: "50px",
-                // bgcolor: "cornflowerblue"
               }}
             >
               Edit Profile

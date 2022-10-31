@@ -48,8 +48,14 @@ const Profile = () => {
       </Paper>
     );
   });
+
   return (
-    <Stack width='100%' justifyContent='space-evenly' spacing={2}>
+    <Stack
+      width='100%'
+      justifyContent='space-evenly'
+      alignItems='center'
+      spacing={2}
+    >
       {infoSections}
     </Stack>
   );

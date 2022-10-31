@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { useState, useEffect } from "react";
-import Post from "../recipe-post/recipe-post-minimize/RecipePostMiniminze";
+import Post from "../recipe-post/RecipePost";
 import axios from "axios";
 
 const PersonalPosts = () => {
@@ -25,6 +25,7 @@ const PersonalPosts = () => {
     return (
       <Post
         key={post.id}
+        width='100%'
         postID={post.id}
         author={post.author}
         category={post.categories}
@@ -44,12 +45,7 @@ const PersonalPosts = () => {
   });
 
   return (
-    <Stack
-      width='100%'
-      justify-content='center'
-      alignItems='flex-start'
-      padding={0}
-    >
+    <Stack width='100%' justifyContent='center' alignItems='center' padding={0}>
       {recipePosts}
     </Stack>
   );
