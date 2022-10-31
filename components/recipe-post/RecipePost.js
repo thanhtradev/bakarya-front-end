@@ -1,18 +1,18 @@
 import { useCallback, useEffect } from "react";
 import { Box, Typography, Stack, Chip, Divider, Button } from "@mui/material";
-import PostHeader from "../PostHeader";
-import classes from "./../RecipePost.module.css";
-import Pic from "../../../assets/Demo.jpg";
-import Interactions from "../Interaction";
+import PostHeader from "./PostHeader";
+import classes from "./RecipePost.module.css";
+import Pic from "../../assets/Demo.jpg";
+import Interactions from "./Interaction";
 import React, { useContext, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import AuthContext from "../../../store/auth-context";
-import Comments from "../Comments";
+import AuthContext from "../../store/auth-context";
+import Comments from "./Comments";
 import axios from "axios";
-import CenteredLoadingCircular from "../../ui/CenteredLoadingCircular";
-import PostImages from "../PostImages";
+import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
+import PostImages from "./PostImages";
 
 const MiniRecipePost = (props) => {
   const authCtx = useContext(AuthContext);
@@ -146,7 +146,7 @@ const MiniRecipePost = (props) => {
   });
 
   return (
-    <Box className={classes.post}>
+    <Box className={classes.post} width={`${props.width ?? "93%"}`}>
       <Stack sx={{ paddingX: "13px", paddingTop: "4px" }} spacing={1.5}>
         <Stack
           direction='row'

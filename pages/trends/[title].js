@@ -10,9 +10,7 @@ export default function TrendPage() {
 
   return (
     <React.Fragment>
-      <SideBarLeft />
       <h1 style={{ textTransform: "capitalize" }}>{title}</h1>
-      <SideBarRight />
     </React.Fragment>
   );
 }

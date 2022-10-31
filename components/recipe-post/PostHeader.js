@@ -83,7 +83,7 @@ const User = (props) => {
       subheader={time}
       action={
         <React.Fragment>
-          <PostSetting />
+          <PostSetting postID={props.postID} />
         </React.Fragment>
       }
       sx={{ width: "100%", padding: 0 }}

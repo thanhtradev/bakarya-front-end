@@ -14,18 +14,9 @@ import SideBarLeft from "../components/body-feed/side-bar/side-bar-left/SideBarL
 function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return (
-      <>
-        <Box
-          sx={{
-            width: "1",
-            height: "57px",
-          }}
-        >
-          <HeaderNewFeed />
-          <ProgressBar />
-        </Box>
+      <AuthContextProvider>
         {Component.getLayout(<Component {...pageProps} />)}
-      </>
+      </AuthContextProvider>
     );
   }
   return (

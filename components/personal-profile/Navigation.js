@@ -1,4 +1,4 @@
-import { Tabs, Tab, Box, Typography } from "@mui/material";
+import { Tabs, Tab, Box, Typography, Stack } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import * as React from "react";
 import PersonalPosts from "./PersonsalPosts";
@@ -15,7 +15,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box>{children}</Box>}
+      {value === index && children}
     </div>
   );
 }
@@ -35,65 +35,48 @@ const ProfileNav = () => {
   };
 
   return (
-    <React.Fragment>
-      <Grid item xs={4} marginTop='10px'>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label='basic tabs example'
-          orientation='vertical'
-          centered
+    <Stack width='100%'>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label='basic tabs example'
+        orientation='horizontal'
+        centered
+        sx={{
+          top: "70px",
+          marginBottom: "20px",
+        }}
+      >
+        <Tab
+          label='Posts'
+          {...a11yProps(0)}
           sx={{
-            "& .MuiTabs-indicator": {
-              display: "none",
-            },
-            position: "sticky",
-            top: "70px",
+            borderRadius: "10px",
+            color: "#5596e6cf",
+            minWidth: "0.3",
+            alignSelf: "center",
+            marginBottom: "8px",
           }}
-        >
-          <Tab
-            label='Posts'
-            {...a11yProps(0)}
-            sx={{
-              borderRadius: "10px",
-              bgcolor: "#5596e6cf",
-              color: "white",
-              "&.Mui-selected": {
-                color: "black",
-                bgcolor: "#5596e6",
-              },
-              width: "0.6",
-              alignSelf: "center",
-              marginBottom: "8px",
-            }}
-          />
-          <Tab
-            label='Personal Profile'
-            {...a11yProps(1)}
-            sx={{
-              borderRadius: "10px",
-              bgcolor: "#5596e6cf",
-              color: "white",
-              "&.Mui-selected": {
-                color: "black",
-                bgcolor: "#5596e6",
-              },
-              width: "0.6",
-              alignSelf: "center",
-              marginBottom: "8px",
-            }}
-          />
-        </Tabs>
-      </Grid>
-      <Grid item xs={8} sx={{ padding: 0 }}>
-        <TabPanel value={value} index={0}>
-          <PersonalPosts />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Profile />
-        </TabPanel>
-      </Grid>
-    </React.Fragment>
+        />
+        <Tab
+          label='Personal Profile'
+          {...a11yProps(1)}
+          sx={{
+            borderRadius: "10px",
+            color: "#5596e6cf",
+            width: "0.3",
+            alignSelf: "center",
+            marginBottom: "8px",
+          }}
+        />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <PersonalPosts />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Profile />
+      </TabPanel>
+    </Stack>
   );
 };
 

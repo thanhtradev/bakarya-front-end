@@ -1,7 +1,7 @@
 import { Col, Container } from "react-bootstrap";
 import CreatePost from "./create-post/CreatePost";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Post from "../recipe-post/recipe-post-minimize/RecipePostMiniminze";
+import Post from "../recipe-post/RecipePost";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";

@@ -287,4 +287,6 @@ export default function LoginPage() {
   );
 }
 
-// export async function getServerSideProps(context) {}
+LoginPage.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};

@@ -19,28 +19,7 @@ const SideBarRight = dynamic(
 );
 
 const Body = ({ posts }) => {
-  return (
-    <MainFeed posts={posts} />
-    // <Container fluid>
-    //   <Row
-    //     style={{
-    //       paddingTop: "20px",
-    //       backgroundColor: "#f4f4f4",
-    //       padding: "20px 0 0 0",
-    //     }}
-    //   >
-    //     {/* //? SideBar Left */}
-    //     <Col>
-    //       <SideBarLeft />
-    //     </Col>
-
-    //     {/* //? SideBar Right */}
-    //     <Col>
-    //       <SideBarRight />
-    //     </Col>
-    //   </Row>
-    // </Container>
-  );
+  return <MainFeed posts={posts} />;
 };
 
 export default Body;

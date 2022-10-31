@@ -391,3 +391,7 @@ export default function SignUpPage() {
     </ThemeProvider>
   );
 }
+
+SignUpPage.getLayout = function PageLayout(page) {
+  return <>{page}</>;
+};

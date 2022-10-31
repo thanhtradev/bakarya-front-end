@@ -14,16 +14,16 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const PostItem = (props) => {
-  const [numberOfComment, setNumberOfComments] = useState(0);
+  // const [numberOfComment, setNumberOfComments] = useState(0);
   const router = useRouter();
 
   const handlePostClick = () => {
     router.push(`/posts/${props.postID}`);
   };
 
-  useEffect(() => {
-    getNumberOfComments();
-  }, [numberOfComment]);
+  // useEffect(() => {
+  //   getNumberOfComments();
+  // }, [numberOfComment]);
 
   const monthNames = [
     "January",
@@ -39,13 +39,13 @@ const PostItem = (props) => {
     "November",
     "December",
   ];
-  const getNumberOfComments = async () => {
-    const comments = await axios.get(
-      `http://api.bakarya.com/api/comments/${props.postID}`
-    );
+  // const getNumberOfComments = async () => {
+  //   const comments = await axios.get(
+  //     `http://api.bakarya.com/api/comments/${props.postID}`
+  //   );
 
-    setNumberOfComments(comments.data.length);
-  };
+  //   setNumberOfComments(comments.data.length);
+  // };
 
   const rawDate = new Date(props.createAt);
   const month = monthNames[rawDate.getMonth()];
@@ -78,15 +78,27 @@ const PostItem = (props) => {
           secondary={
             <Stack direction='row' spacing={2} component='span'>
               <Typography component='span' variant='body2' color='text.primary'>
-                <NotLikeIcon sx={{ fontSize: "17px", marginRight: "8px" }} />
+                <NotLikeIcon
+                  sx={{ fontSize: "17px", marginRight: "8px", color: "red" }}
+                />
                 {props.numberOfLike}
               </Typography>
-              <Typography component='span' variant='body2' color='text.primary'>
-                <ChatBubbleOutlineIcon
-                  sx={{ fontSize: "17px", marginRight: "8px" }}
-                />
-                {numberOfComment}
-              </Typography>
+              <React.Suspense fallback={`loading`}>
+                <Typography
+                  component='span'
+                  variant='body2'
+                  color='text.primary'
+                >
+                  <ChatBubbleOutlineIcon
+                    sx={{
+                      fontSize: "17px",
+                      marginRight: "8px",
+                      color: "brown",
+                    }}
+                  />
+                  {props.numberOfComment}
+                </Typography>
+              </React.Suspense>
             </Stack>
           }
         />
