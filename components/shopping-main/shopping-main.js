@@ -28,29 +28,22 @@ function a11yProps(index) {
 const Shopping = () => {
   const [value, setValue] = React.useState(0);
   const [toolProducts, setToolProducts] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    fetchProducts();
-    console.log("i ran once");
+    axios
+      .get("http://api.bakarya.com/api/products")
+      .then((data) => {
+        setIsLoading(true);
+        setToolProducts((prev) => data.data.slice(0, 9));
+      })
+      .catch((error) => alert(error));
   }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get("http://api.bakarya.com/api/products");
-
-      if (res.status !== 200) {
-        throw new Error(" Something went wrong :( ");
-      }
-
-      setToolProducts(res.data.slice(0, 9));
-    } catch (err) {
-      alert(err);
-    }
-  };
   return (
     <Container maxWidth='xl' sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -68,9 +61,13 @@ const Shopping = () => {
         Item One
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <React.Suspense fallback={<CenteredLoadingCircular />}>
+        {isLoading ? (
           <ToolTab products={toolProducts} />
-        </React.Suspense>
+        ) : (
+          <Box sx={{ height: "100vh", width: "1" }}>
+            <CenteredLoadingCircular />
+          </Box>
+        )}
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
