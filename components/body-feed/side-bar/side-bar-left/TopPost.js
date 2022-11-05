@@ -1,11 +1,8 @@
-// import ItemContainer from "../ItemContainer";
 import { List, Typography } from "@mui/material";
-// import PostItem from "./PostItem";
 import React, { useEffect, useState, lazy } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
 import CenteredLoadingCircular from "../../../ui/CenteredLoadingCircular";
-// const PostItem = lazy(() => import("./PostItem"));
 const PostItem = dynamic(() => import("./PostItem"), {
   loading: () => <CenteredLoadingCircular />,
 });

@@ -40,22 +40,20 @@ const MiniRecipePost = (props) => {
   }, []);
 
   const checkIfUserHasAlreadyLikedPost = () => {
-    var data = { recipeid: props.postID };
-
-    var config = {
-      method: "get",
-      url: "http://api.bakarya.com/api/mlem/check",
-      headers: {},
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // var data = { recipeid: props.postID };
+    // var config = {
+    //   method: "get",
+    //   url: "http://api.bakarya.com/api/mlem/check",
+    //   headers: {},
+    //   data: data,
+    // };
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   const getNumberOfLikes = () => {

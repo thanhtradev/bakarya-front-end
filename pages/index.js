@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import AuthContext from "../store/auth-context";
 import Body from "../components/body-feed/Body";
 import axios from "axios";
+import { useContext } from "react";
 
 export default function Home({ posts }) {
   return (
@@ -18,10 +19,9 @@ export default function Home({ posts }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   try {
-    const first3PostURL = "http://api.bakarya.com/api/recipes/limit/3";
-    const allPostURL = "http://api.bakarya.com/api/recipes";
+    const first3PostURL = "http://api.bakarya.com/api/recipes/limit/5";
 
     const postData = await axios.get(first3PostURL);
 

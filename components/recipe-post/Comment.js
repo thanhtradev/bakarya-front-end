@@ -88,7 +88,7 @@ const Comment = (props) => {
             },
             ...prev,
           ]);
-          console.log(authCtx);
+          console.log(response);
 
           if (!showReply) {
             setShowReply(true);

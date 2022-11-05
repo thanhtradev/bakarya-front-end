@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
 
 const MainFeed = ({ posts: recipePost }) => {
@@ -50,7 +50,6 @@ const MainFeed = ({ posts: recipePost }) => {
   });
 
   const fetchData = async () => {
-    const allPostURL = "http://api.bakarya.com/api/recipes/suggestion";
     const postData = await axios({
       method: "get",
       url: "http://api.bakarya.com/api/recipes/suggestion",
@@ -58,15 +57,12 @@ const MainFeed = ({ posts: recipePost }) => {
         "x-access-token": authCtx.token,
       },
     });
-    console.log(authCtx.token);
     setPosts((prev) => prev.concat(postData.data));
-    console.log("i ran");
   };
 
   return (
     <Stack justify-content='center' alignItems='center' spacing={2}>
       {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
-      {/* {recipePosts} */}
       <InfiniteScroll
         style={{
           display: "flex",
@@ -78,7 +74,11 @@ const MainFeed = ({ posts: recipePost }) => {
         dataLength={recipePosts.length} //This is important field to render the next data
         next={fetchData}
         hasMore={true}
-        loader={<CenteredLoadingCircular />}
+        loader={
+          <Box width={"40.57rem"}>
+            <CenteredLoadingCircular />
+          </Box>
+        }
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>Yay! You have seen it all</b>
@@ -87,7 +87,6 @@ const MainFeed = ({ posts: recipePost }) => {
       >
         <Stack justify-content='center' alignItems='center' spacing={2}>
           {recipePosts}
-          {console.log(recipePost.length)}
         </Stack>
       </InfiniteScroll>
     </Stack>

@@ -61,7 +61,7 @@ const HeaderAvatar = () => {
       return settings.map((setting, i) => (
         <MenuItem
           // onClick={handleCloseUserMenu}
-          key={i}
+          key={setting.title}
         >
           <Link
             style={{
@@ -84,6 +84,7 @@ const HeaderAvatar = () => {
       return settings.map((setting) => (
         <Link
           href={setting.link}
+          key={setting.title}
           style={{ textDecoration: "none", color: "black" }}
         >
           <MenuItem key={setting.title} onClick={handleCloseUserMenu}>

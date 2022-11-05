@@ -26,8 +26,6 @@ export const AuthContextProvider = (props) => {
 
   if (token !== null) {
     AuthContext.isLoggedIn = true;
-  } else {
-    console.log(true);
   }
 
   const loginHandler = (obj) => {
