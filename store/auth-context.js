@@ -10,11 +10,13 @@ const AuthContext = React.createContext({
 });
 let initToken = null;
 let userId = null;
+let username = null;
 export const AuthContextProvider = (props) => {
   if (typeof window !== "undefined") {
     // Perform localStorage action
     initToken = localStorage.getItem("loginToken");
     userId = localStorage.getItem("userID");
+    username = localStorage.getItem("username");
   }
 
   const [token, setToken] = useState(initToken);
@@ -35,13 +37,16 @@ export const AuthContextProvider = (props) => {
     AuthContext.isLoggedIn = true;
     localStorage.setItem("loginToken", obj.accessToken);
     localStorage.setItem("userID", obj.id);
+    localStorage.setItem("username", obj.username);
   };
+
   const logoutHandler = () => {
     setUserID("");
     setToken(null);
     AuthContext.isLoggedIn = false;
     localStorage.removeItem("loginToken");
     localStorage.removeItem("userID");
+    localStorage.removeItem("username");
   };
 
   const contextValue = {

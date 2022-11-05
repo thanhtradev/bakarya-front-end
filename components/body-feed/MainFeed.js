@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
 import { Stack } from "@mui/material";
+import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
 
 const MainFeed = ({ posts: recipePost }) => {
   const authCtx = useContext(AuthContext);
@@ -16,7 +17,7 @@ const MainFeed = ({ posts: recipePost }) => {
 
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
-    setPosts((prev) => prev.reverse());
+    // setPosts((prev) => prev.reverse());
   }, []);
 
   const handleCreatedPost = async (newPosts) => {
@@ -27,7 +28,6 @@ const MainFeed = ({ posts: recipePost }) => {
   };
 
   const recipePosts = posts.map((post) => {
-    console.log(post);
     return (
       <Post
         key={post.id}
@@ -49,33 +49,47 @@ const MainFeed = ({ posts: recipePost }) => {
     );
   });
 
-  return (
-    // <Col xl={6} fluid='true'>
-    //   <Container
-    //     fluid='lg'
-    //     style={{
-    //       padding: "0 20px",
-    //     }}
-    //   >
+  const fetchData = async () => {
+    const allPostURL = "http://api.bakarya.com/api/recipes/suggestion";
+    const postData = await axios({
+      method: "get",
+      url: "http://api.bakarya.com/api/recipes/suggestion",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    });
+    console.log(authCtx.token);
+    setPosts((prev) => prev.concat(postData.data));
+    console.log("i ran");
+  };
 
-    //     {/* <InfiniteScroll
-    //       dataLength={post.length} //This is important field to render the next data
-    //       next={fetchData}
-    //       hasMore={true}
-    //       loader={<h4>Loading...</h4>}
-    //       endMessage={
-    //         <p style={{ textAlign: "center" }}>
-    //           <b>Yay! You have seen it all</b>
-    //         </p>
-    //       }
-    //     >
-    //       {items}
-    //     </InfiniteScroll> */}
-    //   </Container>
-    // </Col>
+  return (
     <Stack justify-content='center' alignItems='center' spacing={2}>
       {isLoggedIn && <CreatePost handleCreatedPost={handleCreatedPost} />}
-      {recipePosts}
+      {/* {recipePosts} */}
+      <InfiniteScroll
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          width: "1",
+          flexDirection: "column",
+        }}
+        dataLength={recipePosts.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={true}
+        loader={<CenteredLoadingCircular />}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+        <Stack justify-content='center' alignItems='center' spacing={2}>
+          {recipePosts}
+          {console.log(recipePost.length)}
+        </Stack>
+      </InfiniteScroll>
     </Stack>
   );
 };

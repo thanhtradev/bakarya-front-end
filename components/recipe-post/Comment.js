@@ -34,7 +34,7 @@ const Comment = (props) => {
     const replyText = replyRef.current.value;
     if (replyText.includes("\n")) {
       // sendReplyHandler();
-      handleReplyComment();
+      sendReplyHandler();
       console.log(numberOfReplies);
     }
   };
@@ -46,7 +46,7 @@ const Comment = (props) => {
     setReplies((prev) => [
       {
         _id: "PictureAsPdf",
-        user_id: { username: "tester" },
+        user_id: { username: authCtx.username },
         time: new Date(),
         comment: replyText,
       },
@@ -77,6 +77,22 @@ const Comment = (props) => {
 
       axios(config)
         .then(function (response) {
+          setNumberOfReplies((prev) => prev + 1);
+          replyRef.current.value = "";
+          setReplies((prev) => [
+            {
+              _id: "PictureAsPdf",
+              user_id: { username: authCtx.username },
+              time: new Date(),
+              comment: replyText,
+            },
+            ...prev,
+          ]);
+          console.log(authCtx);
+
+          if (!showReply) {
+            setShowReply(true);
+          }
           console.log(JSON.stringify(response.data));
         })
         .catch(function (error) {
@@ -86,6 +102,7 @@ const Comment = (props) => {
       alert(error);
     }
   };
+
   return (
     <React.Fragment>
       <Stack
@@ -179,7 +196,7 @@ const Comment = (props) => {
             onChange={handleChangeReply}
             placeholder={`Reply to ${props.username}`}
             endAdornment={
-              <IconButton onClick={handleReplyComment}>
+              <IconButton onClick={sendReplyHandler}>
                 <SendIcon />
               </IconButton>
             }

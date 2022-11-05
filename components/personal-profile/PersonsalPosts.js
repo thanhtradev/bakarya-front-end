@@ -1,10 +1,12 @@
 import { Stack } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Post from "../recipe-post/RecipePost";
 import axios from "axios";
+import AuthContext from "../../store/auth-context";
 
 const PersonalPosts = () => {
   const [posts, setPosts] = useState([]);
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     fetchTop5Post();
@@ -12,12 +14,20 @@ const PersonalPosts = () => {
 
   const fetchTop5Post = async () => {
     try {
-      const top10PostURL = "http://api.bakarya.com/api/recipes/top10";
-      const top10PostData = await axios.get(top10PostURL);
+      var config = {
+        method: "get",
+        url: "http://api.bakarya.com/api/recipes/user/",
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+      };
 
-      setPosts(() => top10PostData.data);
+      const personalPostURL = "http://api.bakarya.com/api/recipes/user/";
+      const personalPost = await axios(config);
+
+      setPosts(() => personalPost.data);
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 

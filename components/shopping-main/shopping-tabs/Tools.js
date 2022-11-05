@@ -34,9 +34,10 @@ const ToolTab = ({ products }) => {
         height: "fit-content",
       }}
       columns={15}
+      sm={15}
       disableGutters
     >
-      <Suspense fallback={<CenteredLoadingCircular />}>{showProducts}</Suspense>
+      {showProducts}
     </Grid>
   );
 };

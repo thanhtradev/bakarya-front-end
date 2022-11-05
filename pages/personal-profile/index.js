@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Head from "next/head";
 import {
   Avatar,
@@ -11,11 +11,14 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import ProfileNav from "../../components/personal-profile/Navigation";
 import UploadIcon from "@mui/icons-material/Upload";
+import UpdateProfile from "../../components/personal-profile/UpdateProfile";
+import AuthContext from "../../store/auth-context";
 
 export default function PersonalPage() {
   const [openModal, setModal] = useState(false);
   const wallpaperFile = useRef();
   const avatarFile = useRef();
+  const authCtx = useContext(AuthContext);
 
   const toggleOpenModal = () => {
     setModal((prev) => !prev);
@@ -192,15 +195,7 @@ export default function PersonalPage() {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={4}>
-            <Button
-              sx={{
-                height: "50px",
-              }}
-            >
-              Edit Profile
-            </Button>
-          </Grid>
+          <UpdateProfile firstname='Thanh' lastname='tu' birthday='2022-2-2' />
         </Grid>
         <Grid container spacing={0}>
           <ProfileNav />

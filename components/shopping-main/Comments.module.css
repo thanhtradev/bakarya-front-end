@@ -1,22 +1,22 @@
 /** width */
-.sidenav::-webkit-scrollbar {
+.comment::-webkit-scrollbar {
   width: 10px;
 }
 
 /** Track */
-.sidenav::-webkit-scrollbar-track {
+.comment::-webkit-scrollbar-track {
   background: #7777772e;
   border-radius: 5px;
 }
 
 /** Handle */
-.sidenav::-webkit-scrollbar-thumb {
+.comment::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: rgba(142, 142, 142, 0.511);
   transition: background-color 0.5s ease-in-out;
 }
 
 /** Handle on hover */
-.sidenav::-webkit-scrollbar-thumb:hover {
+.comment::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }

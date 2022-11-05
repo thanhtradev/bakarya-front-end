@@ -7,7 +7,7 @@ const CenteredLoadingCircular = (props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: props.height ?? "1",
+        height: props.height ?? "100px",
         width: props.width ?? "1",
       }}
     >

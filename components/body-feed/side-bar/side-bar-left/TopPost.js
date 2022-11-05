@@ -19,7 +19,6 @@ const TopPost = ({ top10Posts }) => {
   const first5Post = top10Posts.slice(0, 4);
 
   const postList = first5Post.map((post) => {
-    console.log(post);
     return (
       <React.Suspense key={post.id} fallback={<CenteredLoadingCircular />}>
         <PostItem

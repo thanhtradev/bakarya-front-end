@@ -35,7 +35,7 @@ const Shopping = () => {
       .get("http://api.bakarya.com/api/products")
       .then((data) => {
         setIsLoading(true);
-        setToolProducts((prev) => data.data.slice(0, 9));
+        setToolProducts((prev) => data.data.slice(0, 10));
       })
       .catch((error) => alert(error));
   }, []);
@@ -58,7 +58,13 @@ const Shopping = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Item One
+        {isLoading ? (
+          <ToolTab products={toolProducts} />
+        ) : (
+          <Box sx={{ height: "100vh", width: "1" }}>
+            <CenteredLoadingCircular />
+          </Box>
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {isLoading ? (
@@ -70,7 +76,13 @@ const Shopping = () => {
         )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        {isLoading ? (
+          <ToolTab products={toolProducts} />
+        ) : (
+          <Box sx={{ height: "100vh", width: "1" }}>
+            <CenteredLoadingCircular />
+          </Box>
+        )}
       </TabPanel>
     </Container>
   );
