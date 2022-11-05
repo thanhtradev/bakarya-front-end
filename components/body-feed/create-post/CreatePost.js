@@ -74,7 +74,7 @@ const CreatePost = (props) => {
           justifyContent='center'
           sx={{ width: "1", height: "1" }}
         >
-          <CreatePostForm handleCreatedPost={props.handleCreatedPost} />
+          <CreatePostForm handleCreatedPost={props?.handleCreatedPost} />
         </Stack>
       </Stack>
     </Stack>

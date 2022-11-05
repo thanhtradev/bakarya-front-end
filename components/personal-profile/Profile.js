@@ -31,6 +31,7 @@ const Profile = () => {
     return (
       <Paper
         component={Stack}
+        key={info.title}
         direction='row'
         spacing={1.5}
         paddingLeft='8px'

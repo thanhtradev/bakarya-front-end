@@ -1,18 +1,19 @@
-import { Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import Post from "../recipe-post/RecipePost";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
+import CreatePost from "../body-feed/create-post/CreatePost";
 
 const PersonalPosts = () => {
   const [posts, setPosts] = useState([]);
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
-    fetchTop5Post();
-  }, []);
+    fetchPersonalPost();
+  }, [posts]);
 
-  const fetchTop5Post = async () => {
+  const fetchPersonalPost = async () => {
     try {
       var config = {
         method: "get",
@@ -24,7 +25,6 @@ const PersonalPosts = () => {
 
       const personalPostURL = "http://api.bakarya.com/api/recipes/user/";
       const personalPost = await axios(config);
-
       setPosts(() => personalPost.data);
     } catch (error) {
       console.log(error);
@@ -56,7 +56,16 @@ const PersonalPosts = () => {
 
   return (
     <Stack width='100%' justifyContent='center' alignItems='center' padding={0}>
-      {recipePosts}
+      <CreatePost />
+      {recipePosts.length == 0 ? (
+        <Box sx={{ width: "1", textAlign: "center" }}>
+          <Typography variant='h4' fontWeight='bold' color='#666'>
+            Share your first post with us
+          </Typography>
+        </Box>
+      ) : (
+        recipePosts
+      )}
     </Stack>
   );
 };
