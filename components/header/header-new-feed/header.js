@@ -78,7 +78,6 @@ function HeaderNewsFeed() {
       fixed='top'
       style={{
         margin: 0,
-        // borderBottom: "1px solid rgba(5,5,5,0.4)",
         boxShadow: "rgb(126 125 125 / 20%) 1px 1px 10px 3px",
         height: "57px",
       }}
