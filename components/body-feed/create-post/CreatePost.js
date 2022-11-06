@@ -76,7 +76,7 @@ const CreatePost = (props) => {
         height: "10.5rem",
         width: "40.57rem",
         borderRadius: "15px",
-        border: "1px solid rgb(79 79 79 / 52%)",
+        border: "1px solid #e8e8e8",
         marginBottom: "20px",
       }}
     >

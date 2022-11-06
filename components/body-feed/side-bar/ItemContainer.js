@@ -16,7 +16,7 @@ const ItemContainer = ({ children }) => {
         padding: "10px 0",
         marginBottom: "10px",
         // backgroundColor: "indigo",
-        border: "1px solid rgba(106, 125, 155, 0.4)",
+        border: "1px solid rgba(106, 125, 155, 0.3)",
       }}
     >
       {children}
