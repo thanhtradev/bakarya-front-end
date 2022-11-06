@@ -119,7 +119,7 @@ export default function PersonalPage() {
           <AvatarUser />
           <Grid
             item
-            xs={4}
+            xs={5}
             sx={
               {
                 // bgcolor: "chocolate",
