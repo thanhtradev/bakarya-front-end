@@ -4,7 +4,8 @@ import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import CreatePostForm from "./CreatePostForm";
-
+import axios from "axios";
+import AuthContext from "../../../store/auth-context";
 const icons = [
   { icon: <EventOutlinedIcon />, title: "Post a recipe" },
   { icon: <LiveTvOutlinedIcon />, title: "Livestream" },
@@ -31,11 +32,43 @@ const tabs = icons.map((icon, i) => {
 
 const CreatePost = (props) => {
   const [value, setValue] = React.useState(0);
+  const [avatarSrc, SetAvatarSrc] = React.useState();
+  const authCtx = React.useContext(AuthContext);
 
+  React.useEffect(() => {
+    GetAvatar();
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const GetAvatar = () => {
+    var config = {
+      method: "get",
+      url: "http://api.bakarya.com/api/user/avatar",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        const src = arrayBufferToBase64(response.data.data.data);
+        SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  //* function change array of buffer to string
+  //* for more information
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
   return (
     <Stack
       sx={{
@@ -67,7 +100,7 @@ const CreatePost = (props) => {
           justifyContent='center'
           sx={{ width: "0.1" }}
         >
-          <Avatar />
+          <Avatar src={avatarSrc} />
         </Stack>
         <Stack
           alignItems='flex-start'
