@@ -11,7 +11,8 @@ const PersonalPosts = () => {
 
   useEffect(() => {
     fetchPersonalPost();
-  }, [posts]);
+    console.log("i logged");
+  }, []);
 
   const fetchPersonalPost = async () => {
     try {
