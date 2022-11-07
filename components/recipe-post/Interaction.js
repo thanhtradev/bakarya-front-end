@@ -22,9 +22,10 @@ function Interaction(props) {
   const [showComment, setShowComment] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  // const [isLoadingLikeBtn, setIsLoad]
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
+    checkUserHasLikedPost();
   }, []);
 
   const infoIcons = [
@@ -106,6 +107,31 @@ function Interaction(props) {
 
   const saveHandler = () => {
     setIsSaved((prev) => !prev);
+  };
+
+  const checkUserHasLikedPost = () => {
+    setIsLoading(true);
+    var data = { recipeid: props.postId };
+    var config = {
+      method: "post",
+      url: "http://api.bakarya.com/api/mlem/check",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        const { mlemmed } = response.data;
+        setIsLiked((prev) => {
+          setIsLoading(false);
+          return mlemmed;
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const infoIconList = infoIcons.map((item, i) => {

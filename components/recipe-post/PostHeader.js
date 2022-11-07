@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import { alpha, Avatar, Button, CardHeader } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Typography } from "@mui/material";
-import { useRef } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import PostSetting from "./PostSetting";
-import { CatchingPokemonSharp } from "@mui/icons-material";
+import axios from "axios";
+import AuthContext from "../../store/auth-context";
 
 const User = (props) => {
   const [isFollow, setIsFollow] = useState(false);
   const followRef = useRef();
+  const authCtx = useContext(AuthContext);
+  const [isLoadingFollow, setIsloadingFollow] = useState(false);
 
   const monthNames = [
     "January",
@@ -46,6 +50,43 @@ const User = (props) => {
     }
   };
 
+  const handleUserFollowBtn = async () => {
+    setIsloadingFollow(true);
+
+    let actionURL;
+    let data;
+
+    if (!isFollow) {
+      actionURL = "http://api.bakarya.com/api/user/follow";
+      data = {
+        followuserid: props.authorID,
+      };
+    } else {
+      actionURL = "http://api.bakarya.com/api/user/unfollow";
+      data = {
+        unfollowuserid: props.authorID,
+      };
+    }
+
+    console.log(actionURL);
+    const res = await axios({
+      method: "POST",
+      url: actionURL,
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+      data: data,
+    });
+
+    if (isFollow) {
+      setIsFollow(false);
+    } else {
+      setIsFollow(true);
+    }
+    console.log(res.data);
+    setIsloadingFollow(false);
+  };
+
   return (
     <CardHeader
       avatar={
@@ -56,21 +97,27 @@ const User = (props) => {
       title={
         <React.Fragment>
           <Typography sx={{ fontWeight: "bold" }}>{props.author}</Typography>
-          <Button
-            ref={followRef}
-            disableElevation
-            variant='text'
-            sx={{
-              ":hover": { backgroundColor: alpha("#FDEEDC", 0.7) },
-              width: 70,
-              height: 30,
-              textTransform: "capitalize",
-              fontWeight: "bold",
-            }}
-            onClick={handleFollowButton}
-          >
-            Follow
-          </Button>
+          {isLoadingFollow ? (
+            <LoadingButton loading variant='outlined'>
+              Loading
+            </LoadingButton>
+          ) : (
+            <Button
+              ref={followRef}
+              disableElevation
+              onClick={handleUserFollowBtn}
+              variant='text'
+              sx={{
+                ":hover": { backgroundColor: alpha("#FDEEDC", 0.7) },
+                width: 70,
+                height: 30,
+                textTransform: "capitalize",
+                fontWeight: "bold",
+              }}
+            >
+              Follow
+            </Button>
+          )}
         </React.Fragment>
       }
       titleTypographyProps={{
