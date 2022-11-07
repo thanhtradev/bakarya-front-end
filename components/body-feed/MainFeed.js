@@ -34,6 +34,7 @@ const MainFeed = ({ posts: recipePost }) => {
         key={post.id}
         postID={post.id}
         author={post.author}
+        authorID={post.author_id}
         category={post.categories}
         createAt={post.createdAt}
         directions={post.directions}
@@ -70,7 +71,7 @@ const MainFeed = ({ posts: recipePost }) => {
               return prev + 1;
             }
           });
-        }, 3000);
+        }, 1000);
 
         //* clear time out if reached maximum of retries
         if (tries >= 3) {
