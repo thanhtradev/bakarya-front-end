@@ -59,7 +59,7 @@ const Navigation = () => {
       icon: <StarOutlineIcon />,
       link: "saved-recipes",
       onNavItemClick: () => {
-        router.push("/saved-recipes");
+        router.push("/saved-recipe");
       },
     },
   ];
