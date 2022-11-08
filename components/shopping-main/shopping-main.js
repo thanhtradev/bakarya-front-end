@@ -38,6 +38,7 @@ const Shopping = () => {
         setToolProducts((prev) => data.data.slice(0, 10));
       })
       .catch((error) => alert(error));
+    setIsLoading(false);
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -66,7 +67,7 @@ const Shopping = () => {
           </Box>
         )}
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      {/* <TabPanel value={value} index={1}>
         {isLoading ? (
           <ToolTab products={toolProducts} />
         ) : (
@@ -83,7 +84,7 @@ const Shopping = () => {
             <CenteredLoadingCircular />
           </Box>
         )}
-      </TabPanel>
+      </TabPanel> */}
     </Container>
   );
 };
