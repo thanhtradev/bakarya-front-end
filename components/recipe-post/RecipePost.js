@@ -129,7 +129,11 @@ const RecipePost = (props) => {
   const ingredientList = props.ingredient.map((ingrd, i) => {
     return (
       <React.Fragment key={i}>
-        <Typography component='li' variant='body2'>
+        <Typography
+          component='li'
+          variant='body2'
+          sx={{ wordWrap: "break-word" }}
+        >
           {ingrd}
         </Typography>
       </React.Fragment>
@@ -139,7 +143,12 @@ const RecipePost = (props) => {
   const directionList = props.directions.map((dir, i) => {
     return (
       <React.Fragment key={i}>
-        <Typography component='li' variant='body2'>
+        <Typography
+          component='li'
+          variant='body2'
+          // noWrap
+          sx={{ wordWrap: "break-word" }}
+        >
           {dir}
         </Typography>
       </React.Fragment>
@@ -204,9 +213,13 @@ const RecipePost = (props) => {
           {isShowMore && (
             <React.Fragment>
               <Typography variant='h6'>Ingredients</Typography>
-              <Box component='ul'>{ingredientList}</Box>
+              <Box component='ul' sx={{ maxWidth: "100%" }}>
+                {ingredientList}
+              </Box>
               <Typography variant='h6'>Directions</Typography>
-              <Box component='ol'>{directionList}</Box>
+              <Box component='ol' sx={{ maxWidth: "500px" }}>
+                {directionList}
+              </Box>
               <Typography variant='h6'>Nutrition</Typography>
               <Typography paragraph={true} variant='body2'>
                 {props.nutrition}
@@ -226,7 +239,7 @@ const RecipePost = (props) => {
           />
         )}
         <Box className={classes["post-media"]}>
-          <PostImages />
+          <PostImages images={props.images} />
         </Box>
         <Interactions
           onShowComments={handleToggleComments}
