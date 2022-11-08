@@ -17,14 +17,6 @@ import Comments from "../recipe-post/Comments";
 import classes from "./Comments.module.css";
 import ProductQuantity from "./ProductQuantity";
 
-const priceReducer = (state, action) => {
-  console.log(action.quantity);
-  return {
-    pricePerUnit: state.pricePerUnit,
-    totalPrice: action.quantity * state.pricePerUnit,
-  };
-};
-
 const ProductDetail = ({ id, img, name, quantity, price, description }) => {
   const [testComment, setTestComment] = useState([]);
   const [totalPrice, setTotalPrice] = useState(price);
@@ -41,6 +33,7 @@ const ProductDetail = ({ id, img, name, quantity, price, description }) => {
             direction='row'
             spacing={0.8}
             paddingX='10px'
+            key={Math.random() * 100}
           >
             <Avatar variant='circular' sx={{ width: "35px", height: "35px" }} />
             <Stack alignItems='flex-start'>

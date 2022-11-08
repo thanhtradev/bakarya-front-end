@@ -52,14 +52,17 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
         open={openModal}
         onClose={handleCloseModal}
       >
-        <ProductDetail
-          id={id}
-          img={img}
-          name={name}
-          quantity={quantity}
-          price={price}
-          description={desc}
-        />
+        <Suspense fallback={<Box />}>
+          <ProductDetail
+            id={id}
+            img={img}
+            name={name}
+            quantity={quantity}
+            price={price}
+            description={desc}
+          />
+        </Suspense>
+        {/* <Box /> */}
       </Stack>
       <Grid
         item
@@ -84,16 +87,14 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
             justifyContent='space-evenly'
             sx={{ padding: 0, borderRadius: "10px" }}
           >
-            <Suspense fallback={"Loading"}>
-              <CardMedia
-                component='img'
-                onError={errorHandler}
-                height='190'
-                image={imgSrc}
-                alt={name}
-                sx={{ borderRadius: "10px" }}
-              />
-            </Suspense>
+            <CardMedia
+              component='img'
+              onError={errorHandler}
+              height='190'
+              image={imgSrc}
+              alt={name}
+              sx={{ borderRadius: "10px" }}
+            />
             <CardContent sx={{ paddingX: "0", minHeight: "88px" }}>
               <Typography
                 variant='h6'
