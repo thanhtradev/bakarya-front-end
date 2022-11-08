@@ -6,6 +6,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import CreatePostForm from "./CreatePostForm";
 import axios from "axios";
 import AuthContext from "../../../store/auth-context";
+
 const icons = [
   { icon: <EventOutlinedIcon />, title: "Post a recipe" },
   { icon: <LiveTvOutlinedIcon />, title: "Livestream" },
@@ -26,7 +27,13 @@ const tabs = icons.map((icon, i) => {
     );
   }
   return (
-    <Tab key={i} label={icon.title} icon={icon.icon} iconPosition='start' />
+    <Tab
+      key={i}
+      disabled
+      label={icon.title}
+      icon={icon.icon}
+      iconPosition='start'
+    />
   );
 });
 
@@ -38,6 +45,7 @@ const CreatePost = (props) => {
   React.useEffect(() => {
     GetAvatar();
   }, []);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -69,11 +77,12 @@ const CreatePost = (props) => {
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
     return window.btoa(binary);
   }
+
   return (
     <Stack
       sx={{
         backgroundColor: "#fcfcfc",
-        height: "10.5rem",
+        height: "8.5rem",
         width: "40.57rem",
         borderRadius: "15px",
         border: "1px solid #e8e8e8",
@@ -98,12 +107,12 @@ const CreatePost = (props) => {
         <Stack
           alignItems='center'
           justifyContent='center'
-          sx={{ width: "0.1" }}
+          sx={{ width: "0.1", paddingLeft: "10px" }}
         >
           <Avatar src={avatarSrc} />
         </Stack>
         <Stack
-          alignItems='flex-start'
+          alignItems='center'
           justifyContent='center'
           sx={{ width: "1", height: "1" }}
         >
