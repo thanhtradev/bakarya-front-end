@@ -61,7 +61,7 @@ const MainFeed = ({ posts: recipePost }) => {
       const postData = await axios({
         method: "get",
         // url: "http://api.bakarya.com/api/recipes/suggestion",
-        url: "http://api.bakarya.com/api/recipes/top10",
+        url: "http://api.bakarya.com/api/recipes/random",
         headers: {
           "x-access-token": authCtx.token,
         },
