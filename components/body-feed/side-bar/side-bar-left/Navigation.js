@@ -17,6 +17,7 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AuthContext from "../../../../store/auth-context";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import classes from "../../../ui/RGBLed.module.css";
 import axios from "axios";
 
 const Navigation = () => {
@@ -157,6 +158,7 @@ const Navigation = () => {
         <Button
           variant='outlined'
           onClick={handleClick}
+          className={`${classes["to-RGB-Text"]} ${classes["to-RGB-Border"]}`}
           startIcon={
             <Avatar
               alt='Thanh Tu'
@@ -174,7 +176,7 @@ const Navigation = () => {
             paddingLeft: "10px",
             height: "50px",
             justifyContent: "flex-start",
-            bgcolor: "#c0d2ee",
+            bgcolor: "unset",
             borderRadius: "15px",
             marginBottom: "10px",
             "&.MuiButton-root": {
@@ -200,6 +202,7 @@ const Navigation = () => {
             borderRight: 1,
             borderColor: "divider",
             width: "1",
+            border: "none",
           }}
         >
           {tabItems}

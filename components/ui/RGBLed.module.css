@@ -1,0 +1,41 @@
+@keyframes RGBLed-Border {
+  0% {
+    border: 1px solid red;
+  }
+  25% {
+    border: 1px solid green;
+  }
+  50% {
+    border: 1px solid blue;
+  }
+  100% {
+    border: 1px solid red;
+  }
+}
+
+@keyframes RGBLed-Text {
+  0% {
+    border: 1px solid red;
+    color: red;
+  }
+  33% {
+    border: 1px solid green;
+    color: green;
+  }
+  66% {
+    border: 1px solid blue;
+    color: blue;
+  }
+  100% {
+    border: 1px solid red;
+    color: red;
+  }
+}
+
+.to-RGB-Border {
+  animation: RGBLed-Border 1.7s linear 0.1s infinite;
+}
+
+.to-RGB-Text {
+  animation: RGBLed-Text 2.5s linear 0s infinite;
+}
