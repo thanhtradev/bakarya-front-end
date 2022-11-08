@@ -16,29 +16,34 @@ const MainFeed = ({ posts: recipePost }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [tries, setTries] = useState(0);
+
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
     setPosts((prev) => prev);
-  }, [posts]);
+  }, []);
 
   const handleCreatedPost = async (newPosts) => {
+    console.log("i ran");
     const allPostURL = "http://api.bakarya.com/api/recipes";
     const postData = await axios.get(allPostURL);
 
     postData.data, setPosts((prev) => [newPosts, ...postData.data]);
   };
 
+  console.log("im in main");
   const recipePosts = posts.map((post) => {
     return (
       <Post
         key={post.id}
         postID={post.id}
+        images={post.images}
         author={post.author}
         authorID={post.author_id}
         category={post.categories}
         createAt={post.createdAt}
         directions={post.directions}
         expert={post.expert}
+        width='100%'
         ingredient={post.ingredients}
         makes={post.makes}
         name={post.name}
@@ -55,11 +60,13 @@ const MainFeed = ({ posts: recipePost }) => {
     try {
       const postData = await axios({
         method: "get",
-        url: "http://api.bakarya.com/api/recipes/suggestion",
+        // url: "http://api.bakarya.com/api/recipes/suggestion",
+        url: "http://api.bakarya.com/api/recipes/top10",
         headers: {
           "x-access-token": authCtx.token,
         },
       });
+
       if (postData.data == null || postData.data.length === 0) {
         const retryFetch = setTimeout(() => {
           setTries((prev) => {
@@ -94,8 +101,9 @@ const MainFeed = ({ posts: recipePost }) => {
           display: "flex",
           justifyContent: "center",
           alignContent: "center",
-          width: "1",
+          width: "100%",
           flexDirection: "column",
+          padding: 0,
         }}
         dataLength={recipePosts.length} //This is important field to render the next data
         next={fetchData}
@@ -113,7 +121,12 @@ const MainFeed = ({ posts: recipePost }) => {
           </Typography>
         }
       >
-        <Stack justify-content='center' alignItems='center' spacing={2}>
+        <Stack
+          justify-content='center'
+          alignItems='center'
+          spacing={2}
+          sx={{ width: "1" }}
+        >
           {recipePosts}
         </Stack>
       </InfiniteScroll>
