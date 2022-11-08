@@ -109,7 +109,7 @@ function HeaderNewsFeed() {
               alt='bakarya logo'
               src={`${logo.src}`}
               component='img'
-              sx={{ height: "1", width: "1" }}
+              sx={{ height: "1", width: "50px" }}
             />
           </Link>
         </Box>
