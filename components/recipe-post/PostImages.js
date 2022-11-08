@@ -2,56 +2,47 @@ import React from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { CardMedia, Typography } from "@mui/material";
+import { useState } from "react";
 
-export default function PostImages() {
-  const itemData = [
-    {
-      img: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=936&q=80",
-      title: "Bed",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1621303837174-89787a7d4729?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80",
-      title: "Books",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1089&q=80",
-      title: "Sink",
-    },
-  ];
+export default function PostImages({ images }) {
+  const [postImages, setPostImages] = useState(images);
 
-  const imgList = itemData.map((item) => {
-    if (item === itemData[0]) {
-      return (
-        <ImageListItem
-          key={item.img}
-          rows={2}
-          cols={parseInt(`${itemData.length === 1 ? Interger.P : "1"}`)}
-        >
-          <img
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading='lazy'
-            style={{
-              borderRadius: "10px",
-              height: `${itemData.length === 1 ? "400px" : "auto"}`,
-            }}
-          />
-        </ImageListItem>
-      );
-    }
-    return (
-      <ImageListItem key={item.img} rows={1}>
-        <img
-          src={`${item.img}?w=248&fit=crop&auto=format`}
-          srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-          alt={item.title}
-          loading='lazy'
-          style={{ borderRadius: "10px", height: "100px" }}
-        />
-      </ImageListItem>
+  const imgList =
+    postImages !== undefined ? (
+      postImages.map((item) => {
+        if (item === postImages[0]) {
+          return (
+            <ImageListItem
+              key={item}
+              rows={2}
+              cols={parseInt(`${postImages.length === 1 ? "3" : "1"}`)}
+            >
+              <CardMedia
+                image={item}
+                sx={{
+                  height: `${postImages.length === 1 ? "400px" : "400px"}`,
+                  borderRadius: "10px",
+                }}
+              />
+            </ImageListItem>
+          );
+        }
+        return (
+          <ImageListItem key={item.img} rows={1}>
+            <img
+              src={`${item}?w=248&fit=crop&auto=format`}
+              srcSet={`${item}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.title}
+              loading='lazy'
+              style={{ borderRadius: "10px", height: "100px" }}
+            />
+          </ImageListItem>
+        );
+      })
+    ) : (
+      <Box sx={{ width: "1", height: "10px" }} />
     );
-  });
 
   return (
     <Box sx={{ height: "fit-content", width: 1, paddingX: "10px" }}>
