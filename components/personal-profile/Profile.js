@@ -2,31 +2,71 @@ import { Box, Paper, Stack, Typography } from "@mui/material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import { useEffect, useContext, useState } from "react";
+import axios from "axios";
+import AuthContext from "../../store/auth-context";
+import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
 
 const iconSize = "30px";
-const tabInfo = [
-  {
-    title: "Full name",
-    content: "Bui Thanh TU",
-    icon: (
-      <PermIdentityIcon sx={{ fontSize: iconSize, color: "deepskyblue" }} />
-    ),
-  },
-  {
-    title: "Birthday",
-    content: "20/11/2001",
-    icon: (
-      <CakeOutlinedIcon sx={{ fontSize: iconSize, color: "palevioletred" }} />
-    ),
-  },
-  {
-    title: "Email",
-    content: "tonyandy456@gmail.com",
-    icon: <MailOutlineIcon sx={{ fontSize: iconSize, color: "cadetblue" }} />,
-  },
-];
 
 const Profile = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [birthday, setBirthday] = useState();
+  const [email, setEmail] = useState("");
+  const authCtx = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  const tabInfo = [
+    {
+      title: "Full name",
+      content: `${lastname} ${firstName}`,
+      icon: (
+        <PermIdentityIcon sx={{ fontSize: iconSize, color: "deepskyblue" }} />
+      ),
+    },
+    {
+      title: "Birthday",
+      content: birthday,
+      icon: (
+        <CakeOutlinedIcon sx={{ fontSize: iconSize, color: "palevioletred" }} />
+      ),
+    },
+    {
+      title: "Email",
+      content: email,
+      icon: <MailOutlineIcon sx={{ fontSize: iconSize, color: "cadetblue" }} />,
+    },
+  ];
+
+  const fetchUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios({
+        method: "get",
+        url: "http://api.bakarya.com/api/user/profile",
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+      });
+
+      const { birthday, email, firstname, lastname } = res.data;
+
+      setBirthday(birthday);
+      setFirstName(firstname);
+      setLastName(lastname);
+      setEmail(email);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const infoSections = tabInfo.map((info) => {
     return (
       <Paper
@@ -57,7 +97,7 @@ const Profile = () => {
       alignItems='center'
       spacing={2}
     >
-      {infoSections}
+      {isLoading ? <CenteredLoadingCircular /> : infoSections}
     </Stack>
   );
 };
