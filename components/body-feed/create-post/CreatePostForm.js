@@ -5,13 +5,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Input } from "@mui/material";
+import { Input, Typography } from "@mui/material";
 import TextBox from "../../ui/RichTextBox";
 import axios from "axios";
 import useValidInput from "../../../hooks/use-valid-input";
 import ValidateInput from "../../ValidateInput/ValidateInput";
 import AuthContext from "../../../store/auth-context";
 import CircularProgress from "@mui/material/CircularProgress";
+import classes from "../../ui/RGBLed.module.css";
 
 const Asterisk = () => {
   return <span sx={{ color: "red" }}>*</span>;
@@ -166,8 +167,6 @@ export default function FormDialog(props) {
       data: data,
     };
 
-    console.log(ingrdData);
-
     axios(config)
       .then(function (response) {
         if (response.status === 200) {
@@ -193,10 +192,20 @@ export default function FormDialog(props) {
       <Button
         disableRipple
         variant='text'
+        className={classes["to-RGB"]}
         onClick={handleFormClickOpen}
-        sx={{ width: "1", height: "1" }}
+        sx={{
+          width: "0.95",
+          height: "0.5",
+          bgcolor: "#f0f2f5",
+          color: "#65676b",
+          borderRadius: "30px",
+          display: "flex",
+          justifyContent: "flex-start",
+          paddingLeft: "20px",
+        }}
       >
-        Create new recipe
+        <Typography variant='button'>want to share your recipe ?</Typography>
       </Button>
       <Dialog open={formOpen} onClose={handleFormClose} maxWidth='sm' fullWidth>
         <form onSubmit={handleCreate}>
@@ -214,7 +223,7 @@ export default function FormDialog(props) {
               hasError={hasErrorCakeName}
               inputChangeHandler={cakeNameChangeHandler}
               inputBlurHandler={cakeNameBlurHandler}
-              variant='standard'
+              variant='outlined'
               type='text'
             />
             <ValidateInput
@@ -229,7 +238,7 @@ export default function FormDialog(props) {
               hasError={hasErrorCakeBrief}
               inputChangeHandler={cakeBriefChangeHandler}
               inputBlurHandler={cakeBriefBlurHandler}
-              variant='standard'
+              variant='outlined'
               type='text'
             />
             <DialogContentText
@@ -251,7 +260,7 @@ export default function FormDialog(props) {
                 },
               }}
             >
-              Direction
+              Directions
               <Asterisk />
             </DialogContentText>
             <TextBox type='ordered-list-item' getData={getDirectionData} />
@@ -266,7 +275,7 @@ export default function FormDialog(props) {
               hasError={hasErrorNutrition}
               inputChangeHandler={nutritionChangeHandler}
               inputBlurHandler={nutritionBlurHandler}
-              variant='standard'
+              variant='outlined'
               type='text'
             />
             <ValidateInput
@@ -281,7 +290,7 @@ export default function FormDialog(props) {
               value={prepValue}
               inputChangeHandler={prepChangeHandler}
               inputBlurHandler={prepBlurHandler}
-              variant='standard'
+              variant='outlined'
               type='text'
             />
             <ValidateInput
@@ -295,7 +304,7 @@ export default function FormDialog(props) {
               hasError={hasErrorServe}
               inputChangeHandler={serveChangeHandler}
               inputBlurHandler={serveBlurHandler}
-              variant='standard'
+              variant='outlined'
               type='number'
             />
             <DialogActions>

@@ -17,16 +17,20 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import AuthContext from "../../../../store/auth-context";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import classes from "../../../ui/RGBLed.module.css";
+import axios from "axios";
 
 const Navigation = () => {
   const authCtx = React.useContext(AuthContext);
   const [value, setValue] = React.useState(0);
   const [openLogoutForm, setOpenLogoutForm] = React.useState(false);
   const [logined, setLogined] = useState(false);
+  const [avatarSrc, SetAvatarSrc] = useState();
   const router = useRouter();
 
   React.useEffect(() => {
     setLogined(authCtx.isLoggedIn);
+    GetAvatar();
   }, []);
 
   const navTabs = [
@@ -56,10 +60,38 @@ const Navigation = () => {
       icon: <StarOutlineIcon />,
       link: "saved-recipes",
       onNavItemClick: () => {
-        router.push("/saved-recipes");
+        router.push("/saved-recipe");
       },
     },
   ];
+
+  const GetAvatar = () => {
+    var config = {
+      method: "get",
+      url: "http://api.bakarya.com/api/user/avatar",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        const src = arrayBufferToBase64(response.data.data.data);
+        SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  //* function change array of buffer to string
+  //* for more information
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
 
   const handleLogOut = () => {
     authCtx.logout();
@@ -126,8 +158,13 @@ const Navigation = () => {
         <Button
           variant='outlined'
           onClick={handleClick}
+          className={`${classes["to-RGB-Text"]} ${classes["to-RGB-Border"]}`}
           startIcon={
-            <Avatar alt='Thanh Tu' sx={{ width: "38px", height: "38px" }}>
+            <Avatar
+              alt='Thanh Tu'
+              src={avatarSrc}
+              sx={{ width: "38px", height: "38px" }}
+            >
               TT
             </Avatar>
           }
@@ -139,7 +176,7 @@ const Navigation = () => {
             paddingLeft: "10px",
             height: "50px",
             justifyContent: "flex-start",
-            bgcolor: "#c0d2ee",
+            bgcolor: "unset",
             borderRadius: "15px",
             marginBottom: "10px",
             "&.MuiButton-root": {
@@ -165,6 +202,7 @@ const Navigation = () => {
             borderRight: 1,
             borderColor: "divider",
             width: "1",
+            border: "none",
           }}
         >
           {tabItems}

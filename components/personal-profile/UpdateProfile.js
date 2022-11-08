@@ -77,7 +77,7 @@ const UpdateProfile = ({ firstname, lastname, birthday }) => {
     setBirthdayValue(birthdayRef.current.value);
   };
   return (
-    <Grid item xs={4}>
+    <Grid item xs={3} display='flex' justifyContent='center'>
       <Button
         onClick={handleClickOpen}
         sx={{

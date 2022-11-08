@@ -4,6 +4,8 @@ import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import CreatePostForm from "./CreatePostForm";
+import axios from "axios";
+import AuthContext from "../../../store/auth-context";
 
 const icons = [
   { icon: <EventOutlinedIcon />, title: "Post a recipe" },
@@ -25,25 +27,65 @@ const tabs = icons.map((icon, i) => {
     );
   }
   return (
-    <Tab key={i} label={icon.title} icon={icon.icon} iconPosition='start' />
+    <Tab
+      key={i}
+      disabled
+      label={icon.title}
+      icon={icon.icon}
+      iconPosition='start'
+    />
   );
 });
 
 const CreatePost = (props) => {
   const [value, setValue] = React.useState(0);
+  const [avatarSrc, SetAvatarSrc] = React.useState();
+  const authCtx = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    GetAvatar();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const GetAvatar = () => {
+    var config = {
+      method: "get",
+      url: "http://api.bakarya.com/api/user/avatar",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        const src = arrayBufferToBase64(response.data.data.data);
+        SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  //* function change array of buffer to string
+  //* for more information
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
+
   return (
     <Stack
       sx={{
         backgroundColor: "#fcfcfc",
-        height: "10.5rem",
+        height: "8.5rem",
         width: "40.57rem",
         borderRadius: "15px",
-        border: "1px solid rgb(79 79 79 / 52%)",
+        border: "1px solid #e8e8e8",
         marginBottom: "20px",
       }}
     >
@@ -65,16 +107,16 @@ const CreatePost = (props) => {
         <Stack
           alignItems='center'
           justifyContent='center'
-          sx={{ width: "0.1" }}
+          sx={{ width: "0.1", paddingLeft: "10px" }}
         >
-          <Avatar />
+          <Avatar src={avatarSrc} />
         </Stack>
         <Stack
-          alignItems='flex-start'
+          alignItems='center'
           justifyContent='center'
           sx={{ width: "1", height: "1" }}
         >
-          <CreatePostForm handleCreatedPost={props.handleCreatedPost} />
+          <CreatePostForm handleCreatedPost={props?.handleCreatedPost} />
         </Stack>
       </Stack>
     </Stack>

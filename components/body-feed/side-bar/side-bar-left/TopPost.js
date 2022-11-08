@@ -1,8 +1,9 @@
-import { List, Typography } from "@mui/material";
+import { List, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState, lazy } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
 import CenteredLoadingCircular from "../../../ui/CenteredLoadingCircular";
+import SadFaceIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 const PostItem = dynamic(() => import("./PostItem"), {
   loading: () => <CenteredLoadingCircular />,
 });
@@ -41,7 +42,19 @@ const TopPost = ({ top10Posts }) => {
       >
         Most mlem posts
       </Typography>
-      <List>{postList}</List>
+      {postList.length !== 0 ? (
+        <List>{postList}</List>
+      ) : (
+        <Stack
+          aligntItems='center'
+          justifyContent='center'
+          sx={{ width: "100%", height: "200px" }}
+        >
+          <Typography variant='h5' color='#888' textAlign='center'>
+            Nothing to show <SadFaceIcon />
+          </Typography>
+        </Stack>
+      )}
     </ItemContainer>
   );
 };

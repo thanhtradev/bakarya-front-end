@@ -13,11 +13,11 @@ import ProfileNav from "../../components/personal-profile/Navigation";
 import UploadIcon from "@mui/icons-material/Upload";
 import UpdateProfile from "../../components/personal-profile/UpdateProfile";
 import AuthContext from "../../store/auth-context";
+import AvatarUser from "../../components/personal-profile/Avatar";
 
 export default function PersonalPage() {
   const [openModal, setModal] = useState(false);
   const wallpaperFile = useRef();
-  const avatarFile = useRef();
   const authCtx = useContext(AuthContext);
 
   const toggleOpenModal = () => {
@@ -36,14 +36,6 @@ export default function PersonalPage() {
     console.log(wallpaperFile.current.files[0]);
   };
 
-  const onChangeAvatarFile = () => {
-    console.log("changingAvatar");
-    console.log(avatarFile.current.files[0]);
-  };
-
-  const handleUploadAvatar = () => {
-    avatarFile.current.click();
-  };
   return (
     <React.Fragment>
       <Head>
@@ -124,54 +116,10 @@ export default function PersonalPage() {
             paddingTop: "20px",
           }}
         >
+          <AvatarUser />
           <Grid
             item
-            xs={4}
-            direction='column'
-            justifyContent='space-evenly'
-            alignItems='center'
-            sx={{
-              position: "relative",
-              // bgcolor: "cadetblue",
-              direction: "column",
-            }}
-          >
-            <Stack
-              justifyContent='center'
-              alignItems='center'
-              sx={{ height: "1" }}
-            >
-              <Stack
-                alignItems='center'
-                sx={{
-                  position: "absolute",
-                  top: "-70px",
-                  right: 0,
-                  left: 0,
-                }}
-              >
-                <Avatar
-                  sx={{
-                    width: "113px",
-                    height: "113px",
-                    border: "3px solid white",
-                    zIndex: 100,
-                  }}
-                />
-              </Stack>
-              <Button onClick={handleUploadAvatar}>Upload a photo</Button>
-              <input
-                type='file'
-                accept='image/*'
-                ref={avatarFile}
-                style={{ display: "none" }}
-                onChange={onChangeAvatarFile}
-              />
-            </Stack>
-          </Grid>
-          <Grid
-            item
-            xs={4}
+            xs={5}
             sx={
               {
                 // bgcolor: "chocolate",

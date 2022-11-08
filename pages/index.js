@@ -21,7 +21,7 @@ export default function Home({ posts }) {
 
 export async function getStaticProps() {
   try {
-    const first3PostURL = "http://api.bakarya.com/api/recipes/limit/5";
+    const first3PostURL = "http://api.bakarya.com/api/recipes/random";
 
     const postData = await axios.get(first3PostURL);
 

@@ -1,6 +1,7 @@
 /** width */
 .sidenav::-webkit-scrollbar {
   width: 10px;
+  display: none;
 }
 
 /** Track */

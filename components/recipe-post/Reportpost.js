@@ -47,6 +47,7 @@ const ReportPost = () => {
             onChange={handleChange}
             name={reason.reason.replace(/\s/g, "")}
             value={reason.reason}
+            key={reason.reason}
           />
         }
         label={reason.reason}

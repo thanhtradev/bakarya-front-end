@@ -14,10 +14,11 @@ import axios from "axios";
 import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
 import PostImages from "./PostImages";
 
-const MiniRecipePost = (props) => {
+const RecipePost = (props) => {
   const authCtx = useContext(AuthContext);
   const [isShowMore, setIsShowMore] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
   const [showComments, setShowComments] = useState(
     props.initialShowComment ?? false
   );
@@ -31,30 +32,12 @@ const MiniRecipePost = (props) => {
     getNumberOfLikes();
     setShowComments((prev) => props.initialShowComment ?? prev);
     getNumberOfComments();
-    checkIfUserHasAlreadyLikedPost();
   }, [comments]);
   let isLoggedIn = false;
 
   useEffect(() => {
     isLoggedIn = authCtx.isLoggedIn;
   }, []);
-
-  const checkIfUserHasAlreadyLikedPost = () => {
-    // var data = { recipeid: props.postID };
-    // var config = {
-    //   method: "get",
-    //   url: "http://api.bakarya.com/api/mlem/check",
-    //   headers: {},
-    //   data: data,
-    // };
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-  };
 
   const getNumberOfLikes = () => {
     var config = {
@@ -146,7 +129,11 @@ const MiniRecipePost = (props) => {
   const ingredientList = props.ingredient.map((ingrd, i) => {
     return (
       <React.Fragment key={i}>
-        <Typography component='li' variant='body2'>
+        <Typography
+          component='li'
+          variant='body2'
+          sx={{ wordWrap: "break-word" }}
+        >
           {ingrd}
         </Typography>
       </React.Fragment>
@@ -156,7 +143,12 @@ const MiniRecipePost = (props) => {
   const directionList = props.directions.map((dir, i) => {
     return (
       <React.Fragment key={i}>
-        <Typography component='li' variant='body2'>
+        <Typography
+          component='li'
+          variant='body2'
+          // noWrap
+          sx={{ wordWrap: "break-word" }}
+        >
           {dir}
         </Typography>
       </React.Fragment>
@@ -177,6 +169,7 @@ const MiniRecipePost = (props) => {
             createAt={props.createAt}
             author={props.author}
             postID={props.postID}
+            authorID={props.authorID}
           />
         </Stack>
         <Stack justifyContent='flex-start' alignItems='flex-start'>
@@ -220,9 +213,13 @@ const MiniRecipePost = (props) => {
           {isShowMore && (
             <React.Fragment>
               <Typography variant='h6'>Ingredients</Typography>
-              <Box component='ul'>{ingredientList}</Box>
+              <Box component='ul' sx={{ maxWidth: "100%" }}>
+                {ingredientList}
+              </Box>
               <Typography variant='h6'>Directions</Typography>
-              <Box component='ol'>{directionList}</Box>
+              <Box component='ol' sx={{ maxWidth: "500px" }}>
+                {directionList}
+              </Box>
               <Typography variant='h6'>Nutrition</Typography>
               <Typography paragraph={true} variant='body2'>
                 {props.nutrition}
@@ -242,7 +239,7 @@ const MiniRecipePost = (props) => {
           />
         )}
         <Box className={classes["post-media"]}>
-          <PostImages />
+          <PostImages images={props.images} />
         </Box>
         <Interactions
           onShowComments={handleToggleComments}
@@ -280,4 +277,4 @@ const MiniRecipePost = (props) => {
   );
 };
 
-export default MiniRecipePost;
+export default RecipePost;

@@ -13,6 +13,8 @@ import Link from "next/link";
 import AuthContext from "../../../store/auth-context";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const logginedSettings = [
   { title: "Profile", link: "/personal-profile" },
@@ -29,9 +31,15 @@ const HeaderAvatar = () => {
   const router = useRouter();
   const authCtx = React.useContext(AuthContext);
   const isLoggined = authCtx.isLoggedIn;
-  const settings = isLoggined ? logginedSettings : notLogginSetting;
   const [openLogoutForm, setOpenLogoutForm] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [avatarSrc, SetAvatarSrc] = useState();
+
+  const settings = isLoggined ? logginedSettings : notLogginSetting;
+
+  useEffect(() => {
+    GetAvatar();
+  }, []);
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -41,6 +49,39 @@ const HeaderAvatar = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
+  const GetAvatar = async () => {
+    try {
+      var config = {
+        method: "get",
+        url: "http://api.bakarya.com/api/user/avatar",
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+      };
+
+      const res = await axios(config);
+      const src = arrayBufferToBase64(res.data.data.data);
+      SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+    } catch (err) {
+      console.log(err);
+    }
+
+    // axios(config)
+    //   .then(function (response) {})
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+  };
+
+  //* function change array of buffer to string
+  //* for more information
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
 
   const handleOpenLogOut = () => {
     setOpenLogoutForm(true);
@@ -101,7 +142,7 @@ const HeaderAvatar = () => {
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
             alt='Remy Sharp'
-            src='/static/images/avatar/2.jpg'
+            src={avatarSrc}
             sx={{
               height: "38px",
               width: "38px",

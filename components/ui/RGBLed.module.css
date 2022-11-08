@@ -1,0 +1,31 @@
+@keyframes RGBLed-Text {
+  0% {
+    border: 1px solid red;
+    color: red;
+    box-shadow: 0px 0px 14px 0px rgba(255, 0, 0, 0.17);
+  }
+  33% {
+    border: 1px solid green;
+    color: green;
+    box-shadow: 0px 0px 14px 0px #09ff003d;
+  }
+  66% {
+    border: 1px solid blue;
+    color: blue;
+    box-shadow: 0px 0px 14px 0px #000eff3d;
+  }
+  100% {
+    border: 1px solid red;
+    color: red;
+    box-shadow: 0px 0px 14px 0px rgba(255, 0, 0, 0.17);
+  }
+}
+
+.to-RGB-Border {
+  animation: RGBLed-Border 1.7s linear 0.1s infinite;
+}
+
+.to-RGB-Text {
+  animation: RGBLed-Text 2.5s linear 0s infinite;
+  /* box-shadow: 0px 0px 14px 0px #ff00003d; */
+}

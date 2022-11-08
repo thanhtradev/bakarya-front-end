@@ -38,6 +38,7 @@ export default function Post({ post1 }) {
           category={post.categories}
           createAt={post.createdAt}
           directions={post.directions}
+          images={post.images}
           expert={post.expert}
           ingredient={post.ingredients}
           makes={post.makes}

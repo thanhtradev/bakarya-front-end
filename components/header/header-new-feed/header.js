@@ -20,6 +20,8 @@ import AppsIcon from "@mui/icons-material/Apps";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import Avatar from "./Avatar";
+import _Menu from "../../Menu/Menu";
+import React from "react";
 
 const MyBtn = styled(Button)({
   height: "40px",
@@ -39,32 +41,33 @@ const MyInput = styled(Input)({
 });
 
 const iconList = [
-  { title: "", icon: <FavoriteBorderIcon /> },
-  { title: "", icon: <NotificationsNoneIcon /> },
-  { title: "", icon: <AppsIcon /> },
+  { title: "", item: <FavoriteBorderIcon /> },
+  { title: "", item: <NotificationsNoneIcon /> },
+  { title: "", item: <_Menu /> },
 ];
 
 const iconBtns = iconList.map((icon, index) => {
   return (
-    <Box
-      component={MyBtn}
-      key={index}
-      sx={{
-        padding: "0",
-        width: "40px",
-        height: "40px",
-        minWidth: "41px",
-        color: "#333",
-        "&:hover": {
-          color: "white",
-          backgroundColor: "#6ba4e9",
-          boxShadow:
-            "0 14px 26px -12px rgb(85 150 230 / 42%), 0 4px 23px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(85 150 230 / 20%)",
-        },
-      }}
-    >
-      {icon.icon}
-    </Box>
+    // <Box
+    //   component={MyBtn}
+    //   key={index}
+    //   sx={{
+    //     padding: "0",
+    //     width: "40px",
+    //     height: "40px",
+    //     minWidth: "41px",
+    //     color: "#333",
+    //     "&:hover": {
+    //       color: "white",
+    //       backgroundColor: "#6ba4e9",
+    //       boxShadow:
+    //         "0 14px 26px -12px rgb(85 150 230 / 42%), 0 4px 23px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(85 150 230 / 20%)",
+    //     },
+    //   }}
+    // >
+
+    // </Box>
+    <React.Fragment key={index}>{icon.item}</React.Fragment>
   );
 });
 
@@ -79,6 +82,7 @@ function HeaderNewsFeed() {
       style={{
         margin: 0,
         // borderBottom: "1px solid rgba(5,5,5,0.4)",
+        boxShadow: "rgb(126 125 125 / 20%) 1px 1px 10px 3px",
         height: "57px",
       }}
     >
@@ -105,7 +109,7 @@ function HeaderNewsFeed() {
               alt='bakarya logo'
               src={`${logo.src}`}
               component='img'
-              sx={{ height: "1", width: "1" }}
+              sx={{ height: "1", width: "50px" }}
             />
           </Link>
         </Box>

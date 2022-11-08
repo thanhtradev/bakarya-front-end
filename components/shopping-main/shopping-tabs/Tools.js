@@ -30,7 +30,6 @@ const ToolTab = ({ products }) => {
       container
       spacing={3}
       sx={{
-        // bgcolor: "aqua",
         height: "fit-content",
       }}
       columns={15}

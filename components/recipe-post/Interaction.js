@@ -8,6 +8,9 @@ import SavedIcon from "@mui/icons-material/Star";
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import { LoadingButton } from "@mui/lab";
+// import LikedIcon from "../../assets/like.svg";
+import { ReactComponent as LikedIcon } from "../../assets/like.svg";
+import { SvgIcon } from "@mui/material";
 import axios from "axios";
 
 const infoIconColor = "#84b6e9";
@@ -22,14 +25,16 @@ function Interaction(props) {
   const [showComment, setShowComment] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  // const [isLoadingLikeBtn, setIsLoad]
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
+    checkUserHasLikedPost();
   }, []);
 
   const infoIcons = [
     {
       icon: <NotLikeIcon fontSize='small' sx={{ fontSize: "17px" }} />,
+      // icon: <SvgIcon component={LikedIcon} />,
       quantity: numberOfLike,
     },
     {
@@ -57,55 +62,80 @@ function Interaction(props) {
     setShowComment((prev) => !prev);
   };
 
-  const likeHandler = () => {
-    setIsLoading(true);
+  const likeBtnHandler = async () => {
+    try {
+      setIsLoading(true);
 
-    if (!isLiked) {
-      const data = {
-        userid: authCtx.userID,
-        recipeid: props.postId,
-      };
+      let url;
+      let data;
 
+      //* set url
+      if (!isLiked) {
+        url = "http://api.bakarya.com/api/mlem";
+        data = {
+          userid: authCtx.userID,
+          recipeid: props.postId,
+        };
+      } else {
+        url = "http://api.bakarya.com/api/unmlem";
+        data = {
+          recipeid: props.postId,
+        };
+      }
+
+      //* set config
       var config = {
         method: "post",
-        url: "http://api.bakarya.com/api/mlem",
+        url,
         headers: { "x-access-token": authCtx.token },
         data: data,
       };
 
-      axios(config)
-        .then(function (response) {
-          setIsLoading(false);
-          setNumberOfLike(numberOfLike + 1);
-          setIsLiked((prev) => !prev);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else {
-      const data = {
-        recipeid: props.postId,
-      };
-      var config = {
-        method: "post",
-        url: "http://api.bakarya.com/api/unmlem",
-        headers: {
-          "x-access-token": authCtx.token,
-        },
-        data: data,
-      };
+      //* fetch
+      const res = await axios(config);
 
-      axios(config)
-        .then(function (response) {})
-        .catch(function (error) {
-          alert(error);
-        });
+      //* action after fetch
+      if (isLiked) {
+        setIsLiked(false);
+        setNumberOfLike((prev) => prev - 1);
+      } else {
+        setIsLiked(true);
+        setNumberOfLike((prev) => prev + 1);
+      }
+      console.log(res.data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
-    setIsLoading(false);
   };
 
   const saveHandler = () => {
     setIsSaved((prev) => !prev);
+  };
+
+  const checkUserHasLikedPost = () => {
+    setIsLoading(true);
+    var data = { recipeid: props.postId };
+    var config = {
+      method: "post",
+      url: "http://api.bakarya.com/api/mlem/check",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        const { mlemmed } = response.data;
+        setIsLiked((prev) => {
+          setIsLoading(false);
+          return mlemmed;
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const infoIconList = infoIcons.map((item, i) => {
@@ -169,7 +199,7 @@ function Interaction(props) {
             />
           ) : (
             <IconButton
-              onClick={likeHandler}
+              onClick={likeBtnHandler}
               sx={{
                 backgroundColor: infoIconColor,
                 backgroundColor: `${isLiked ? infoIconColor : "#84b6e9"}`,
