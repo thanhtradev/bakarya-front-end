@@ -69,9 +69,7 @@ const PostItem = (props) => {
         <ListItemText
           primary={
             <Stack component='span'>
-              <Typography sx={{ textTransform: "capitalize" }}>
-                {`${props.name} - ${props.author}`}
-              </Typography>
+              <Typography>{`${props.name} - ${props.author}`}</Typography>
               <Typography variant='caption'>{time}</Typography>
             </Stack>
           }
