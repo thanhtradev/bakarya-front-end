@@ -46,7 +46,7 @@ const TopPost = ({ top10Posts }) => {
         <List>{postList}</List>
       ) : (
         <Stack
-          aligntItems='center'
+          alignItems='center'
           justifyContent='center'
           sx={{ width: "100%", height: "200px" }}
         >

@@ -4,11 +4,14 @@ import SideBar from "../SideBar";
 import Navigation from "./Navigation";
 import Top10Posts from "./TopPost";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 import CenteredLoadingCircular from "../../../ui/CenteredLoadingCircular";
 
 const SideBarLeft = () => {
   const [top10Posts, setTop10Post] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [cookies, setCookies] = useCookies();
+  const [username, setUsername] = useState(cookies.username);
   useEffect(() => {
     fetchTop10Post();
   }, []);
@@ -29,7 +32,7 @@ const SideBarLeft = () => {
   return (
     <SideBar left={30} position='fixed' bottom='0' overflowY='scroll'>
       <Box>
-        <Navigation />
+        <Navigation username={username} />
         {/* {isLoading && <CenteredLoadingCircular />} */}
         <Top10Posts top10Posts={top10Posts} />
       </Box>

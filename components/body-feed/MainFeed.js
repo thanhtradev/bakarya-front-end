@@ -30,7 +30,6 @@ const MainFeed = ({ posts: recipePost }) => {
     postData.data, setPosts((prev) => [newPosts, ...postData.data]);
   };
 
-  console.log("im in main");
   const recipePosts = posts.map((post) => {
     return (
       <Post

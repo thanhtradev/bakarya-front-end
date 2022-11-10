@@ -4,8 +4,11 @@ import AuthContext from "../store/auth-context";
 import Body from "../components/body-feed/Body";
 import axios from "axios";
 import { useContext } from "react";
+import { useCookies } from "react-cookie";
 
-export default function Home({ posts }) {
+export default function Home({ posts, token }) {
+  const [cookies, setCookies] = useCookies();
+
   return (
     <div className={styles.container} style={{ padding: 0 }}>
       <Head>
@@ -19,7 +22,7 @@ export default function Home({ posts }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps({ req, res }) {
   try {
     const first3PostURL = "http://api.bakarya.com/api/recipes/random";
 

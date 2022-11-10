@@ -126,8 +126,9 @@ export default function LoginPage() {
         })
         .catch(function (error) {
           handleToggle();
-          message = error.response.data.message;
-          notifyError(message);
+          // message = error.response.data.message;
+          console.log(error);
+          // notifyError(message);
           Clear();
         });
     } catch (error) {

@@ -136,6 +136,10 @@ export default function SignUpPage() {
     setOpen(true);
   };
 
+  const handleCloseBackDrop = () => {
+    setOpen(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isFormValid) {
@@ -152,7 +156,6 @@ export default function SignUpPage() {
 
   const SignUp = ({ username, pwd }) => {
     handleOpenBackDrop();
-    console.log(open);
     const data = {
       username: username,
       password: pwd,
@@ -184,6 +187,7 @@ export default function SignUpPage() {
         message = error.response.data.message;
         notifyError(message);
       });
+    handleCloseBackDrop();
   };
 
   const notifyOk = (message) => {
