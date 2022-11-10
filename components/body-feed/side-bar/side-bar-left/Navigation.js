@@ -19,20 +19,23 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import classes from "../../../ui/RGBLed.module.css";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
-const Navigation = () => {
+const Navigation = ({ username }) => {
   const authCtx = React.useContext(AuthContext);
+  const [cookies, setCookies] = useCookies();
   const [value, setValue] = React.useState(0);
   const [openLogoutForm, setOpenLogoutForm] = React.useState(false);
   const [logined, setLogined] = useState(false);
   const [avatarSrc, SetAvatarSrc] = useState();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
     setLogined(authCtx.isLoggedIn);
     GetAvatar();
+    setIsLoading(false);
   }, []);
-
   const navTabs = [
     {
       title: "Home",
@@ -155,39 +158,41 @@ const Navigation = () => {
   return (
     <React.Fragment>
       <ItemContainer>
-        <Button
-          variant='outlined'
-          onClick={handleClick}
-          className={`${classes["to-RGB-Text"]} ${classes["to-RGB-Border"]}`}
-          startIcon={
-            <Avatar
-              alt='Thanh Tu'
-              src={avatarSrc}
-              sx={{ width: "38px", height: "38px" }}
-            >
-              TT
-            </Avatar>
-          }
-          sx={{
-            height: "40px",
-            color: "unset",
-            textTransform: "capitalize",
-            fontSize: "19px",
-            paddingLeft: "10px",
-            height: "50px",
-            justifyContent: "flex-start",
-            bgcolor: "unset",
-            borderRadius: "15px",
-            marginBottom: "10px",
-            "&.MuiButton-root": {
-              width: "0.9",
-            },
-          }}
-        >
-          <Typography variant='subtitle1' fontWeight='bold'>
-            Thanh Tu
-          </Typography>
-        </Button>
+        {authCtx.isLoggedIn && !isLoading && (
+          <Button
+            variant='outlined'
+            onClick={handleClick}
+            className={`${classes["to-RGB-Text"]} ${classes["to-RGB-Border"]}`}
+            startIcon={
+              <Avatar
+                alt='Thanh Tu'
+                src={avatarSrc}
+                sx={{ width: "38px", height: "38px" }}
+              >
+                TT
+              </Avatar>
+            }
+            sx={{
+              height: "40px",
+              color: "unset",
+              textTransform: "capitalize",
+              fontSize: "19px",
+              paddingLeft: "10px",
+              height: "50px",
+              justifyContent: "flex-start",
+              bgcolor: "unset",
+              borderRadius: "15px",
+              marginBottom: "10px",
+              "&.MuiButton-root": {
+                width: "0.9",
+              },
+            }}
+          >
+            <Typography variant='subtitle1' fontWeight='bold'>
+              {!isLoading ? username : "Loading..."}
+            </Typography>
+          </Button>
+        )}
         <Tabs
           orientation='vertical'
           value={value}

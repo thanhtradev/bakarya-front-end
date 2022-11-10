@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import jwt_decode from "jwt-decode";
+import { CookiesProvider } from "react-cookie";
 
 const AuthContext = React.createContext({
   token: "",
@@ -8,20 +11,13 @@ const AuthContext = React.createContext({
   login: (token) => {},
   logout: () => {},
 });
-let initToken = null;
-let userId = null;
-let username = null;
-export const AuthContextProvider = (props) => {
-  if (typeof window !== "undefined") {
-    // Perform localStorage action
-    initToken = localStorage.getItem("loginToken");
-    userId = localStorage.getItem("userID");
-    username = localStorage.getItem("username");
-  }
 
-  const [token, setToken] = useState(initToken);
-  const [userID, setUserID] = useState(userId);
-  const [username, setUsername] = useState("");
+export const AuthContextProvider = (props) => {
+  const [cookie, setCookie, removeCookie] = useCookies();
+
+  const [token, setToken] = useState(cookie.accessToken);
+  const [userID, setUserID] = useState(cookie.userID);
+  const [username, setUsername] = useState(cookie.username);
   const userIsLoggedIn = !!token;
 
   if (token !== null) {
@@ -29,22 +25,35 @@ export const AuthContextProvider = (props) => {
   }
 
   const loginHandler = (obj) => {
+    const usernameCookieValue = obj.username;
+    const accessTokenCookieValue = obj.accessToken;
+    const userIDCookieValue = obj.id;
+
+    setCookieValue("username", usernameCookieValue);
+    setCookieValue("accessToken", accessTokenCookieValue);
+    setCookieValue("userID", userIDCookieValue);
+
     setToken(obj.accessToken);
     setUsername(obj.username);
     setUserID(obj.id);
     AuthContext.isLoggedIn = true;
-    localStorage.setItem("loginToken", obj.accessToken);
-    localStorage.setItem("userID", obj.id);
-    localStorage.setItem("username", obj.username);
+  };
+
+  const setCookieValue = (cookieKey, cookieValue) => {
+    setCookie(cookieKey, cookieValue, {
+      path: "/",
+      maxAge: 3600, // Expires after 1hr
+      sameSite: true,
+    });
   };
 
   const logoutHandler = () => {
     setUserID("");
     setToken(null);
     AuthContext.isLoggedIn = false;
-    localStorage.removeItem("loginToken");
-    localStorage.removeItem("userID");
-    localStorage.removeItem("username");
+    removeCookie("userID");
+    removeCookie("accessToken");
+    removeCookie("username");
   };
 
   const contextValue = {
@@ -57,9 +66,11 @@ export const AuthContextProvider = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
-    </AuthContext.Provider>
+    <CookiesProvider>
+      <AuthContext.Provider value={contextValue}>
+        {props.children}
+      </AuthContext.Provider>
+    </CookiesProvider>
   );
 };
 
