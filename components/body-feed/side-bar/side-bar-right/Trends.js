@@ -25,7 +25,7 @@ const Suggestion = ({ categories }) => {
   const listItems = categories.map((cate, index) => {
     return (
       <React.Fragment key={index}>
-        {index !== 0 && <Divider component='li' sx={{ margin: "4px 0" }} />}
+        {index !== 0 && <Divider component="li" sx={{ margin: "4px 0" }} />}
         <Link
           key={index}
           href={`/trends/${cate.replace(/ /g, "").toLowerCase()}`}
@@ -60,8 +60,8 @@ const Suggestion = ({ categories }) => {
               }}
             />
             <Typography
-              variant='caption'
-              fontSize='12px'
+              variant="caption"
+              fontSize="12px"
               sx={{ color: "#959292", lineHeight: "1" }}
             >
               0 Posts
@@ -75,28 +75,28 @@ const Suggestion = ({ categories }) => {
   return (
     <ItemContainer>
       <Stack
-        direction='row'
-        justifyContent='flex-start'
-        alignItems='center'
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
         sx={{
           width: "1",
           // backgroundColor: "aquamarine",
         }}
       >
         <Typography
-          variant='h5'
+          variant="h5"
           sx={{
             fontWeight: "bolder",
             lineHeight: "1.4",
           }}
         >
-          Maybe you'll like
+          Maybe you&apos;ll like
         </Typography>
       </Stack>
       <Box sx={{ width: "100%" }}>
         <List
-          component='nav'
-          aria-label='Categories'
+          component="nav"
+          aria-label="Categories"
           sx={{
             display: "flex",
             justifyContent: "flex-start",

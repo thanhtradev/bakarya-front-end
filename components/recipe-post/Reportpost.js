@@ -40,6 +40,7 @@ const ReportPost = () => {
 
   const reportPostReason = reportReasons.map((reason) => {
     return (
+      // eslint-disable-next-line react/jsx-key
       <FormControlLabel
         control={
           <Checkbox
@@ -73,7 +74,7 @@ const ReportPost = () => {
       </Button>
       <MUIDialog open={openDialog}>
         <form onSubmit={handleSubmitReport}>
-          <DialogTitle textTransform='capitalize'>
+          <DialogTitle textTransform="capitalize">
             Report recipe post
           </DialogTitle>
           <DialogContent
@@ -85,12 +86,12 @@ const ReportPost = () => {
             }}
           >
             <FormControl>
-              <FormLabel component='legend'>Report reasons</FormLabel>
+              <FormLabel component="legend">Report reasons</FormLabel>
               <FormGroup>{reportPostReason}</FormGroup>
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleToggleDialog} type='submit'>
+            <Button onClick={handleToggleDialog} type="submit">
               Agree
             </Button>
           </DialogActions>
