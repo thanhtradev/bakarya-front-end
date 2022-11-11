@@ -175,8 +175,8 @@ const Navigation = ({ username }) => {
             sx={{
               height: "40px",
               color: "unset",
-              textTransform: "capitalize",
-              fontSize: "19px",
+              textTransform: "none",
+              fontSize: "13px",
               paddingLeft: "10px",
               height: "50px",
               justifyContent: "flex-start",
@@ -188,7 +188,7 @@ const Navigation = ({ username }) => {
               },
             }}
           >
-            <Typography variant='subtitle1' fontWeight='bold'>
+            <Typography variant='body1' fontWeight='bold'>
               {!isLoading ? username : "Loading..."}
             </Typography>
           </Button>
