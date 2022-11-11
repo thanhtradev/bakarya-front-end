@@ -86,6 +86,8 @@ const User = (props) => {
     setIsloadingFollow(false);
   };
 
+  const handleGetUserAvatar = () => {};
+
   return (
     <CardHeader
       avatar={
