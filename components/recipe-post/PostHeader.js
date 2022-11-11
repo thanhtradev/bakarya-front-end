@@ -12,6 +12,7 @@ const User = (props) => {
   const followRef = useRef();
   const authCtx = useContext(AuthContext);
   const [isLoadingFollow, setIsloadingFollow] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState("");
 
   const monthNames = [
     "January",
@@ -68,7 +69,6 @@ const User = (props) => {
       };
     }
 
-    console.log(actionURL);
     const res = await axios({
       method: "POST",
       url: actionURL,
@@ -83,9 +83,10 @@ const User = (props) => {
     } else {
       setIsFollow(true);
     }
-    console.log(res.data);
     setIsloadingFollow(false);
   };
+
+  const handleGetUserAvatar = () => {};
 
   return (
     <CardHeader

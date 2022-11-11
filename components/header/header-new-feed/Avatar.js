@@ -16,11 +16,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const logginedSettings = [
-  { title: "Profile", link: "/personal-profile" },
-  { title: "Account", link: "/#" },
-  { title: "Dashboard", link: "/#" },
-];
+const logginedSettings = [{ title: "Profile", link: "/personal-profile" }];
 const notLogginSetting = [
   { title: "Sign in", link: "/login-page" },
   { title: "Sign up", link: "/signup-page" },
