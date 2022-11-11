@@ -6,7 +6,6 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
-
 const iconSize = "30px";
 
 const Profile = () => {
@@ -19,7 +18,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, [firstName, lastname, birthday, email]);
 
   const tabInfo = [
     {
@@ -55,8 +54,8 @@ const Profile = () => {
       });
 
       const { birthday, email, firstname, lastname } = res.data;
-
-      setBirthday(birthday);
+      const dateConverted = setDate(birthday);
+      setBirthday(dateConverted);
       setFirstName(firstname);
       setLastName(lastname);
       setEmail(email);
@@ -65,6 +64,30 @@ const Profile = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const setDate = (string) => {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const rawDate = new Date(string);
+    const month = monthNames[rawDate.getMonth()];
+    const day = rawDate.getDate().toString();
+    const year = rawDate.getFullYear().toString();
+    const time = day.concat(" ", month).concat(", ", year);
+
+    return time;
   };
 
   const infoSections = tabInfo.map((info) => {
