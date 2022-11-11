@@ -64,7 +64,7 @@ const Suggestion = ({ categories }) => {
               fontSize='12px'
               sx={{ color: "#959292", lineHeight: "1" }}
             >
-              3 Posts
+              0 Posts
             </Typography>
           </ListItemButton>
         </Link>

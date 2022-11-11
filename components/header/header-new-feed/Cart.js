@@ -27,7 +27,7 @@ const Cart = () => {
         margin: "0 10px",
       }}
     >
-      <Badge badgeContent={4} color='primary'>
+      <Badge badgeContent={0} color='primary'>
         <ShoppingCartOutlinedIcon />
       </Badge>
     </Box>
