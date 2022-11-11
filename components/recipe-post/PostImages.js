@@ -7,7 +7,6 @@ import { useState } from "react";
 
 export default function PostImages({ images }) {
   const [postImages, setPostImages] = useState(images);
-
   const imgList =
     postImages !== undefined ? (
       postImages.map((item) => {

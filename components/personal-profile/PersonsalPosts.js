@@ -33,6 +33,7 @@ const PersonalPosts = () => {
   };
 
   const recipePosts = posts.slice(0, 5).map((post) => {
+    console.log(post);
     return (
       <Post
         key={post.id}
@@ -46,6 +47,7 @@ const PersonalPosts = () => {
         ingredient={post.ingredients}
         makes={post.makes}
         name={post.name}
+        images={post.images}
         numberOfComment={post.number_of_comments}
         numberOfLike={post.number_of_mlems}
         nutrition={post.nutrition}
