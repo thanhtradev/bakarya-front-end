@@ -51,13 +51,13 @@ const Navigation = ({ username }) => {
         router.push("/shopping");
       },
     },
-    {
-      title: "Livestream",
-      icon: <OndemandVideoIcon />,
-      onNavItemClick: () => {
-        router.push("/livestream");
-      },
-    },
+    // {
+    //   title: "Livestream",
+    //   icon: <OndemandVideoIcon />,
+    //   onNavItemClick: () => {
+    //     router.push("/livestream");
+    //   },
+    // },
     {
       title: "Saved Recipes",
       icon: <StarOutlineIcon />,
