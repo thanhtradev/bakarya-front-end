@@ -1,0 +1,27 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy NextJS app
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.SSH_HOST}}
+          key: ${{secrets.SSH_KEY}}
+          username: ${{secrets.SSH_USERNAME}}
+          passphrase: ${{secrets.SSH_PASSPHRASE}}
+
+          script: |
+            rm -rf bakarya-front-end
+            git clone --branch release https://github.com/thanhtradev/bakarya-front-end.git
+            cd bakarya-front-end
+
+            npm install
+            npm run build
+            pm2 delete bakarya-front-end && pm2 start npm --name "bakarya-front-end" -- start
+            echo "Deployed"
