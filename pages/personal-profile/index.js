@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import {
   Avatar,
@@ -11,12 +11,21 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import ProfileNav from "../../components/personal-profile/Navigation";
 import UploadIcon from "@mui/icons-material/Upload";
-import UpdateProfile from "../../components/personal-profile/UpdateProfile";
+// import UpdateProfile from "../../components/personal-profile/UpdateProfile";
 import AuthContext from "../../store/auth-context";
 import AvatarUser from "../../components/personal-profile/Avatar";
+import dynamic from "next/dynamic";
+import axios from "axios";
+const UpdateProfile = dynamic(
+  () => import("../../components/personal-profile/UpdateProfile"),
+  {
+    suspense: true,
+  }
+);
 
 export default function PersonalPage() {
   const [openModal, setModal] = useState(false);
+  const [username, setUsername] = useState();
   const wallpaperFile = useRef();
   const authCtx = useContext(AuthContext);
 
@@ -29,6 +38,31 @@ export default function PersonalPage() {
     const formData = new FormData();
 
     // Update the formData object
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    try {
+      const url = "http://api.bakarya.com/api/user/profile";
+      var config = {
+        method: "get",
+        url: url,
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+      };
+
+      const res = await axios(config);
+
+      const { firstname, lastname } = res.data;
+      const username = lastname.concat(" ").concat(firstname);
+      setUsername(username);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const onChangeWallpaper = () => {
@@ -128,7 +162,7 @@ export default function PersonalPage() {
           >
             <Stack spacing={1}>
               <Typography variant='h5' fontWeight='bold'>
-                Thanh Tu
+                {username}
               </Typography>
               <Stack direction='row' spacing={3} color='#5985d4'>
                 <Typography>10 post</Typography>
@@ -143,7 +177,7 @@ export default function PersonalPage() {
               </Typography>
             </Stack>
           </Grid>
-          <UpdateProfile firstname='Thanh' lastname='tu' birthday='2022-2-2' />
+          <UpdateProfile />
         </Grid>
         <Grid container spacing={0}>
           <ProfileNav />
