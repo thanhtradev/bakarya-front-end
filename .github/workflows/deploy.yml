@@ -23,5 +23,6 @@ jobs:
 
             npm install
             npm run build
-            pm2 delete bakarya-front-end && pm2 start npm --name "bakarya-front-end" -- start
+            pm2 delete bakarya-front-end 
+            pm2 start npm --name "bakarya-front-end" -- start
             echo "Deployed"
