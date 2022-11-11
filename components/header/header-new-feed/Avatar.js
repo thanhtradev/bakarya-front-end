@@ -108,8 +108,8 @@ const HeaderAvatar = () => {
             href={setting.link}
           >
             <Typography
-              component='a'
-              textAlign='center'
+              component="a"
+              textAlign="center"
               sx={{ width: "1", height: "1" }}
             >
               {setting.title}
@@ -125,7 +125,7 @@ const HeaderAvatar = () => {
           style={{ textDecoration: "none", color: "black" }}
         >
           <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
-            <Typography textAlign='center'>{setting.title}</Typography>
+            <Typography textAlign="center">{setting.title}</Typography>
           </MenuItem>
         </Link>
       ));
@@ -134,10 +134,10 @@ const HeaderAvatar = () => {
 
   return (
     <React.Fragment>
-      <Tooltip title='Open settings'>
+      <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
-            alt='Remy Sharp'
+            alt="Remy Sharp"
             src={avatarSrc}
             sx={{
               height: "38px",
@@ -151,7 +151,7 @@ const HeaderAvatar = () => {
       </Tooltip>
       <Menu
         sx={{ mt: "45px" }}
-        id='menu-appbar'
+        id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: "top",
@@ -168,7 +168,7 @@ const HeaderAvatar = () => {
         {settingList()}
         {isLoggined && (
           <MenuItem onClick={handleOpenLogOut}>
-            <Typography textAlign='center'>Sign out</Typography>
+            <Typography textAlign="center">Log out</Typography>
           </MenuItem>
         )}
       </Menu>
@@ -176,10 +176,10 @@ const HeaderAvatar = () => {
         <Dialog
           open={openLogoutForm}
           onClose={handleClose}
-          aria-labelledby='alert-log-out'
-          aria-describedby='alert-log-out-form'
+          aria-labelledby="alert-log-out"
+          aria-describedby="alert-log-out-form"
         >
-          <DialogTitle id='alert-dialog-title'>
+          <DialogTitle id="alert-dialog-title">
             Do you want to log out ?
           </DialogTitle>
           <DialogActions>

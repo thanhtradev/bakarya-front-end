@@ -109,7 +109,7 @@ const Navigation = ({ username }) => {
         {...a11yProps(i)}
         icon={item.icon}
         onClick={item.onNavItemClick}
-        iconPosition='start'
+        iconPosition="start"
         sx={{
           borderRadius: "14px",
           "&.MuiTab-root": {
@@ -160,12 +160,12 @@ const Navigation = ({ username }) => {
       <ItemContainer>
         {authCtx.isLoggedIn && !isLoading && (
           <Button
-            variant='outlined'
+            variant="outlined"
             onClick={handleClick}
             className={`${classes["to-RGB-Text"]} ${classes["to-RGB-Border"]}`}
             startIcon={
               <Avatar
-                alt='Thanh Tu'
+                alt="Thanh Tu"
                 src={avatarSrc}
                 sx={{ width: "38px", height: "38px" }}
               >
@@ -188,16 +188,16 @@ const Navigation = ({ username }) => {
               },
             }}
           >
-            <Typography variant='body1' fontWeight='bold'>
+            <Typography variant="body1" fontWeight="bold">
               {!isLoading ? username : "Loading..."}
             </Typography>
           </Button>
         )}
         <Tabs
-          orientation='vertical'
+          orientation="vertical"
           value={value}
           onChange={handleChange}
-          aria-label='Navigation Bar'
+          aria-label="Navigation Bar"
           TabIndicatorProps={{
             style: {
               display: "none",
@@ -213,11 +213,11 @@ const Navigation = ({ username }) => {
           {tabItems}
           {logined && (
             <Tab
-              label='Sign out'
+              label="log out"
               {...a11yProps(5)}
               icon={<LogoutIcon />}
               onClick={handleOpenLogOut}
-              iconPosition='start'
+              iconPosition="start"
               sx={{
                 borderRadius: "14px",
                 "&.MuiTab-root": {
@@ -241,17 +241,17 @@ const Navigation = ({ username }) => {
         <Dialog
           open={openLogoutForm}
           onClose={handleClose}
-          aria-labelledby='alert-log-out'
-          aria-describedby='alert-log-out-form'
+          aria-labelledby="alert-log-out"
+          aria-describedby="alert-log-out-form"
         >
-          <DialogTitle id='alert-dialog-title'>
+          <DialogTitle id="alert-dialog-title">
             Do you want to log out ?
           </DialogTitle>
           <DialogActions>
             <Button onClick={handleLogOut} autoFocus>
               Yes, I am
             </Button>
-            <Button onClick={handleContinue}>No, I don&apos;t</Button>
+            <Button onClick={handleContinue}>No, I don't</Button>
           </DialogActions>
         </Dialog>
       </div>

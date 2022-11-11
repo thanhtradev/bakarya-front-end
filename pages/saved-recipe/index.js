@@ -13,9 +13,9 @@ const SavedRecipePage = () => {
 
   return (
     <>
-      {!isLoading && savedRecipeList.length === 0 ? (
-        <Stack alignItems='center' sx={{ width: "1", height: "1" }}>
-          <Typography variant='h4' color='#888'>
+      {savedRecipeList.length === 0 ? (
+        <Stack alignItems="center" sx={{ width: "1", height: "1" }}>
+          <Typography variant="h4" color="#888">
             You haven&apos;t saved anything yet
           </Typography>
         </Stack>
