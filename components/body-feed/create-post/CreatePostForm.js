@@ -13,20 +13,29 @@ import ValidateInput from "../../ValidateInput/ValidateInput";
 import AuthContext from "../../../store/auth-context";
 import CircularProgress from "@mui/material/CircularProgress";
 import classes from "../../ui/RGBLed.module.css";
+import UploadIcon from "@mui/icons-material/Upload";
+import PostImages from "../../recipe-post/PostImages";
+import { useState } from "react";
+import { LoadingButton } from "@mui/lab";
 
 const Asterisk = () => {
   return <span sx={{ color: "red" }}>*</span>;
 };
 
+const IMAGE_LIMIT = 4;
+
 export default function FormDialog(props) {
+  const recipeImages = React.useRef();
   const authCtx = React.useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(false);
   const [formOpen, setFormOpen] = React.useState(false);
   const [ingrdData, setIngrdData] = React.useState([]);
   const [directionData, setDirectionData] = React.useState([]);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [isUploadLoading, setIsUploadLoading] = React.useState(false);
   const [logined, setLogined] = React.useState(false);
-
+  const [previewImages, setPreviewImages] = React.useState([]);
+  const [uploadImages, setUploadImages] = useState([]);
   const {
     value: cakeNameValue,
     isValid: cakeNameIsValid,
@@ -84,6 +93,28 @@ export default function FormDialog(props) {
 
   const token = authCtx.token;
 
+  const onChangeRecipeImages = () => {
+    const images = recipeImages.current.files;
+    const isOkImagesListLength = checkUploadImagesLength(images);
+    if (!isOkImagesListLength)
+      throw new Error("Cannot upload more than 3 images");
+
+    const convertArr = Array.from(images);
+    const preview = [];
+    const upload = [];
+    convertArr.map((img, i) => {
+      preview.push(URL.createObjectURL(img));
+      upload.push(img);
+    });
+    setUploadImages((prev) => {
+      console.log(uploadImages.concat(upload));
+      return uploadImages.concat(upload);
+    });
+    setPreviewImages((prev) => {
+      return previewImages.concat(preview);
+    });
+  };
+
   const getIngrdData = React.useCallback((data) => {
     setIngrdData(data);
   }, []);
@@ -102,6 +133,8 @@ export default function FormDialog(props) {
     resetPrep();
     resetServe();
     resetNutrition();
+    setPreviewImages([]);
+    setUploadImages([]);
   };
   const handleContinue = () => {
     //* do not quit
@@ -122,19 +155,30 @@ export default function FormDialog(props) {
 
   const handleCreate = (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    CreatePost({
-      cakeName: data.get("cakename"),
-      cakeBrief: data.get("cakebrief"),
+    const form = new FormData(e.currentTarget);
+    const data = {
+      cakeName: form.get("cakename"),
+      cakeBrief: form.get("cakebrief"),
       ingrdData,
       directionData,
-      nutrition: data.get("nutrition"),
-      prepTime: data.get("prep"),
-      serving: data.get("serving"),
-    });
+      nutrition: form.get("nutrition"),
+      prepTime: form.get("prep"),
+      serving: form.get("serving"),
+    };
+
+    const hasImages = checkIsUploadImages(uploadImages);
+    if (!hasImages) {
+      // CreatePostWithoutImages(data);
+      CreatePostWithImages(data);
+    } else {
+      const toUploadImages = Array.from(uploadImages).map((img) =>
+        form.append("images", img)
+      );
+      CreatePostWithoutImages(data);
+    }
   };
 
-  const CreatePost = ({
+  const CreatePostWithoutImages = ({
     cakeName,
     cakeBrief,
     ingrdData,
@@ -145,19 +189,50 @@ export default function FormDialog(props) {
   }) => {
     //** toggle loading on*/
     handleToggle();
+    // var data = {
+    //   author: authCtx.username,
+    //   createdAt: new Date(),
+    //   name: cakeName,
+    //   expert: cakeBrief,
+    //   time: prepTime,
+    //   makes: serving,
+    //   ingredients: ingrdData,
+    //   directions: directionData,
+    //   nutrition: nutrition,
+    //   categories: "Angel Food Cakes",
+    //   images: uploadImages,
+    // };
+
     var data = {
-      author: authCtx.username,
-      createdAt: new Date(),
-      name: cakeName,
-      expert: cakeBrief,
-      time: prepTime,
-      makes: serving,
-      ingredients: ingrdData,
-      directions: directionData,
-      nutrition: nutrition,
-      categories: "Angel Food Cakes",
+      recipe: {
+        name: "Best Angel Food Cake",
+        expert:
+          "For our daughter's wedding, a friend made this lovely, angel food cake from a recipe she's used for decades. It really is one of the best angel food cake recipes I've found. Serve slices plain or dress them up with fresh fruit. \\u2014Marilyn Niemeyer, Doon, Iowa",
+        time: "Prep: 15 min. + standing Bake: 35 min. + cooling",
+        makes: "16 servings",
+        ingredients: [
+          "1-1/4 cups egg whites (about 9 large)",
+          "1-1/2 cups sugar, divided",
+          "1 cup cake flour",
+          "1-1/4 teaspoons cream of tartar",
+          "1 teaspoon vanilla extract",
+          "1/4 teaspoon almond extract",
+          "1/4 teaspoon salt",
+        ],
+        directions: [
+          "Place egg whites in a large bowl; let stand at room temperature 30 minutes. Sift 1/2 cup sugar and flour together twice; set aside.",
+          "Place oven rack in the lowest position. Preheat oven to 350\\u00b0. Add cream of tartar, extracts and salt to egg whites; beat on medium speed until soft peaks form. Gradually add remaining sugar, about 2 tablespoons at a time, beating on high until stiff peaks form. Gradually fold in flour mixture, about 1/2 cup at a time.",
+          "Gently spoon into an ungreased 10-in. tube pan. Cut through batter with a knife to remove air pockets. Bake until lightly browned and entire top appears dry, 35-40 minutes. Immediately invert pan; cool completely, about 1 hour.",
+          "Run a knife around side and center tube of pan. Remove cake to a serving plate.",
+        ],
+        nutrition:
+          "1 piece: 115 calories, 0 fat (0 saturated fat), 0 cholesterol, 68mg sodium, 26g carbohydrate (19g sugars, 0 fiber), 3g protein. Diabetic Exchanges: 1-1/2 starch.",
+        categories: "Angel Food Cakes",
+      },
+      images: uploadImages,
     };
 
+    setIsUploadLoading(true);
     var config = {
       method: "post",
       url: "http://api.bakarya.com/api/recipe",
@@ -185,6 +260,51 @@ export default function FormDialog(props) {
       .catch(function (error) {
         console.log(error);
       });
+    setIsUploadLoading(false);
+  };
+
+  const CreatePostWithImages = async ({ recipe, images }) => {
+    try {
+      setIsUploadLoading(true);
+
+      const data = {
+        // author: ,
+        createdAt: new Date(),
+        name: cakeName,
+        expert: cakeBrief,
+        time: prepTime,
+        makes: serving,
+        ingredients: ingrdData,
+        directions: directionData,
+        nutrition: nutrition,
+        categories: "Angel Food Cakes",
+      };
+
+      var config = {
+        method: "post",
+        url: "http://api.bakarya.com/api/recipe",
+        headers: {
+          "x-access-token": authCtx.token,
+          // 'Access-Control-Allow-Origin'
+        },
+        data: data,
+      };
+
+      const res = await axios(config);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsUploadLoading(false);
+  };
+
+  const checkUploadImagesLength = (toCheckList) =>
+    toCheckList.length <= IMAGE_LIMIT;
+
+  const checkIsUploadImages = (toCheckList) => toCheckList.length > 0;
+
+  const handleUploadRecipeImages = () => {
+    recipeImages.current.click();
   };
 
   return (
@@ -307,9 +427,34 @@ export default function FormDialog(props) {
               variant='outlined'
               type='number'
             />
+            <Button
+              onClick={handleUploadRecipeImages}
+              startIcon={<UploadIcon sx={{ fontSize: "17px" }} />}
+            >
+              Upload photo(s)
+            </Button>
+            <input
+              type='file'
+              accept='image/*'
+              ref={recipeImages}
+              name='recipeImages'
+              multiple
+              style={{ display: "none" }}
+              onChange={onChangeRecipeImages}
+            />
+            {/* {console.log(previewImages)} */}
+            <PostImages images={previewImages} />
             <DialogActions>
               <Button onClick={handleFormClose}>Cancel</Button>
-              <Button type='submit'>Post</Button>
+              {isUploadLoading ? (
+                <LoadingButton
+                  loading
+                  variant='outlined'
+                  sx={{ height: "30px" }}
+                />
+              ) : (
+                <Button type='submit'>Post</Button>
+              )}
             </DialogActions>
           </DialogContent>
         </form>
