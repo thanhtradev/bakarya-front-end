@@ -112,6 +112,7 @@ const User = (props) => {
                 ":hover": { backgroundColor: alpha("#FDEEDC", 0.7) },
                 width: 70,
                 height: 30,
+                marginLeft: "25px",
                 textTransform: "capitalize",
                 fontWeight: "bold",
               }}
