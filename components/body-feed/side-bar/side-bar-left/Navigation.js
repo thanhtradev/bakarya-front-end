@@ -213,7 +213,7 @@ const Navigation = ({ username }) => {
           {tabItems}
           {logined && (
             <Tab
-              label='log out'
+              label='Sign out'
               {...a11yProps(5)}
               icon={<LogoutIcon />}
               onClick={handleOpenLogOut}

@@ -52,8 +52,6 @@ const UpdateProfile = () => {
         .split("/")
         .reverse()
         .join("-");
-      console.log(dateFromDB.split(","));
-      setBirthdayValue(displayDate);
       console.log(
         new Date(birthday).toLocaleString("en-US", {
           timeZone: "Asia/Shanghai",

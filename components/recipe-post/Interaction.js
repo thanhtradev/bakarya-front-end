@@ -9,8 +9,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import { LoadingButton } from "@mui/lab";
 // import LikedIcon from "../../assets/like.svg";
-import { ReactComponent as LikedIcon } from "../../assets/like.svg";
-import { SvgIcon } from "@mui/material";
+
 import axios from "axios";
 
 const infoIconColor = "#84b6e9";
@@ -25,6 +24,7 @@ function Interaction(props) {
   const [showComment, setShowComment] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   // const [isLoadingLikeBtn, setIsLoad]
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
@@ -111,8 +111,40 @@ function Interaction(props) {
     }
   };
 
-  const saveHandler = () => {
-    setIsSaved((prev) => !prev);
+  const saveButtonHandler = () => {
+    setIsSaved((prev) => {
+      if (prev === false) {
+        saveBtnAction(props.postId, "http://api.bakarya.com/api/recipe/save");
+      } else {
+        saveBtnAction(
+          props.postID,
+          "http://api.bakarya.com/api/recipe/unsaved"
+        );
+      }
+      return !prev;
+    });
+  };
+
+  const saveBtnAction = async (id, url) => {
+    try {
+      setIsSaving(true);
+      var data = { recipeid: props.postId };
+
+      var config = {
+        method: "post",
+        url: url,
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+        data: data,
+      };
+
+      const res = await axios(config);
+      console.log(res.data);
+      setIsSaving(false);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const checkUserHasLikedPost = () => {
@@ -242,41 +274,55 @@ function Interaction(props) {
           >
             <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "20px" }} />
           </IconButton>
-          <IconButton
-            onClick={saveHandler}
-            sx={{
-              backgroundColor: infoIconColor,
-              backgroundColor: `${isSaved ? infoIconColor : "#84b6e9"}`,
-              width: "35px",
-              height: "35px",
-              "&:hover": {
-                backgroundColor: "#8cadcf",
-              },
-              boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
-            }}
-          >
-            {isSaved ? (
-              <SavedIcon
-                viewBox='2 8 21 10'
-                height='13px'
-                width='13px'
-                fontSize='small'
-                sx={{
-                  fontSize: "20px",
-                  pointerEvents: "none",
-                  color: "#e1c693",
-                }}
-              />
-            ) : (
-              <StarOutlineIcon
-                viewBox='2 8 20 10'
-                height='13px'
-                width='13px'
-                fontSize='small'
-                sx={{ fontSize: "20px", pointerEvents: "none" }}
-              />
-            )}
-          </IconButton>
+          {isSaving ? (
+            <LoadingButton
+              loading
+              sx={{
+                "&.MuiLoadingButton-root": {
+                  minWidth: "35px",
+                  minHeight: "35px",
+                  borderRadius: "50%",
+                  bgcolor: infoIconColor,
+                },
+              }}
+            />
+          ) : (
+            <IconButton
+              onClick={saveButtonHandler}
+              sx={{
+                backgroundColor: infoIconColor,
+                backgroundColor: `${isSaved ? infoIconColor : "#84b6e9"}`,
+                width: "35px",
+                height: "35px",
+                "&:hover": {
+                  backgroundColor: "#8cadcf",
+                },
+                boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
+              }}
+            >
+              {isSaved ? (
+                <SavedIcon
+                  viewBox='2 8 21 10'
+                  height='13px'
+                  width='13px'
+                  fontSize='small'
+                  sx={{
+                    fontSize: "20px",
+                    pointerEvents: "none",
+                    color: "#e1c693",
+                  }}
+                />
+              ) : (
+                <StarOutlineIcon
+                  viewBox='2 8 20 10'
+                  height='13px'
+                  width='13px'
+                  fontSize='small'
+                  sx={{ fontSize: "20px", pointerEvents: "none" }}
+                />
+              )}
+            </IconButton>
+          )}
         </Stack>
       )}
     </Box>

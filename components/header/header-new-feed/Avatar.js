@@ -168,7 +168,7 @@ const HeaderAvatar = () => {
         {settingList()}
         {isLoggined && (
           <MenuItem onClick={handleOpenLogOut}>
-            <Typography textAlign='center'>Log out</Typography>
+            <Typography textAlign='center'>Sign out</Typography>
           </MenuItem>
         )}
       </Menu>

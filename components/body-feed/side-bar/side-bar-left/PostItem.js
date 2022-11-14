@@ -61,10 +61,7 @@ const PostItem = (props) => {
         sx={{ borderRadius: "10px" }}
       >
         <ListItemAvatar>
-          <Avatar
-            alt={props.author}
-            src='https://melmagazine.com/wp-content/uploads/2021/01/66f-1.jpg'
-          />
+          <Avatar alt={props.author} src={props.author_avatar} />
         </ListItemAvatar>
         <ListItemText
           primary={

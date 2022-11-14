@@ -1,5 +1,5 @@
 import { List, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState, lazy } from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
 import CenteredLoadingCircular from "../../../ui/CenteredLoadingCircular";
@@ -13,7 +13,6 @@ const ItemContainer = dynamic(() => import("../ItemContainer"), {
 });
 
 const TopPost = ({ top10Posts }) => {
-  const [postLists, setPostLists] = useState(top10Posts.slice(0, 4));
   const first5Post = top10Posts.slice(0, 4);
 
   const postList = first5Post.map((post) => {
@@ -22,6 +21,7 @@ const TopPost = ({ top10Posts }) => {
         <PostItem
           postID={post.id}
           author={post.author}
+          author_avatar={post.author_avatar}
           name={post.name}
           createAt={post.createdAt}
           numberOfLike={post.number_of_mlems}
