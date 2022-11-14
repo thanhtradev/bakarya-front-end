@@ -146,20 +146,11 @@ export default function PersonalPage() {
             width: "1",
             height: "200px",
             height: "fit-content",
-            // // bgcolor: "burlywood",
             paddingTop: "20px",
           }}
         >
           <AvatarUser />
-          <Grid
-            item
-            xs={5}
-            sx={
-              {
-                // bgcolor: "chocolate",
-              }
-            }
-          >
+          <Grid item xs={5}>
             <Stack spacing={1}>
               <Typography variant='h5' fontWeight='bold'>
                 {username}

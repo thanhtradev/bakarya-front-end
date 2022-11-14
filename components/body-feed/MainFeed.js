@@ -41,6 +41,7 @@ const MainFeed = ({ posts: recipePost }) => {
         category={post.categories}
         createAt={post.createdAt}
         directions={post.directions}
+        author_avatar={post.author_avatar}
         expert={post.expert}
         width='100%'
         ingredient={post.ingredients}

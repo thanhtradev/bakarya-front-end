@@ -91,7 +91,11 @@ const User = (props) => {
   return (
     <CardHeader
       avatar={
-        <Avatar alt="Someone's Avatar" sx={{ width: 40, height: 40 }}>
+        <Avatar
+          alt="Someone's Avatar"
+          sx={{ width: 40, height: 40 }}
+          src={props.author_avatar}
+        >
           TT
         </Avatar>
       }

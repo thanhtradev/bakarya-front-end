@@ -14,7 +14,6 @@ export default function Post({ post1 }) {
   const { postid } = router.query;
 
   useEffect(() => {
-    console.log("i ran");
     if (postid) {
       axios
         .get(`http://api.bakarya.com/api/recipes/id/${postid}`)
@@ -38,6 +37,7 @@ export default function Post({ post1 }) {
           category={post.categories}
           createAt={post.createdAt}
           directions={post.directions}
+          author_avatar={post.author_avatar}
           images={post.images}
           expert={post.expert}
           ingredient={post.ingredients}
