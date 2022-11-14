@@ -45,10 +45,6 @@ function Interaction(props) {
       ),
       quantity: props.numberOfComment ?? 0,
     },
-    {
-      icon: <StarOutlineIcon fontSize='small' sx={{ fontSize: "19px" }} />,
-      quantity: 10,
-    },
   ];
 
   useEffect(() => {
@@ -104,7 +100,6 @@ function Interaction(props) {
         setIsLiked(true);
         setNumberOfLike((prev) => prev + 1);
       }
-      console.log(res.data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -197,8 +192,9 @@ function Interaction(props) {
         direction='row'
         justifyContent='space-between'
         alignItems='center'
+        spacing={1}
         sx={{
-          width: "0.23",
+          width: "0.1",
           height: "1",
           // bgcolor: "aquamarine"
         }}
@@ -216,7 +212,6 @@ function Interaction(props) {
             height: "40px",
             top: -38,
             left: 0,
-            // backgroundColor: "blanchedalmond",
           }}
         >
           {isLoading ? (
