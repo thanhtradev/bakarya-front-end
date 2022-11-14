@@ -186,7 +186,7 @@ const HeaderAvatar = () => {
             <Button onClick={handleLogOut} autoFocus>
               Yes, I am
             </Button>
-            <Button onClick={handleContinue}>No, I don't</Button>
+            <Button onClick={handleContinue}>No, I don&apos;t</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>
