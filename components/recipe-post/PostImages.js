@@ -4,40 +4,83 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { CardMedia, Typography } from "@mui/material";
 import { useState } from "react";
+import PostImage from "./PostImage";
+
+const SINGLE_IMAGE = 1;
+const FULL_ROWS = 2;
+const HALF_ROWS = 1;
+const FULL_COLS = 3;
+const HALF_COLS = 1;
 
 export default function PostImages({ images }) {
-  const [postImages, setPostImages] = useState(images);
   const imgList =
-    postImages !== undefined ? (
-      postImages.map((item) => {
-        if (item === postImages[0]) {
-          return (
-            <ImageListItem
-              key={item}
-              rows={2}
-              cols={parseInt(`${postImages.length === 1 ? "3" : "1"}`)}
-            >
-              <CardMedia
-                image={item}
-                sx={{
-                  height: `${postImages.length === 1 ? "400px" : "400px"}`,
-                  borderRadius: "10px",
-                }}
+    images !== undefined ? (
+      images.map((item) => {
+        //* first item
+        if (item === images[0]) {
+          if (images.length < 4) {
+            return (
+              <PostImage
+                key={item}
+                rows={FULL_ROWS}
+                cols={images.length == FULL_ROWS ? HALF_COLS : FULL_COLS}
+                children={
+                  <CardMedia
+                    image={images[0]}
+                    sx={{
+                      height: `410px`,
+                      borderRadius: "10px",
+                    }}
+                  />
+                }
               />
-            </ImageListItem>
+            );
+          } else {
+            return (
+              <PostImage
+                key={item}
+                rows={HALF_ROWS}
+                cols={HALF_COLS}
+                children={
+                  <img
+                    src={`${item}`}
+                    srcSet={`${item}`}
+                    alt={item.title}
+                    loading='lazy'
+                    style={{
+                      borderRadius: "10px",
+                      height: `${
+                        images.length == FULL_ROWS ? "100%" : "100px"
+                      }`,
+                    }}
+                  />
+                }
+              />
+            );
+          }
+        }
+        //* end first item
+        else {
+          return (
+            <PostImage
+              key={item}
+              rows={images.length == FULL_ROWS ? FULL_ROWS : HALF_ROWS}
+              cols={HALF_COLS}
+              children={
+                <img
+                  src={`${item}`}
+                  srcSet={`${item}`}
+                  alt={item.title}
+                  loading='lazy'
+                  style={{
+                    borderRadius: "10px",
+                    height: `${images.length == FULL_ROWS ? "100%" : "100px"}`,
+                  }}
+                />
+              }
+            />
           );
         }
-        return (
-          <ImageListItem key={item.img} rows={1}>
-            <img
-              src={`${item}?w=248&fit=crop&auto=format`}
-              srcSet={`${item}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading='lazy'
-              style={{ borderRadius: "10px", height: "100px" }}
-            />
-          </ImageListItem>
-        );
       })
     ) : (
       <Box sx={{ width: "1", height: "10px" }} />

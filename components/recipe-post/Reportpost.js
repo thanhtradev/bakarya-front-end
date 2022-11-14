@@ -7,6 +7,7 @@ import MUIDialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import UploadIcon from "@mui/icons-material/Upload";
 
 import { useState } from "react";
 import { Button, MenuItem } from "@mui/material";
@@ -41,6 +42,7 @@ const ReportPost = () => {
   const reportPostReason = reportReasons.map((reason) => {
     return (
       <FormControlLabel
+        key={reason.reason}
         control={
           <Checkbox
             checked={state.reason}
