@@ -90,7 +90,7 @@ const Suggestion = ({ categories }) => {
             lineHeight: "1.4",
           }}
         >
-          Maybe you'll like
+          Maybe you&apos;ll like
         </Typography>
       </Stack>
       <Box sx={{ width: "100%" }}>
