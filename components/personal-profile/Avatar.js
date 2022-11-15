@@ -17,7 +17,7 @@ const AvatarUser = () => {
 
   useEffect(() => {
     GetAvatar();
-  }, [isUploading]);
+  }, []);
 
   const onChangeAvatarFile = async () => {
     try {
@@ -36,11 +36,10 @@ const AvatarUser = () => {
         data: formData,
       });
 
-      SetAvatarSrc((prev) => {
-        return URL.createObjectURL(avatarFile.current.files[0]);
-      });
+      SetAvatarSrc(URL.createObjectURL(avatarFile.current.files[0]));
+
+      console.log(res.data);
     } catch (error) {
-      SetAvatarSrc((prev) => "");
       alert(error);
     }
     setIsUploading(false);
@@ -57,8 +56,8 @@ const AvatarUser = () => {
 
     axios(config)
       .then(function (response) {
-        const src = arrayBufferToBase64(response.data.data.data);
-        SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+        const { avatar_url } = response.data;
+        SetAvatarSrc((prev) => avatar_url);
       })
       .catch(function (error) {
         console.log(error);

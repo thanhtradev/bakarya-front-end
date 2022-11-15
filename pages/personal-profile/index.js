@@ -66,7 +66,6 @@ export default function PersonalPage() {
   };
 
   const onChangeWallpaper = () => {
-    console.log("changing");
     console.log(wallpaperFile.current.files[0]);
   };
 
@@ -76,7 +75,7 @@ export default function PersonalPage() {
         <title>Personal Profile Page</title>
       </Head>
       <Container
-        maxWidth="lg"
+        maxWidth='lg'
         disableGutters={true}
         sx={{
           marginY: "15px",
@@ -104,9 +103,9 @@ export default function PersonalPage() {
           {openModal === true && (
             <Fade in={openModal}>
               <Stack
-                position="absolute"
-                justifyContent="center"
-                alignItems="center"
+                position='absolute'
+                justifyContent='center'
+                alignItems='center'
                 onClick={handleUploadWallPaper}
                 zIndex={100}
                 right={0}
@@ -120,16 +119,16 @@ export default function PersonalPage() {
                 }}
               >
                 <Button
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   startIcon={<UploadIcon sx={{ fontSize: "17px" }} />}
                   sx={{ color: "white" }}
                 >
                   Upload a photo
                 </Button>
                 <input
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   ref={wallpaperFile}
                   style={{ display: "none" }}
                   onChange={onChangeWallpaper}
@@ -140,8 +139,8 @@ export default function PersonalPage() {
         </Container>
         <Grid
           container
-          direction="row"
-          justifyContent="space-evenly"
+          direction='row'
+          justifyContent='space-evenly'
           sx={{
             width: "1",
             height: "200px",
@@ -152,15 +151,15 @@ export default function PersonalPage() {
           <AvatarUser />
           <Grid item xs={5}>
             <Stack spacing={1}>
-              <Typography variant="h5" fontWeight="bold">
+              <Typography variant='h5' fontWeight='bold'>
                 {username}
               </Typography>
-              <Stack direction="row" spacing={3} color="#5985d4">
+              <Stack direction='row' spacing={3} color='#5985d4'>
                 <Typography>10 post</Typography>
                 <Typography>10 followers</Typography>
                 <Typography>104 following</Typography>
               </Stack>
-              <Typography variant="subtitle2" maxWidth="500px">
+              <Typography variant='subtitle2' maxWidth='500px'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iam
                 enim adesse poterit. Quis est tam dissimile homini. At ille
                 pellit, qui permulcet sensum voluptate. Vide, quaeso, rectumne
