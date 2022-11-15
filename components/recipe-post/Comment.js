@@ -30,8 +30,15 @@ const Comment = (props) => {
     setShowReply((prev) => !prev);
   };
 
-  const handleChangeReply = async () => {
+  const handlePressEnter = (e) => {
+    if (e.key === "Enter") {
+      handleReplyComment();
+    }
+  };
+
+  const handleChangeReply = () => {
     const replyText = replyRef.current.value;
+    console.log(replyText);
     if (replyText.includes("\n")) {
       // sendReplyHandler();
       sendReplyHandler();
@@ -195,6 +202,7 @@ const Comment = (props) => {
             inputRef={replyRef}
             onChange={handleChangeReply}
             placeholder={`Reply to ${props.username}`}
+            onKeyDown={handlePressEnter}
             endAdornment={
               <IconButton onClick={sendReplyHandler}>
                 <SendIcon />

@@ -24,6 +24,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { TextField } from "@mui/material";
 
 //? Server-side import Password checklist components
 const PasswordChecklist = dynamic(() => import("react-password-checklist"), {
@@ -144,22 +145,28 @@ export default function SignUpPage() {
     event.preventDefault();
     if (isFormValid) {
       const data = new FormData(event.currentTarget);
+      const username = lastNameValue.concat(` ${firstNameValue}`);
       SignUp({
-        username: data.get("email"),
+        username: username,
+        email: data.get("email"),
         pwd: data.get("password"),
+        firstName: data.get("firstname"),
+        lastName: data.get("lastname"),
       });
     } else {
-      alert("non");
+      notifyError("non");
     }
   };
   let isNotified = false;
 
-  const SignUp = ({ username, pwd }) => {
+  const SignUp = ({ username, email, pwd, firstName, lastName }) => {
     handleOpenBackDrop();
     const data = {
-      username: username,
+      username: email,
       password: pwd,
-      email: username,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
     };
 
     var config = {
@@ -296,7 +303,7 @@ export default function SignUpPage() {
               <Grid item xs={12}>
                 <ValidateInput
                   id='email'
-                  label='Email'
+                  label='Email/Username'
                   name='email'
                   autoComplete='email'
                   placeholder='Ex: JohnWick@abcxyz.com'
@@ -306,6 +313,16 @@ export default function SignUpPage() {
                   errorMsg='Ex: JohnWick@abcxyz.com'
                   hasError={hasErrorEmail}
                   type='text'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label='Full name'
+                  name='username'
+                  value={`${lastNameValue} ${firstNameValue}`}
+                  type='text'
+                  disabled
+                  sx={{ width: "1" }}
                 />
               </Grid>
               <Grid item xs={12}>
