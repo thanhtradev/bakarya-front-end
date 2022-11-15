@@ -7,6 +7,8 @@ import ShoppingHeader from "../../components/header/header-shopping/HeaderShoppi
 import ShoppingMain from "../../components/shopping-main/shopping-main";
 import HeaderNewsFeed from "../../components/header/header-new-feed/header";
 import dynamic from "next/dynamic";
+import { store } from "../../redux";
+import { Provider } from "react-redux";
 const ProgressBar = dynamic(() => import("../../components/ui/ProgressBar"), {
   fallback: true,
 });
@@ -16,12 +18,12 @@ export default function ShoppingPage({ products }) {
   return (
     <React.Fragment>
       <Head>
-        <meta charSet='UTF-8' />
+        <meta charSet="UTF-8" />
         <title>Bakarya Shop</title>
       </Head>
 
       <Container
-        maxWidth='xl'
+        maxWidth="xl"
         disableGutters
         sx={{
           backgroundColor: "#7dc5e04d",
@@ -36,7 +38,7 @@ export default function ShoppingPage({ products }) {
 
 ShoppingPage.getLayout = function PageLayout(page) {
   return (
-    <>
+    <Provider store={store}>
       <Box
         sx={{
           width: "1",
@@ -47,6 +49,6 @@ ShoppingPage.getLayout = function PageLayout(page) {
         <ProgressBar />
       </Box>
       {page}
-    </>
+    </Provider>
   );
 };
