@@ -57,27 +57,12 @@ const HeaderAvatar = () => {
       };
 
       const res = await axios(config);
-      const src = arrayBufferToBase64(res.data.data.data);
-      SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+      const { avatar_url } = res.data;
+      SetAvatarSrc((prev) => avatar_url);
     } catch (err) {
       console.log(err);
     }
-
-    // axios(config)
-    //   .then(function (response) {})
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   };
-
-  //* function change array of buffer to string
-  //* for more information
-  function arrayBufferToBase64(buffer) {
-    var binary = "";
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    return window.btoa(binary);
-  }
 
   const handleOpenLogOut = () => {
     setOpenLogoutForm(true);

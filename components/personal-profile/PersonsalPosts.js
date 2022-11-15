@@ -11,7 +11,6 @@ const PersonalPosts = () => {
 
   useEffect(() => {
     fetchPersonalPost();
-    console.log("i logged");
   }, []);
 
   const fetchPersonalPost = async () => {
@@ -24,7 +23,6 @@ const PersonalPosts = () => {
         },
       };
 
-      const personalPostURL = "http://api.bakarya.com/api/recipes/user/";
       const personalPost = await axios(config);
       setPosts(() => personalPost.data);
     } catch (error) {
