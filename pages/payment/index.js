@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import styles from "./Payment.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { payment } from "../../redux/user.reducer";
+import { useCookies } from "react-cookie";
 function Payment() {
   const dispatch = useDispatch();
   const userSlice = useSelector((state) => state.userSlice.pay);
   const [checkOne, setCheckOne] = useState(false);
+      const [cookies, setCookies] = useCookies();
+    const [username, setUsername] = useState(cookies.username);
   const payments = () => {
     dispatch(payment());
   };
@@ -129,6 +132,7 @@ function Payment() {
                         className={styles["input"]}
                         placeholder="Enter your email address"
                         name="checkout_email"
+                        defaultValue={username}
                         autofocus
                       />
                     </div>
