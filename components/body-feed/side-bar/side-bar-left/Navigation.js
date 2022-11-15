@@ -42,8 +42,6 @@ const Navigation = ({ username }) => {
     setIsLoading(false);
   }, []);
 
-  console.log(activeTab);
-
   const navTabs = [
     {
       title: "Home",
@@ -197,7 +195,11 @@ const Navigation = ({ username }) => {
         <Tabs
           orientation="vertical"
           // value={activeTab}
-          value={activeTabLink.indexOf(router.pathname)}
+          value={
+            activeTabLink.indexOf(router.pathname) === -1
+              ? 0
+              : activeTabLink.indexOf(router.pathname)
+          }
           onChange={handleChange}
           aria-label="Navigation Bar"
           TabIndicatorProps={{

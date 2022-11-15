@@ -21,7 +21,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import Avatar from "./Avatar";
 import _Menu from "../../Menu/Menu";
-import React from "react";
+import React, { useRef } from "react";
+import { useRouter } from "next/router";
 
 const MyBtn = styled(Button)({
   height: "40px",
@@ -47,31 +48,30 @@ const iconList = [
 ];
 
 const iconBtns = iconList.map((icon, index) => {
-  return (
-    // <Box
-    //   component={MyBtn}
-    //   key={index}
-    //   sx={{
-    //     padding: "0",
-    //     width: "40px",
-    //     height: "40px",
-    //     minWidth: "41px",
-    //     color: "#333",
-    //     "&:hover": {
-    //       color: "white",
-    //       backgroundColor: "#6ba4e9",
-    //       boxShadow:
-    //         "0 14px 26px -12px rgb(85 150 230 / 42%), 0 4px 23px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(85 150 230 / 20%)",
-    //     },
-    //   }}
-    // >
-
-    // </Box>
-    <React.Fragment key={index}>{icon.item}</React.Fragment>
-  );
+  return <React.Fragment key={index}>{icon.item}</React.Fragment>;
 });
 
 function HeaderNewsFeed() {
+  const router = useRouter();
+  const { asPath } = useRouter();
+  const txtSearchRef = useRef();
+
+  const search = () => {
+    const searchTxt = txtSearchRef.current?.value;
+
+    if (searchTxt === "") {
+      router.push("/search/random");
+    } else {
+      router.push(`/search/${searchTxt}`);
+    }
+  };
+
+  const onKeyDownSearch = (e) => {
+    if (e.key === "Enter") {
+      search();
+    }
+  };
+
   return (
     <Navbar
       collapseOnSelect
@@ -109,7 +109,7 @@ function HeaderNewsFeed() {
               alt='bakarya logo'
               src={`${logo.src}`}
               component='img'
-              sx={{ height: "1", width: "50px" }}
+              sx={{ height: "1", width: "40px" }}
             />
           </Link>
         </Box>
@@ -165,7 +165,13 @@ function HeaderNewsFeed() {
               >
                 <SearchIcon sx={{ color: "#333" }} />
               </Box>
-              <MyInput placeholder='Find a recipe' disableUnderline={true} />
+              <MyInput
+                inputRef={txtSearchRef}
+                // ref={txtSearchRef}
+                placeholder='Find a recipe'
+                disableUnderline={true}
+                onKeyDown={onKeyDownSearch}
+              />
             </Stack>
             <Cart />
             <Avatar />
