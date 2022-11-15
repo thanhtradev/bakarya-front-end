@@ -3,6 +3,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import classes from "./header.module.css";
+import { useSelector } from "react-redux";
 const MyBtn = styled(Button)({
   height: "40px",
   width: "40px",
@@ -10,6 +12,7 @@ const MyBtn = styled(Button)({
 });
 
 const Cart = () => {
+  const userSlice = useSelector((state) => state.userSlice.cart);
   return (
     <Box
       component={MyBtn}
@@ -31,6 +34,9 @@ const Cart = () => {
         <Link href="/checkout">
           <ShoppingCartOutlinedIcon />
         </Link>
+        {userSlice.length > 0 && (
+          <div className={classes["red-cart"]}>{userSlice.length}</div>
+        )}
       </Badge>
     </Box>
   );

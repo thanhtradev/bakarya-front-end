@@ -17,14 +17,15 @@ import errorPic from "../../assets/Demo.jpg";
 import ProductDetail from "./ProductDetail";
 import { addToCart } from "../../redux/user.reducer";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useCookies } from "react-cookie";
 const ProductItem = ({ id, img, name, quantity, price, description }) => {
   const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState(img);
   const [desc, setDesc] = useState(description);
   const [openModal, setOpenModal] = useState(false);
   const userSlice = useSelector((state) => state.userSlice.users);
-
+  const [cookies, setCookies] = useCookies();
+  const [username, setUsername] = useState(cookies.username);
   useEffect(() => {
     if (desc.length > 65) {
       setDesc(desc.slice(0, 65).concat("..."));
@@ -53,8 +54,8 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
     <React.Fragment>
       <Stack
         component={Modal}
-        justifyContent='center'
-        alignItems='center'
+        justifyContent="center"
+        alignItems="center"
         open={openModal}
         onClose={handleCloseModal}
       >
@@ -90,31 +91,31 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
           <Stack
             component={CardActionArea}
             onClick={handleOpenModel}
-            justifyContent='space-evenly'
+            justifyContent="space-evenly"
             sx={{ padding: 0, borderRadius: "10px" }}
           >
             <CardMedia
-              component='img'
+              component="img"
               onError={errorHandler}
-              height='190'
+              height="190"
               image={imgSrc}
               alt={name}
               sx={{ borderRadius: "10px" }}
             />
             <CardContent sx={{ paddingX: "0", minHeight: "88px" }}>
               <Typography
-                variant='h6'
+                variant="h6"
                 fontSize={15}
-                width='100%'
-                fontWeight='bold'
-                minHeight='48px'
+                width="100%"
+                fontWeight="bold"
+                minHeight="48px"
               >
                 {name}
               </Typography>
               <Typography
                 paragraph
-                variant='caption'
-                color='rgba(3,3,3,0.5)'
+                variant="caption"
+                color="rgba(3,3,3,0.5)"
                 sx={{ margin: 0 }}
               >
                 {desc}
@@ -122,18 +123,28 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
             </CardContent>
           </Stack>
           <Stack
-            direction='row'
-            alignItems='center'
-            justifyContent='space-between'
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            <Typography variant='caption'>{quantity} left </Typography>
-            <Button
-              sx={{ color: "#0d9cd2" }}
-              startIcon={<AddShoppingCartIcon />}
-              onClick={() => addToCard(img, name, price)}
-            >
-              {price} $
-            </Button>
+            <Typography variant="caption">{quantity} left </Typography>
+            {username ? (
+              <Button
+                sx={{ color: "#0d9cd2" }}
+                startIcon={<AddShoppingCartIcon />}
+                onClick={() => addToCard(img, name, price)}
+              >
+                add to card {price} $
+              </Button>
+            ) : (
+              <Button
+                sx={{ color: "#0d9cd2" }}
+                startIcon={<AddShoppingCartIcon />}
+              >
+                {" "}
+                {price} $
+              </Button>
+            )}
           </Stack>
         </Card>
       </Grid>
