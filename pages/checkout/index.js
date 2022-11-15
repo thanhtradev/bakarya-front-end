@@ -3,7 +3,16 @@ import styles from "./Checkout.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addPayment } from "../../redux/user.reducer";
 // import { useRouter } from "next/navigation";
+import { Badge, Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/router";
+const MyBtn = styled(Button)({
+  height: "40px",
+  width: "40px",
+  padding: "0",
+});
 function Checkout() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -88,39 +97,59 @@ function Checkout() {
                       <span className={styles["discount"]}>Discount</span>
                       <span className={styles["total"]}>Total</span>
                     </div>
-                    {userSlice.length > 0
-                      ? userSlice.map((userSlice, index) => (
-                          <div
-                            className={styles["flex-table-item"]}
-                            key={index}
-                          >
-                            <div className={styles["product"]}>
-                              <img src={userSlice.img} alt="" />
-                              <span className={styles["product-name"]}>
-                                {userSlice.name}
-                              </span>
-                            </div>
-                            <div className={styles["quantity"]}>
-                              <span className={styles["has-price"]}>
-                                {userSlice.quantity}
-                              </span>
-                            </div>
-                            <div className={styles["price"]}>
-                              <span className={styles["has-price"]}>
-                                {userSlice.price}
-                              </span>
-                            </div>
-                            <div className={styles["discount"]}>
-                              <span className={styles["has-price"]}>0</span>
-                            </div>
-                            <div className={styles["total"]}>
-                              <span className={styles["has-price"]}>
-                                {userSlice.price * userSlice.quantity}
-                              </span>
-                            </div>
+                    {userSlice.length > 0 ? (
+                      userSlice.map((userSlice, index) => (
+                        <div className={styles["flex-table-item"]} key={index}>
+                          <div className={styles["product"]}>
+                            <img src={userSlice.img} alt="" />
+                            <span className={styles["product-name"]}>
+                              {userSlice.name}
+                            </span>
                           </div>
-                        ))
-                      : "not found"}
+                          <div className={styles["quantity"]}>
+                            <span className={styles["has-price"]}>
+                              {userSlice.quantity}
+                            </span>
+                          </div>
+                          <div className={styles["price"]}>
+                            <span className={styles["has-price"]}>
+                              {userSlice.price}
+                            </span>
+                          </div>
+                          <div className={styles["discount"]}>
+                            <span className={styles["has-price"]}>0</span>
+                          </div>
+                          <div className={styles["total"]}>
+                            <span className={styles["has-price"]}>
+                              {userSlice.price * userSlice.quantity}
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <Box
+                        component={MyBtn}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          minWidth: "100%",
+                          height: "40px",
+                          padding: "0",
+                          color: "#333",
+                          "& :hover": {
+                            color: "white",
+                          },
+                          margin: "0 10px",
+                        }}
+                      >
+                        <Badge badgeContent={0} color="primary">
+                          <Link href="/shopping">
+                            Add some thing to your cart
+                          </Link>
+                        </Badge>
+                      </Box>
+                    )}
                   </div>
                 </div>
                 {/*Checkout section*/}
@@ -236,21 +265,33 @@ function Checkout() {
                       <span className={styles["is-total"]}>{sum + 2}</span>
                     </div>
                     <div className={styles["button-wrap"]}>
-                      {checkOne ? (
+                      {userSlice.length > 0 ? (
                         <>
-                          {checkSecond ? (
-                            <button
-                              id="checkout-button"
-                              className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
-                              onClick={() => addToPay(sum)}
-                            >
-                              Continue
-                            </button>
+                          {checkOne ? (
+                            <>
+                              {checkSecond ? (
+                                <button
+                                  id="checkout-button"
+                                  className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
+                                  onClick={() => addToPay(sum)}
+                                >
+                                  Continue
+                                </button>
+                              ) : (
+                                <button
+                                  id="checkout-button"
+                                  className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
+                                  onClick={sectionSecond}
+                                >
+                                  Continue
+                                </button>
+                              )}
+                            </>
                           ) : (
                             <button
                               id="checkout-button"
                               className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
-                              onClick={sectionSecond}
+                              onClick={sectionOne}
                             >
                               Continue
                             </button>
@@ -260,7 +301,11 @@ function Checkout() {
                         <button
                           id="checkout-button"
                           className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
-                          onClick={sectionOne}
+                          style={{
+                            width: "100%",
+                            opacity: ".4",
+                          }}
+                          disabled
                         >
                           Continue
                         </button>

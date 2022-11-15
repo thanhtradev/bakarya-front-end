@@ -3,3 +3,16 @@
   align-items: center;
   justify-content: center;
 }
+.red-cart {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  right: -8px;
+  /* top: -4px; */
+  bottom: 20px;
+  /* color: #fff; */
+  background-color: #f44336;
+  -webkit-box-shadow: 0 0 10px 0 #f44336;
+  box-shadow: 0 0 10px 0 #f44336;
+}

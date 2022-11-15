@@ -17,14 +17,15 @@ import errorPic from "../../assets/Demo.jpg";
 import ProductDetail from "./ProductDetail";
 import { addToCart } from "../../redux/user.reducer";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useCookies } from "react-cookie";
 const ProductItem = ({ id, img, name, quantity, price, description }) => {
   const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState(img);
   const [desc, setDesc] = useState(description);
   const [openModal, setOpenModal] = useState(false);
   const userSlice = useSelector((state) => state.userSlice.users);
-
+  const [cookies, setCookies] = useCookies();
+  const [username, setUsername] = useState(cookies.username);
   useEffect(() => {
     if (desc.length > 65) {
       setDesc(desc.slice(0, 65).concat("..."));
@@ -127,13 +128,23 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
             justifyContent='space-between'
           >
             <Typography variant='caption'>{quantity} left </Typography>
-            <Button
-              sx={{ color: "#0d9cd2" }}
-              startIcon={<AddShoppingCartIcon />}
-              onClick={() => addToCard(img, name, price)}
-            >
-              {price} $
-            </Button>
+            {username ? (
+              <Button
+                sx={{ color: "#0d9cd2" }}
+                startIcon={<AddShoppingCartIcon />}
+                onClick={() => addToCard(img, name, price)}
+              >
+                add to card {price} $
+              </Button>
+            ) : (
+              <Button
+                sx={{ color: "#0d9cd2" }}
+                startIcon={<AddShoppingCartIcon />}
+              >
+                {" "}
+                {price} $
+              </Button>
+            )}
           </Stack>
         </Card>
       </Grid>
