@@ -260,6 +260,7 @@ const RecipePost = (props) => {
               recipeId={props.postID}
               comments={comments}
               onGetComments={getComments}
+              author_avatar={props.author_avatar}
             />
           </React.Fragment>
         )}

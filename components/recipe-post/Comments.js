@@ -107,6 +107,7 @@ const Comments = (props) => {
           username={comment.user_id.username}
           comment={comment.comment}
           time={time}
+          author_avatar={props.author_avatar}
         />
       </Stack>
     );
@@ -125,7 +126,10 @@ const Comments = (props) => {
           padding: "5px",
         }}
       >
-        <Avatar sx={{ width: "35px", height: "35px" }} />
+        <Avatar
+          sx={{ width: "35px", height: "35px" }}
+          src={props.author_avatar}
+        />
         <FilledInput
           inputRef={commentRef}
           onChange={handleChangeComment}

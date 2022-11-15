@@ -28,9 +28,7 @@ function Interaction(props) {
   // const [isLoadingLikeBtn, setIsLoad]
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
-    if (isLoggedIn) {
-      checkUserHasLikedPost();
-    }
+    checkUserHasLikedPost();
   }, []);
 
   const infoIcons = [
