@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import SigninPic from "../../assets/signin3.jpg";
-import { Stack } from "@mui/material";
+import { IconButton, InputAdornment, Stack } from "@mui/material";
 import NextLink from "next/link";
 import classes from "./../../styles/login-page.module.css";
 import useValidInput from "../../hooks/use-valid-input";
@@ -26,6 +26,8 @@ import { useRouter } from "next/router";
 import AuthContext from "../../store/auth-context";
 import { useContext } from "react";
 const { src: Pic } = SigninPic;
+import { OutlinedInput } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Copyright(props) {
   return (
@@ -49,6 +51,7 @@ export default function LoginPage() {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
   const [open, setOpen] = React.useState(false);
+  const [showPwd, setShowPwd] = React.useState(false);
   const router = useRouter();
 
   const {
@@ -104,11 +107,8 @@ export default function LoginPage() {
         password: pwd,
       };
 
-      // const result = await handleFetchAxios();
-      // handleToggle();
       Clear();
 
-      // router.replace("/");
       let message = "Something went wrong";
 
       var config = {
@@ -126,14 +126,17 @@ export default function LoginPage() {
         })
         .catch(function (error) {
           handleToggle();
-          // message = error.response.data.message;
-          console.log(error);
-          // notifyError(message);
+          message = error.response.data.message;
+          notifyError(message);
           Clear();
         });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPwd((prev) => !prev);
   };
 
   const Loading = () => {
@@ -233,7 +236,7 @@ export default function LoginPage() {
                 fullWidth
                 name='password'
                 label='Password'
-                type='password'
+                type={showPwd ? "text" : "password"}
                 id='password'
                 value={passwordValue}
                 onChange={passwordChangeHandler}
@@ -241,6 +244,19 @@ export default function LoginPage() {
                 autoComplete='current-password'
                 helperText={`${hasErrorPassword ? "Fill in password" : ""}`}
                 error={hasErrorPassword}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        edge='end'
+                      >
+                        {!showPwd ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <FormControlLabel
                 control={<Checkbox value='remember' color='primary' />}
@@ -273,6 +289,7 @@ export default function LoginPage() {
                   <Link
                     href='/signup-page'
                     variant='body2'
+                    sx={{ textDecoration: "none" }}
                     component={NextLink}
                   >
                     {"Don't have an account? Sign Up"}

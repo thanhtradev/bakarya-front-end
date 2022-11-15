@@ -21,6 +21,8 @@ import classes from "../../../ui/RGBLed.module.css";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
+const activeTabLink = ["/", "/shopping", "/saved-recipe"];
+
 const Navigation = ({ username }) => {
   const authCtx = React.useContext(AuthContext);
   const [cookies, setCookies] = useCookies();
@@ -30,17 +32,24 @@ const Navigation = ({ username }) => {
   const [avatarSrc, SetAvatarSrc] = useState();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState(
+    activeTabLink.indexOf(router.pathname.toString())
+  );
 
   React.useEffect(() => {
     setLogined(authCtx.isLoggedIn);
     GetAvatar();
     setIsLoading(false);
   }, []);
+
+  console.log(activeTab);
+
   const navTabs = [
     {
       title: "Home",
       icon: <HomeIcon />,
       onNavItemClick: () => {
+        // setActiveTab(activeTabLink.indexOf(router.pathname));
         router.push("/");
       },
     },
@@ -51,18 +60,12 @@ const Navigation = ({ username }) => {
         router.push("/shopping");
       },
     },
-    // {
-    //   title: "Livestream",
-    //   icon: <OndemandVideoIcon />,
-    //   onNavItemClick: () => {
-    //     router.push("/livestream");
-    //   },
-    // },
     {
       title: "Saved Recipes",
       icon: <StarOutlineIcon />,
       link: "saved-recipes",
       onNavItemClick: () => {
+        // setActiveTab(activeTabLink.indexOf(router.pathname));
         router.push("/saved-recipe");
       },
     },
@@ -82,9 +85,7 @@ const Navigation = ({ username }) => {
         const src = arrayBufferToBase64(response.data.data.data);
         SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   //* function change array of buffer to string
@@ -130,7 +131,7 @@ const Navigation = ({ username }) => {
   });
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setActiveTab(activeTabLink.indexOf(router.pathname.toString()));
   };
 
   function a11yProps(index) {
@@ -195,7 +196,8 @@ const Navigation = ({ username }) => {
         )}
         <Tabs
           orientation="vertical"
-          value={value}
+          // value={activeTab}
+          value={activeTabLink.indexOf(router.pathname)}
           onChange={handleChange}
           aria-label="Navigation Bar"
           TabIndicatorProps={{
