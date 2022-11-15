@@ -12,7 +12,7 @@ import { LoadingButton } from "@mui/lab";
 
 import axios from "axios";
 
-const infoIconColor = "#84b6e9";
+const infoIconColor = "#F99F38";
 function Interaction(props) {
   const authCtx = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
@@ -44,10 +44,6 @@ function Interaction(props) {
         <ChatBubbleOutlineIcon fontSize='small' sx={{ fontSize: "15px" }} />
       ),
       quantity: props.numberOfComment ?? 0,
-    },
-    {
-      icon: <StarOutlineIcon fontSize='small' sx={{ fontSize: "19px" }} />,
-      quantity: 10,
     },
   ];
 
@@ -104,7 +100,6 @@ function Interaction(props) {
         setIsLiked(true);
         setNumberOfLike((prev) => prev + 1);
       }
-      console.log(res.data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -197,8 +192,9 @@ function Interaction(props) {
         direction='row'
         justifyContent='space-between'
         alignItems='center'
+        spacing={1}
         sx={{
-          width: "0.23",
+          width: "0.1",
           height: "1",
           // bgcolor: "aquamarine"
         }}
@@ -216,7 +212,6 @@ function Interaction(props) {
             height: "40px",
             top: -38,
             left: 0,
-            // backgroundColor: "blanchedalmond",
           }}
         >
           {isLoading ? (
@@ -236,7 +231,7 @@ function Interaction(props) {
               onClick={likeBtnHandler}
               sx={{
                 backgroundColor: infoIconColor,
-                backgroundColor: `${isLiked ? infoIconColor : "#84b6e9"}`,
+                // backgroundColor: `${isLiked ? infoIconColor : infoIconColor}`,
                 color: `${isLiked ? "#FEFFF6" : ""}`,
                 "&:hover": {
                   backgroundColor: infoIconColor,
@@ -263,9 +258,8 @@ function Interaction(props) {
             onClick={handleGetComments}
             sx={{
               backgroundColor: infoIconColor,
-              backgroundColor: "#84b6e9",
               "&:hover": {
-                backgroundColor: "#8cadcf",
+                backgroundColor: infoIconColor,
               },
               width: "35px",
               height: "35px",
@@ -291,11 +285,10 @@ function Interaction(props) {
               onClick={saveButtonHandler}
               sx={{
                 backgroundColor: infoIconColor,
-                backgroundColor: `${isSaved ? infoIconColor : "#84b6e9"}`,
                 width: "35px",
                 height: "35px",
                 "&:hover": {
-                  backgroundColor: "#8cadcf",
+                  backgroundColor: infoIconColor,
                 },
                 boxShadow: "2px 1px 43px 0px rgb(85 131 106 / 35%)",
               }}
@@ -309,7 +302,7 @@ function Interaction(props) {
                   sx={{
                     fontSize: "20px",
                     pointerEvents: "none",
-                    color: "#e1c693",
+                    color: "white",
                   }}
                 />
               ) : (
