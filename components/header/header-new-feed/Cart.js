@@ -2,7 +2,7 @@ import { Badge, Box } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
-
+import Link from "next/link";
 const MyBtn = styled(Button)({
   height: "40px",
   width: "40px",
@@ -27,8 +27,10 @@ const Cart = () => {
         margin: "0 10px",
       }}
     >
-      <Badge badgeContent={0} color='primary'>
-        <ShoppingCartOutlinedIcon />
+      <Badge badgeContent={0} color="primary">
+        <Link href="/checkout">
+          <ShoppingCartOutlinedIcon />
+        </Link>
       </Badge>
     </Box>
   );
