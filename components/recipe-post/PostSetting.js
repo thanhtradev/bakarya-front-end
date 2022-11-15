@@ -77,7 +77,7 @@ function PostSetting(props) {
             />
             // {/* </MenuItem> */}
           ))}
-          <ReportPost />
+          <ReportPost postId={props.postID} />
         </Stack>
       </Menu>
     </React.Fragment>
