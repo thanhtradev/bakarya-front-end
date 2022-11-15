@@ -6,11 +6,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SettingButton from "../ui/Dialog";
 import { Stack, Typography } from "@mui/material";
 import ReportPost from "./Reportpost";
+import AuthContext from "../../store/auth-context";
 
 const ITEM_HEIGHT = 30;
 
 function PostSetting(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const authCtx = React.useContext(AuthContext);
   const open = Boolean(anchorEl);
 
   const handleEditPost = () => {};
@@ -67,7 +69,6 @@ function PostSetting(props) {
       >
         <Stack>
           {options.map((option) => (
-            // <MenuItem key={option}>
             <SettingButton
               key={option.title}
               component={MenuItem}
@@ -75,9 +76,11 @@ function PostSetting(props) {
               content={<Typography>{option.content}</Typography>}
               action={option.onClick}
             />
-            // {/* </MenuItem> */}
           ))}
-          <ReportPost postId={props.postID} />
+          <ReportPost
+            postId={props.postID}
+            displayReport={props.displayReport}
+          />
         </Stack>
       </Menu>
     </React.Fragment>

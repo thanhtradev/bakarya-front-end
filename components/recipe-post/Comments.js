@@ -35,7 +35,11 @@ const Comments = (props) => {
   const commentRef = useRef();
   const [comments, setComments] = useState(props.comments);
   const [isLoadingNewComment, setIsLoadingComment] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState(false);
 
+  useEffect(() => {
+    getAvatar();
+  }, []);
   const handleSetNewComment = async (comment) => {
     try {
       setIsLoadingComment(true);
@@ -87,12 +91,32 @@ const Comments = (props) => {
     }
   };
 
+  const getAvatar = () => {
+    var config = {
+      method: "get",
+      url: "http://api.bakarya.com/api/user/avatar",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        const { avatar_url } = response.data;
+        setAvatarSrc(avatar_url);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const commentList = props.comments.map((comment) => {
     const rawDate = new Date(comment.createdAt);
     const month = monthNames[rawDate.getMonth()];
     const date = rawDate.getDate().toString();
     const year = rawDate.getFullYear().toString();
     const time = date.concat(" ", month).concat(", ", year);
+    console.log(comment);
     return (
       <Stack
         key={comment._id}
@@ -126,10 +150,7 @@ const Comments = (props) => {
           padding: "5px",
         }}
       >
-        <Avatar
-          sx={{ width: "35px", height: "35px" }}
-          src={props.author_avatar}
-        />
+        <Avatar sx={{ width: "35px", height: "35px" }} src={avatarSrc} />
         <FilledInput
           inputRef={commentRef}
           onChange={handleChangeComment}

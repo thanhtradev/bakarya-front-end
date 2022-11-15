@@ -29,7 +29,7 @@ const reportReasons = [
 ];
 import { ToastContainer, toast } from "react-toastify";
 
-const ReportPost = ({ postId }) => {
+const ReportPost = ({ postId, displayReport }) => {
   const [reason, setReason] = useState("");
   const authCtx = useContext(AuthContext);
   const isInvalid = reason.length === 0;
@@ -108,7 +108,11 @@ const ReportPost = ({ postId }) => {
       <MenuItem>
         <Button
           onClick={handleToggleDialog}
-          sx={{ color: "black", fontSize: "13px" }}
+          sx={{
+            color: "black",
+            fontSize: "13px",
+            display: `${displayReport ?? "inital"}`,
+          }}
         >
           Report
         </Button>

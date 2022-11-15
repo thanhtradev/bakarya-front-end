@@ -33,6 +33,8 @@ export const AuthContextProvider = (props) => {
     setCookieValue("accessToken", accessTokenCookieValue);
     setCookieValue("userID", userIDCookieValue);
 
+    console.log(obj);
+
     setToken(obj.accessToken);
     setUsername(obj.username);
     setUserID(obj.id);
