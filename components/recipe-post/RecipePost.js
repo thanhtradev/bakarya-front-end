@@ -171,6 +171,8 @@ const RecipePost = (props) => {
             postID={props.postID}
             authorID={props.authorID}
             author_avatar={props.author_avatar}
+            followButtonDisplay={props.followButtonDisplay}
+            displayReport={props.displayReport}
           />
         </Stack>
         <Stack justifyContent='flex-start' alignItems='flex-start'>

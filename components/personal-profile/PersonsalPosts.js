@@ -49,8 +49,11 @@ const PersonalPosts = () => {
         numberOfComment={post.number_of_comments}
         numberOfLike={post.number_of_mlems}
         nutrition={post.nutrition}
+        author_avatar={post.author_avatar}
         makingTime={post.time}
         updateAt={post.updatedAt}
+        followButtonDisplay={"none"}
+        displayReport={"none"}
       />
     );
   });

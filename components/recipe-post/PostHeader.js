@@ -43,14 +43,6 @@ const User = (props) => {
     }
   }, [isFollow]);
 
-  const handleFollowButton = () => {
-    if (isFollow) {
-      setIsFollow(false);
-    } else {
-      setIsFollow(true);
-    }
-  };
-
   const handleUserFollowBtn = async () => {
     setIsloadingFollow(true);
 
@@ -87,7 +79,6 @@ const User = (props) => {
   };
 
   const handleGetUserAvatar = () => {};
-
   return (
     <CardHeader
       avatar={
@@ -119,6 +110,7 @@ const User = (props) => {
                 marginLeft: "25px",
                 textTransform: "capitalize",
                 fontWeight: "bold",
+                display: `${props.followButtonDisplay ?? "initial"}`,
               }}
             >
               Follow
@@ -134,7 +126,11 @@ const User = (props) => {
       subheader={time}
       action={
         <React.Fragment>
-          <PostSetting postID={props.postID} />
+          <PostSetting
+            postID={props.postID}
+            authorID={props.authorID}
+            displayReport={props.displayReport}
+          />
         </React.Fragment>
       }
       sx={{ width: "100%", padding: 0 }}

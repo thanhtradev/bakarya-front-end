@@ -61,8 +61,8 @@ const CreatePost = (props) => {
 
     axios(config)
       .then(function (response) {
-        const src = arrayBufferToBase64(response.data.data.data);
-        SetAvatarSrc((prev) => `data:image/png;base64,${src}`);
+        const { avatar_url } = response.data;
+        SetAvatarSrc((prev) => avatar_url);
       })
       .catch(function (error) {
         console.log(error);

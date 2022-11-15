@@ -8,11 +8,11 @@ import {
   IconButton,
 } from "@mui/material";
 import ReplyIcon from "@mui/icons-material/Reply";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import AuthContext from "../../store/auth-context";
-import axios from "axios";
 import SendIcon from "@mui/icons-material/Send";
 import ReplyComments from "./ReplyComments";
+import axios from "axios";
 
 const Comment = (props) => {
   const replyRef = useRef();
@@ -21,9 +21,32 @@ const Comment = (props) => {
   const [numberOfReplies, setNumberOfReplies] = useState(props.replies);
   const [replies, setReplies] = useState([]);
   const [showReply, setShowReply] = useState(false);
-
+  const [avatarSrc, setAvatarSrc] = useState("");
   const handleReply = () => {
     setIsReply((prev) => !prev);
+  };
+
+  useEffect(() => {
+    getAvatar();
+  }, []);
+
+  const getAvatar = () => {
+    var config = {
+      method: "get",
+      url: "http://api.bakarya.com/api/user/avatar",
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        const { avatar_url } = response.data;
+        setAvatarSrc(avatar_url);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleShowReply = () => {
@@ -120,7 +143,11 @@ const Comment = (props) => {
         paddingX='10px'
         key={props.id}
       >
-        <Avatar variant='circular' sx={{ width: "35px", height: "35px" }} />
+        <Avatar
+          variant='circular'
+          sx={{ width: "35px", height: "35px" }}
+          src={avatarSrc}
+        />
         <Stack alignItems='flex-start'>
           <Paper
             elevation={1}
@@ -197,7 +224,7 @@ const Comment = (props) => {
           justifyContent='flex-start'
           sx={{ marginY: "10px", width: "1", paddingLeft: "30px" }}
         >
-          <Avatar sx={{ width: "30px", height: "30px" }} />
+          <Avatar sx={{ width: "30px", height: "30px" }} src={avatarSrc} />
           <Input
             inputRef={replyRef}
             onChange={handleChangeReply}

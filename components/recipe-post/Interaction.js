@@ -28,7 +28,9 @@ function Interaction(props) {
   // const [isLoadingLikeBtn, setIsLoad]
   useEffect(() => {
     setIsLoggedIn(authCtx.isLoggedIn);
-    checkUserHasLikedPost();
+    if (authCtx.isLoggedIn) {
+      checkUserHasLikedPost();
+    }
   }, []);
 
   const infoIcons = [
@@ -141,28 +143,32 @@ function Interaction(props) {
   };
 
   const checkUserHasLikedPost = () => {
-    setIsLoading(true);
-    var data = { recipeid: props.postId };
-    var config = {
-      method: "post",
-      url: "http://api.bakarya.com/api/mlem/check",
-      headers: {
-        "x-access-token": authCtx.token,
-      },
-      data: data,
-    };
+    try {
+      setIsLoading(true);
+      var data = { recipeid: props.postId };
+      var config = {
+        method: "post",
+        url: "http://api.bakarya.com/api/mlem/check",
+        headers: {
+          "x-access-token": authCtx.token,
+        },
+        data: data,
+      };
 
-    axios(config)
-      .then(function (response) {
-        const { mlemmed } = response.data;
-        setIsLiked((prev) => {
-          setIsLoading(false);
-          return mlemmed;
+      axios(config)
+        .then(function (response) {
+          const { mlemmed } = response.data;
+          setIsLiked((prev) => {
+            setIsLoading(false);
+            return mlemmed;
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const infoIconList = infoIcons.map((item, i) => {
