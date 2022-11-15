@@ -47,6 +47,29 @@ const Search = () => {
     }
   };
 
+  // const posts = foundPosts.map((post) => (
+  //   <RecipePost
+  //     key={post.id}
+  //     postID={post.id}
+  //     images={post.images}
+  //     author={post.author}
+  //     authorID={post.author_id}
+  //     category={post.categories}
+  //     createAt={post.createdAt}
+  //     directions={post.directions}
+  //     author_avatar={post.author_avatar}
+  //     expert={post.expert}
+  //     width='100%'
+  //     ingredient={post.ingredients}
+  //     makes={post.makes}
+  //     name={post.name}
+  //     numberOfComment={post.number_of_comments}
+  //     numberOfLike={post.number_of_mlems}
+  //     nutrition={post.nutrition}
+  //     makingTime={post.time}
+  //     updateAt={post.updatedAt}
+  //   />
+  // ));
   const posts =
     foundPosts.length !== 0 ? (
       foundPosts.map((post) => (
@@ -81,21 +104,18 @@ const Search = () => {
   const fetchFindPost = async () => {
     try {
       //* reset found post
+      console.log("i ran in find");
       setFoundPost([]);
       setIsLoading(true);
       var config = {
         method: "get",
         url: `http://api.bakarya.com/api/recipes/category/${router.query.txtSearch}`,
         headers: {
-          "x-access-token": authCtx.token,
+          // "x-access-token": authCtx.token,
         },
       };
 
       const res = await axios(config);
-      if (!res.ok) {
-        throw new Error("Something is wrong");
-      }
-
       setFoundPost((prev) => {
         console.log(res.data);
         return res.data;
@@ -110,7 +130,7 @@ const Search = () => {
       <Head>
         <title>Search page</title>
       </Head>
-      {foundPosts.length !== 0 && (
+      {!isLoading && foundPosts.length !== 0 && (
         <Typography
           variant='h4'
           alignSelf='start'
