@@ -20,7 +20,7 @@
 }
 
 .post-media {
-  max-height: 400px;
+  height: fit-content;
   width: 100%;
 }
 
