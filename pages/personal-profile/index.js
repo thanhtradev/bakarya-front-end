@@ -170,7 +170,7 @@ export default function PersonalPage() {
           <UpdateProfile />
         </Grid>
         <Grid container spacing={0}>
-          <ProfileNav />
+          <ProfileNav userid={authCtx.userID} />
         </Grid>
       </Container>
     </React.Fragment>

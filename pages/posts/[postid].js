@@ -35,6 +35,7 @@ export default function Post({ post1 }) {
           postID={post.id}
           author={post.author}
           category={post.categories}
+          authorID={post.author_id}
           createAt={post.createdAt}
           directions={post.directions}
           author_avatar={post.author_avatar}
@@ -53,53 +54,3 @@ export default function Post({ post1 }) {
     </>
   );
 }
-
-// export async function getStaticPaths() {
-//   const res = await axios.get("http://api.bakarya.com/api/recipes");
-//   const posts = res.data;
-//   const paths = posts.map((post) => ({
-//     params: {
-//       postid: post.id,
-//     },
-//   }));
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
-
-// export async function getStaticProps({ params }) {
-//   const postId = "6352cf513e3d5bb57cd96fca";
-//   // const postId = JSON.parse(params.postid.toString());
-//   // const postId = JSON.parse(JSON.stringify(params.postid);
-//   // params contains the post `id`.
-//   // If the route is like /posts/1, then params.id is 1
-//   // const res = await axios.get(`http://api.bakarya.com/api/recipes/${postId}`);
-//   const res = await axios.get(
-//     `http://api.bakarya.com/api/recipes/6352cf513e3d5bb57cd96fca`
-//   );
-//   const post = JSON.stringify(res.data);
-
-//   // Pass post data to the page via props
-//   return {
-//     props: {
-//       post: {
-//         id: post.id,
-//         // author: "test",
-//         // author: post.author,
-//         categories: post.categories,
-//         createdAt: post.createdAt,
-//         directions: post.directions,
-//         expert: post.expert,
-//         ingredients: post.ingredients,
-//         makes: post.makes,
-//         name: post.name,
-//         number_of_comments: post.number_of_comments,
-//         number_of_mlems: post.number_of_mlems,
-//         nutrition: post.nutrition,
-//         time: post.time,
-//         updatedAt: post.updatedAt,
-//       },
-//     },
-//   };
-// }

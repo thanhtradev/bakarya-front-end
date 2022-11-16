@@ -87,6 +87,7 @@ const CreatePost = (props) => {
         borderRadius: "15px",
         border: "1px solid #e8e8e8",
         marginBottom: "20px",
+        display: `${props.showCreatePost ?? "flex"}`,
       }}
     >
       <Box

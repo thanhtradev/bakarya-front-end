@@ -6,6 +6,7 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import CenteredLoadingCircular from "../ui/CenteredLoadingCircular";
+import { useRouter } from "next/router";
 const iconSize = "30px";
 
 const Profile = () => {
@@ -15,6 +16,8 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const authCtx = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { userid } = router.query;
 
   useEffect(() => {
     fetchUserProfile();
@@ -47,7 +50,7 @@ const Profile = () => {
       setIsLoading(true);
       const res = await axios({
         method: "get",
-        url: "http://api.bakarya.com/api/user/profile",
+        url: `http://api.bakarya.com/api/userid/profile/${userid}`,
         headers: {
           "x-access-token": authCtx.token,
         },

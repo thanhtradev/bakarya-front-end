@@ -16,7 +16,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const logginedSettings = [{ title: "Profile", link: "/personal-profile" }];
+const logginedSettings = [
+  { title: "Profile", link: "/personal-profile" },
+  { title: "Your Order", link: "/view-order" },
+];
 const notLogginSetting = [
   { title: "Sign in", link: "/login-page" },
   { title: "Sign up", link: "/signup-page" },
@@ -79,7 +82,7 @@ const HeaderAvatar = () => {
   };
 
   const settingList = () => {
-    if (settings.length === 2) {
+    if (settings.length === 3) {
       return settings.map((setting, i) => (
         <MenuItem
           // onClick={handleCloseUserMenu}
@@ -104,15 +107,17 @@ const HeaderAvatar = () => {
       ));
     } else {
       return settings.map((setting) => (
-        <Link
-          href={setting.link}
-          key={setting.title}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+        <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+          <Link
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+            href={setting.link}
+          >
             <Typography textAlign="center">{setting.title}</Typography>
-          </MenuItem>
-        </Link>
+          </Link>
+        </MenuItem>
       ));
     }
   };
