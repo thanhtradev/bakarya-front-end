@@ -42,7 +42,6 @@ export default function PersonalPage() {
 
   useEffect(() => {
     fetchUserProfile();
-    getInfo();
   }, []);
 
   const fetchUserProfile = async () => {
@@ -65,28 +64,7 @@ export default function PersonalPage() {
       alert(err);
     }
   };
-  const getInfo = () => {
-    var config = {
-      method: "get",
-      url: `http://api.bakarya.com/api/userid/profile/${authCtx.userID}`,
-      headers: {
-        "x-access-token": authCtx.token,
-      },
-    };
 
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-        const { lastname, firstname, numberOfRecipes, followers, following } =
-          response.data;
-        setNumberOfRecipe(numberOfRecipes);
-        setNumberOfFollowers(followers.length);
-        setNumberOfFollowing(following.length);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
   const onChangeWallpaper = () => {
     console.log(wallpaperFile.current.files[0]);
   };
@@ -177,9 +155,9 @@ export default function PersonalPage() {
                 {username}
               </Typography>
               <Stack direction="row" spacing={3} color="#5985d4">
-                <Typography>{numberOfRecipe} Posts</Typography>
-                <Typography>{numberOfFollowers} Followers</Typography>
-                <Typography>{numberOfFollowing} Following </Typography>
+                <Typography>10 post</Typography>
+                <Typography>10 followers</Typography>
+                <Typography>104 following</Typography>
               </Stack>
               <Typography variant="subtitle2" maxWidth="500px">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iam
