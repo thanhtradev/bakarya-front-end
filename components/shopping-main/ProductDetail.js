@@ -16,13 +16,20 @@ import React, { useEffect, useReducer, useState } from "react";
 import Comments from "../recipe-post/Comments";
 import classes from "./Comments.module.css";
 import ProductQuantity from "./ProductQuantity";
-
+import { addToCart } from "../../redux/user.reducer";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 const ProductDetail = ({ id, img, name, quantity, price, description }) => {
+   const dispatch = useDispatch();
   const [testComment, setTestComment] = useState([]);
   const [totalPrice, setTotalPrice] = useState(price);
   const initState = { pricePerUnit: price, totalPrice: price };
   //   const [totalPrice, dispatchTotalPrice] = useReducer(priceReducer, initState);
-
+  const [cookies, setCookies] = useCookies();
+  const [username, setUsername] = useState(cookies.username);
+    const addToCard = (img, name, price) => {
+    dispatch(addToCart({ img, name, quantity: 1, price }));
+  };
   useEffect(() => {
     for (let i = 0; i < 4; i++) {
       setTestComment((prev) =>
@@ -141,7 +148,19 @@ const ProductDetail = ({ id, img, name, quantity, price, description }) => {
             onChangeQuantity={handleIncreaseTotalPrice}
             price={price}
           />
-          <Button
+          {username ? (
+                        <Button
+            variant="contained"
+            sx={{
+              fontSize: "11px",
+              height: "2.33rem",
+            }}
+            onClick={() => addToCard(img, name, price)}
+          >
+            {`Add to cart ${totalPrice} $`}
+          </Button>
+            ) : (
+                      <Button
             variant="contained"
             sx={{
               fontSize: "11px",
@@ -150,6 +169,8 @@ const ProductDetail = ({ id, img, name, quantity, price, description }) => {
           >
             {`Add to cart ${totalPrice} $`}
           </Button>
+            )}
+
         </Stack>
       </CardContent>
     </Card>
