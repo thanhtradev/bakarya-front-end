@@ -41,7 +41,8 @@ export default function PostImages({ images }) {
                   src={`${item}`}
                   srcSet={`${item}`}
                   alt={item.title}
-                  loading='lazy'
+                  loading="lazy"
+                  layout="fill"
                   style={{
                     borderRadius: "10px",
                     height: `${images.length == FULL_ROWS ? "100%" : "100px"}`,
@@ -63,7 +64,8 @@ export default function PostImages({ images }) {
                 src={`${item}`}
                 srcSet={`${item}`}
                 alt={item.title}
-                loading='lazy'
+                layout="fill"
+                loading="lazy"
                 style={{
                   borderRadius: "10px",
                   height: `${images.length == FULL_ROWS ? "100%" : "100px"}`,

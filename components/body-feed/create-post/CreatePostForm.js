@@ -168,71 +168,69 @@ export default function FormDialog(props) {
       serving: form.get("serving"),
     };
 
-    const toUploadImages = Array.from(uploadImages).map((img) =>
-      form.append("images", img)
-    );
+    const toUploadImages = Array.from(uploadImages);
     // CreatePostWithoutImages(data);
     CreatePostWithImages(data, toUploadImages);
   };
 
-  const CreatePostWithoutImages = ({
-    cakeName,
-    cakeBrief,
-    ingrdData,
-    directionData,
-    nutrition,
-    prepTime,
-    serving,
-  }) => {
-    //** toggle loading on*/
-    handleToggle();
-    var data = {
-      recipe: {
-        author: authCtx.username,
-        createdAt: new Date(),
-        name: cakeName,
-        expert: cakeBrief,
-        time: prepTime,
-        makes: serving,
-        ingredients: ingrdData,
-        directions: directionData,
-        nutrition: nutrition,
-        categories: "Angel Food Cakes",
-      },
-      images: [],
-    };
+  // const CreatePostWithoutImages = ({
+  //   cakeName,
+  //   cakeBrief,
+  //   ingrdData,
+  //   directionData,
+  //   nutrition,
+  //   prepTime,
+  //   serving,
+  // }) => {
+  //   //** toggle loading on*/
+  //   handleToggle();
+  //   var data = {
+  //     recipe: {
+  //       author: authCtx.username,
+  //       createdAt: new Date(),
+  //       name: cakeName,
+  //       expert: cakeBrief,
+  //       time: prepTime,
+  //       makes: serving,
+  //       ingredients: ingrdData,
+  //       directions: directionData,
+  //       nutrition: nutrition,
+  //       categories: "Angel Food Cakes",
+  //     },
+  //     images: [],
+  //   };
 
-    setIsUploadLoading(true);
-    var config = {
-      method: "post",
-      url: "http://api.bakarya.com/api/recipe",
-      headers: {
-        "x-access-token": token,
-      },
-      data: data,
-    };
+  //   setIsUploadLoading(true);
+  //   var config = {
+  //     method: "post",
+  //     url: "http://api.bakarya.com/api/recipe",
+  //     headers: {
+  //       "x-access-token": token,
+  //     },
+  //     data: data,
+  //   };
 
-    axios(config)
-      .then(function (response) {
-        console.log("i ran");
-        if (response.status === 200) {
-          setFormOpen(false);
-          resetCakeName();
-          resetcakeBrief();
-          resetPrep();
-          resetServe();
-          resetNutrition();
-        }
-        //** toggle loading off */
-        handleToggle();
+  //   axios(config)
+  //     .then(function (response) {
+  //       console.log("i ran");
+  //       if (response.status === 200) {
+  //         setFormOpen(false);
+  //         resetCakeName();
+  //         resetcakeBrief();
+  //         resetPrep();
+  //         resetServe();
+  //         resetNutrition();
+  //       }
+  //       //** toggle loading off */
+  //       handleToggle();
 
-        // props.handleCreatedPost(data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    setIsUploadLoading(false);
-  };
+  //       // props.handleCreatedPost(data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   setIsUploadLoading(false);
+  // };
 
   const CreatePostWithImages = async (
     {
@@ -263,43 +261,23 @@ export default function FormDialog(props) {
         },
         images: toUploadImages,
       };
+      console.log(toUploadImages);
+      const formData = new FormData();
+      formData.append("recipe", JSON.stringify(data.recipe));
+      toUploadImages.map((img) => {
+        formData.append("images", img);
+      });
 
-      // var data = {
-      //   recipe: {
-      //     name: "Best Angel Food Cake",
-      //     expert:
-      //       "For our daughter's wedding, a friend made this lovely, angel food cake from a recipe she's used for decades. It really is one of the best angel food cake recipes I've found. Serve slices plain or dress them up with fresh fruit. \\u2014Marilyn Niemeyer, Doon, Iowa",
-      //     time: "Prep: 15 min. + standing Bake: 35 min. + cooling",
-      //     makes: "16 servings",
-      //     ingredients: [
-      //       "1-1/4 cups egg whites (about 9 large)",
-      //       "1-1/2 cups sugar, divided",
-      //       "1 cup cake flour",
-      //       "1-1/4 teaspoons cream of tartar",
-      //       "1 teaspoon vanilla extract",
-      //       "1/4 teaspoon almond extract",
-      //       "1/4 teaspoon salt",
-      //     ],
-      //     directions: [
-      //       "Place egg whites in a large bowl; let stand at room temperature 30 minutes. Sift 1/2 cup sugar and flour together twice; set aside.",
-      //       "Place oven rack in the lowest position. Preheat oven to 350\\u00b0. Add cream of tartar, extracts and salt to egg whites; beat on medium speed until soft peaks form. Gradually add remaining sugar, about 2 tablespoons at a time, beating on high until stiff peaks form. Gradually fold in flour mixture, about 1/2 cup at a time.",
-      //       "Gently spoon into an ungreased 10-in. tube pan. Cut through batter with a knife to remove air pockets. Bake until lightly browned and entire top appears dry, 35-40 minutes. Immediately invert pan; cool completely, about 1 hour.",
-      //       "Run a knife around side and center tube of pan. Remove cake to a serving plate.",
-      //     ],
-      //     nutrition:
-      //       "1 piece: 115 calories, 0 fat (0 saturated fat), 0 cholesterol, 68mg sodium, 26g carbohydrate (19g sugars, 0 fiber), 3g protein. Diabetic Exchanges: 1-1/2 starch.",
-      //     categories: "Angel Food Cakes",
-      //   },
-      //   images: uploadImages,
-      // };
+      // console.log(formData.toString());
 
       var config = {
         method: "post",
         url: "http://api.bakarya.com/api/recipe",
         headers: {
           "x-access-token": authCtx.token,
+          "Content-Type": "multipart/form-data",
         },
-        data: data,
+        data: formData,
       };
 
       const res = await axios(config);
@@ -338,7 +316,7 @@ export default function FormDialog(props) {
     <React.Fragment>
       <Button
         disableRipple
-        variant='text'
+        variant="text"
         className={classes["to-RGB"]}
         onClick={handleFormClickOpen}
         sx={{
@@ -352,42 +330,42 @@ export default function FormDialog(props) {
           paddingLeft: "20px",
         }}
       >
-        <Typography variant='button'>want to share your recipe ?</Typography>
+        <Typography variant="button">want to share your recipe ?</Typography>
       </Button>
-      <Dialog open={formOpen} onClose={handleFormClose} maxWidth='sm' fullWidth>
+      <Dialog open={formOpen} onClose={handleFormClose} maxWidth="sm" fullWidth>
         <ToastContainer />
         <form onSubmit={handleCreate}>
           <DialogContent>
             <DialogTitle sx={{ margin: 0, padding: 0 }}>New Recipe</DialogTitle>
             <ValidateInput
-              id='first name'
-              label='Cake name'
+              id="first name"
+              label="Cake name"
               required={true}
-              name='cakename'
+              name="cakename"
               validate={(value) => value.trim() !== ""}
-              autoComplete='first-name'
+              autoComplete="first-name"
               enteredValue={cakeNameValue}
-              placeholder='Ex: Angle Food Cake'
+              placeholder="Ex: Angle Food Cake"
               hasError={hasErrorCakeName}
               inputChangeHandler={cakeNameChangeHandler}
               inputBlurHandler={cakeNameBlurHandler}
-              variant='outlined'
-              type='text'
+              variant="outlined"
+              type="text"
             />
             <ValidateInput
-              id='cake brief'
+              id="cake brief"
               label="Cake's brief"
               required={true}
-              name='cakebrief'
+              name="cakebrief"
               validate={(value) => value.trim() !== ""}
-              autoComplete='cake-brief'
+              autoComplete="cake-brief"
               enteredValue={cakeBriefValue}
-              placeholder='Ex: John'
+              placeholder="Ex: John"
               hasError={hasErrorCakeBrief}
               inputChangeHandler={cakeBriefChangeHandler}
               inputBlurHandler={cakeBriefBlurHandler}
-              variant='outlined'
-              type='text'
+              variant="outlined"
+              type="text"
             />
             <DialogContentText
               sx={{
@@ -400,7 +378,7 @@ export default function FormDialog(props) {
               Ingredients
               <Asterisk />
             </DialogContentText>
-            <TextBox type='unordered-list-item' getData={getIngrdData} />
+            <TextBox type="unordered-list-item" getData={getIngrdData} />
             <DialogContentText
               sx={{
                 "&.MuiDialogContentText-root": {
@@ -411,49 +389,49 @@ export default function FormDialog(props) {
               Directions
               <Asterisk />
             </DialogContentText>
-            <TextBox type='ordered-list-item' getData={getDirectionData} />
+            <TextBox type="ordered-list-item" getData={getDirectionData} />
             <ValidateInput
-              id='nutrition'
+              id="nutrition"
               label="Recipe's nutrition"
-              name='nutrition'
+              name="nutrition"
               validate={(value) => value.trim().length < 40}
-              autoComplete='cake-brief'
+              autoComplete="cake-brief"
               enteredValue={nutritionValue}
-              placeholder='Ex: 4.5mg Fat'
+              placeholder="Ex: 4.5mg Fat"
               hasError={hasErrorNutrition}
               inputChangeHandler={nutritionChangeHandler}
               inputBlurHandler={nutritionBlurHandler}
-              variant='outlined'
-              type='text'
+              variant="outlined"
+              type="text"
             />
             <ValidateInput
-              id='pre-time'
-              label='Preparation time'
-              name='prep'
+              id="pre-time"
+              label="Preparation time"
+              name="prep"
               validate={(value) => value.trim().length < 40}
-              autoComplete='cake-brief'
+              autoComplete="cake-brief"
               enteredValue={prepValue}
-              placeholder='Ex: 30min. Bake 10min + chilling'
+              placeholder="Ex: 30min. Bake 10min + chilling"
               hasError={hasErrorPrep}
               value={prepValue}
               inputChangeHandler={prepChangeHandler}
               inputBlurHandler={prepBlurHandler}
-              variant='outlined'
-              type='text'
+              variant="outlined"
+              type="text"
             />
             <ValidateInput
-              id='serving'
-              label='Number of serving'
-              name='serving'
+              id="serving"
+              label="Number of serving"
+              name="serving"
               validate={(value) => value < 20000}
-              autoComplete='cake-brief'
+              autoComplete="cake-brief"
               enteredValue={serveValue}
-              placeholder='Ex: 10 serving'
+              placeholder="Ex: 10 serving"
               hasError={hasErrorServe}
               inputChangeHandler={serveChangeHandler}
               inputBlurHandler={serveBlurHandler}
-              variant='outlined'
-              type='number'
+              variant="outlined"
+              type="number"
             />
             <Button
               onClick={handleUploadRecipeImages}
@@ -462,10 +440,10 @@ export default function FormDialog(props) {
               Upload photo(s)
             </Button>
             <input
-              type='file'
-              accept='image/*'
+              type="file"
+              accept="image/*"
               ref={recipeImages}
-              name='recipeImages'
+              name="recipeImages"
               multiple
               style={{ display: "none" }}
               onChange={onChangeRecipeImages}
@@ -477,11 +455,11 @@ export default function FormDialog(props) {
               {isUploadLoading ? (
                 <LoadingButton
                   loading
-                  variant='outlined'
+                  variant="outlined"
                   sx={{ height: "30px" }}
                 />
               ) : (
-                <Button type='submit'>Post</Button>
+                <Button type="submit">Post</Button>
               )}
             </DialogActions>
           </DialogContent>
