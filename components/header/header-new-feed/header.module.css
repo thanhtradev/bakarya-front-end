@@ -12,7 +12,11 @@
   /* top: -4px; */
   bottom: 20px;
   /* color: #fff; */
-  background-color: #f44336;
-  -webkit-box-shadow: 0 0 10px 0 #f44336;
-  box-shadow: 0 0 10px 0 #f44336;
+  background-color: #f99f38;
+  -webkit-box-shadow: 0 0 10px 0 rgb(255, 181, 97);
+  box-shadow: 0 0 10px 0 rgb(255, 181, 97);
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2px;
 }

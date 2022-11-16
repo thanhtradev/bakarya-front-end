@@ -134,14 +134,13 @@ const ProductItem = ({ id, img, name, quantity, price, description }) => {
                 startIcon={<AddShoppingCartIcon />}
                 onClick={() => addToCard(img, name, price)}
               >
-                add to card {price} $
+                {price} $
               </Button>
             ) : (
               <Button
                 sx={{ color: "#0d9cd2" }}
                 startIcon={<AddShoppingCartIcon />}
               >
-                {" "}
                 {price} $
               </Button>
             )}
