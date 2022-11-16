@@ -4,13 +4,42 @@ import styles from "./Payment.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { payment } from "../../redux/user.reducer";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import AuthContext from "../../store/auth-context";
 function Payment() {
   const dispatch = useDispatch();
   const userSlice = useSelector((state) => state.userSlice.pay);
   const [checkOne, setCheckOne] = useState(false);
-      const [cookies, setCookies] = useCookies();
-    const [username, setUsername] = useState(cookies.username);
-  const payments = () => {
+  const [cookies, setCookies] = useCookies();
+  const [username, setUsername] = useState(cookies.username);
+  const authCtx = React.useContext(AuthContext);
+  const createOrder = async () => {
+    axios({
+      method: "POST",
+      url: `http://api.bakarya.com/api/order`,
+      headers: {
+          "x-access-token": authCtx.token,
+        },
+      data:{
+    items: [
+        {
+            productid: "634af0fccafce0162fbccac9",
+            quantity: 6
+        }
+    ],
+    address :"HCM",
+    phone: "0915193178"
+}
+    })
+      .then((res) => {
+         console.log("ok");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+    const payments = () => {
+      createOrder();
     dispatch(payment());
   };
   return (
@@ -194,6 +223,7 @@ function Payment() {
                               transform: "translate(0px) !important",
                               colorScheme: "light only !important",
                               height: "16.8px",
+                              width: "100%",
                             }}
                           />
                           {/* <input
