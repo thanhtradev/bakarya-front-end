@@ -168,70 +168,22 @@ export default function FormDialog(props) {
       serving: form.get("serving"),
     };
 
-    const toUploadImages = Array.from(uploadImages).map((img) =>
+    const {
+      cakeName,
+      cakeBrief,
+      ingrdData,
+      directionData,
+      nutrition,
+      prepTime,
+      serving,
+    } = data;
+
+    const toUploadImages = Array.from(uploadImages).forEach((img) =>
       form.append("images", img)
     );
+
     // CreatePostWithoutImages(data);
-    CreatePostWithImages(data, toUploadImages);
-  };
-
-  const CreatePostWithoutImages = ({
-    cakeName,
-    cakeBrief,
-    ingrdData,
-    directionData,
-    nutrition,
-    prepTime,
-    serving,
-  }) => {
-    //** toggle loading on*/
-    handleToggle();
-    var data = {
-      recipe: {
-        author: authCtx.username,
-        createdAt: new Date(),
-        name: cakeName,
-        expert: cakeBrief,
-        time: prepTime,
-        makes: serving,
-        ingredients: ingrdData,
-        directions: directionData,
-        nutrition: nutrition,
-        categories: "Angel Food Cakes",
-      },
-      images: [],
-    };
-
-    setIsUploadLoading(true);
-    var config = {
-      method: "post",
-      url: "http://api.bakarya.com/api/recipe",
-      headers: {
-        "x-access-token": token,
-      },
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log("i ran");
-        if (response.status === 200) {
-          setFormOpen(false);
-          resetCakeName();
-          resetcakeBrief();
-          resetPrep();
-          resetServe();
-          resetNutrition();
-        }
-        //** toggle loading off */
-        handleToggle();
-
-        // props.handleCreatedPost(data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    setIsUploadLoading(false);
+    CreatePostWithImages(data, toUploadImages, form);
   };
 
   const CreatePostWithImages = async (
@@ -261,8 +213,10 @@ export default function FormDialog(props) {
           nutrition: nutrition,
           categories: "Angel Food Cakes",
         },
-        images: toUploadImages,
+        images: uploadImages,
       };
+
+      console.log(uploadImages);
 
       // var data = {
       //   recipe: {
@@ -298,6 +252,7 @@ export default function FormDialog(props) {
         url: "http://api.bakarya.com/api/recipe",
         headers: {
           "x-access-token": authCtx.token,
+          "Content-Type": "multipart/form-data",
         },
         data: data,
       };

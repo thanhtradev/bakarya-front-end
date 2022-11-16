@@ -28,6 +28,9 @@ export default function PersonalPage() {
   const [username, setUsername] = useState();
   const wallpaperFile = useRef();
   const authCtx = useContext(AuthContext);
+  const [numberOfRecipe, setNumberOfRecipe] = useState(0);
+  const [numberOfFollowers, setNumberOfFollowers] = useState(0);
+  const [numberOfFollowing, setNumberOfFollowing] = useState(0);
 
   const toggleOpenModal = () => {
     setModal((prev) => !prev);
@@ -42,6 +45,7 @@ export default function PersonalPage() {
 
   useEffect(() => {
     fetchUserProfile();
+    getInfo();
   }, []);
 
   const fetchUserProfile = async () => {
@@ -63,6 +67,29 @@ export default function PersonalPage() {
     } catch (err) {
       alert(err);
     }
+  };
+
+  const getInfo = () => {
+    var config = {
+      method: "get",
+      url: `http://api.bakarya.com/api/userid/profile/${authCtx.userID}`,
+      headers: {
+        "x-access-token": authCtx.token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        const { lastname, firstname, numberOfRecipes, followers, following } =
+          response.data;
+        setNumberOfRecipe(numberOfRecipes);
+        setNumberOfFollowers(followers.length);
+        setNumberOfFollowing(following.length);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const onChangeWallpaper = () => {
@@ -155,9 +182,9 @@ export default function PersonalPage() {
                 {username}
               </Typography>
               <Stack direction='row' spacing={3} color='#5985d4'>
-                <Typography>10 post</Typography>
-                <Typography>10 followers</Typography>
-                <Typography>104 following</Typography>
+                <Typography>{numberOfRecipe} Posts</Typography>
+                <Typography>{numberOfFollowers} Followers</Typography>
+                <Typography>{numberOfFollowing} Following </Typography>
               </Stack>
               <Typography variant='subtitle2' maxWidth='500px'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iam

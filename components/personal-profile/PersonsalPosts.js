@@ -31,7 +31,7 @@ const PersonalPosts = ({ userid, showCreatePost }) => {
     }
   };
 
-  const recipePosts = posts.slice(0, 5).map((post) => {
+  const recipePosts = posts.map((post) => {
     return (
       <Post
         key={post.id}
