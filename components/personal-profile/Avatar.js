@@ -80,18 +80,18 @@ const AvatarUser = () => {
     <Grid
       item
       xs={4}
-      direction='column'
-      justifyContent='space-evenly'
-      alignItems='center'
+      direction="column"
+      justifyContent="space-evenly"
+      alignItems="center"
       sx={{
         position: "relative",
         // bgcolor: "cadetblue",
         direction: "column",
       }}
     >
-      <Stack justifyContent='center' alignItems='center' sx={{ height: "1" }}>
+      <Stack justifyContent="center" alignItems="center" sx={{ height: "1" }}>
         <Stack
-          alignItems='center'
+          alignItems="center"
           sx={{
             position: "absolute",
             top: "-70px",
@@ -112,9 +112,9 @@ const AvatarUser = () => {
         {isUploading ? (
           <LoadingButton
             loading
-            loadingPosition='start'
+            loadingPosition="start"
             startIcon={<SaveIcon />}
-            variant='outlined'
+            variant="outlined"
           >
             Uploading
           </LoadingButton>
@@ -122,9 +122,9 @@ const AvatarUser = () => {
           <Button onClick={handleUploadAvatar}>Upload a photo</Button>
         )}
         <input
-          type='file'
-          name='avatar'
-          accept='image/*'
+          type="file"
+          name="avatar"
+          accept="image/*"
           ref={avatarFile}
           style={{ display: "none" }}
           onChange={onChangeAvatarFile}
