@@ -17,6 +17,8 @@ import UploadIcon from "@mui/icons-material/Upload";
 import PostImages from "../../recipe-post/PostImages";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Asterisk = () => {
   return <span sx={{ color: "red" }}>*</span>;
@@ -166,16 +168,11 @@ export default function FormDialog(props) {
       serving: form.get("serving"),
     };
 
-    const hasImages = checkIsUploadImages(uploadImages);
-    if (!hasImages) {
-      // CreatePostWithoutImages(data);
-      CreatePostWithImages(data);
-    } else {
-      const toUploadImages = Array.from(uploadImages).map((img) =>
-        form.append("images", img)
-      );
-      CreatePostWithoutImages(data);
-    }
+    const toUploadImages = Array.from(uploadImages).map((img) =>
+      form.append("images", img)
+    );
+    // CreatePostWithoutImages(data);
+    CreatePostWithImages(data, toUploadImages);
   };
 
   const CreatePostWithoutImages = ({
@@ -189,47 +186,20 @@ export default function FormDialog(props) {
   }) => {
     //** toggle loading on*/
     handleToggle();
-    // var data = {
-    //   author: authCtx.username,
-    //   createdAt: new Date(),
-    //   name: cakeName,
-    //   expert: cakeBrief,
-    //   time: prepTime,
-    //   makes: serving,
-    //   ingredients: ingrdData,
-    //   directions: directionData,
-    //   nutrition: nutrition,
-    //   categories: "Angel Food Cakes",
-    //   images: uploadImages,
-    // };
-
     var data = {
       recipe: {
-        name: "Best Angel Food Cake",
-        expert:
-          "For our daughter's wedding, a friend made this lovely, angel food cake from a recipe she's used for decades. It really is one of the best angel food cake recipes I've found. Serve slices plain or dress them up with fresh fruit. \\u2014Marilyn Niemeyer, Doon, Iowa",
-        time: "Prep: 15 min. + standing Bake: 35 min. + cooling",
-        makes: "16 servings",
-        ingredients: [
-          "1-1/4 cups egg whites (about 9 large)",
-          "1-1/2 cups sugar, divided",
-          "1 cup cake flour",
-          "1-1/4 teaspoons cream of tartar",
-          "1 teaspoon vanilla extract",
-          "1/4 teaspoon almond extract",
-          "1/4 teaspoon salt",
-        ],
-        directions: [
-          "Place egg whites in a large bowl; let stand at room temperature 30 minutes. Sift 1/2 cup sugar and flour together twice; set aside.",
-          "Place oven rack in the lowest position. Preheat oven to 350\\u00b0. Add cream of tartar, extracts and salt to egg whites; beat on medium speed until soft peaks form. Gradually add remaining sugar, about 2 tablespoons at a time, beating on high until stiff peaks form. Gradually fold in flour mixture, about 1/2 cup at a time.",
-          "Gently spoon into an ungreased 10-in. tube pan. Cut through batter with a knife to remove air pockets. Bake until lightly browned and entire top appears dry, 35-40 minutes. Immediately invert pan; cool completely, about 1 hour.",
-          "Run a knife around side and center tube of pan. Remove cake to a serving plate.",
-        ],
-        nutrition:
-          "1 piece: 115 calories, 0 fat (0 saturated fat), 0 cholesterol, 68mg sodium, 26g carbohydrate (19g sugars, 0 fiber), 3g protein. Diabetic Exchanges: 1-1/2 starch.",
+        author: authCtx.username,
+        createdAt: new Date(),
+        name: cakeName,
+        expert: cakeBrief,
+        time: prepTime,
+        makes: serving,
+        ingredients: ingrdData,
+        directions: directionData,
+        nutrition: nutrition,
         categories: "Angel Food Cakes",
       },
-      images: uploadImages,
+      images: [],
     };
 
     setIsUploadLoading(true);
@@ -244,6 +214,7 @@ export default function FormDialog(props) {
 
     axios(config)
       .then(function (response) {
+        console.log("i ran");
         if (response.status === 200) {
           setFormOpen(false);
           resetCakeName();
@@ -255,7 +226,7 @@ export default function FormDialog(props) {
         //** toggle loading off */
         handleToggle();
 
-        props.handleCreatedPost(data);
+        // props.handleCreatedPost(data);
       })
       .catch(function (error) {
         console.log(error);
@@ -263,40 +234,96 @@ export default function FormDialog(props) {
     setIsUploadLoading(false);
   };
 
-  const CreatePostWithImages = async ({ recipe, images }) => {
+  const CreatePostWithImages = async (
+    {
+      cakeName,
+      cakeBrief,
+      ingrdData,
+      directionData,
+      nutrition,
+      prepTime,
+      serving,
+    },
+    toUploadImages
+  ) => {
     try {
       setIsUploadLoading(true);
 
       const data = {
-        // author: ,
-        createdAt: new Date(),
-        name: cakeName,
-        expert: cakeBrief,
-        time: prepTime,
-        makes: serving,
-        ingredients: ingrdData,
-        directions: directionData,
-        nutrition: nutrition,
-        categories: "Angel Food Cakes",
+        recipe: {
+          createdAt: new Date(),
+          name: cakeName,
+          expert: cakeBrief,
+          time: prepTime,
+          makes: serving,
+          ingredients: ingrdData,
+          directions: directionData,
+          nutrition: nutrition,
+          categories: "Angel Food Cakes",
+        },
+        images: toUploadImages,
       };
+
+      // var data = {
+      //   recipe: {
+      //     name: "Best Angel Food Cake",
+      //     expert:
+      //       "For our daughter's wedding, a friend made this lovely, angel food cake from a recipe she's used for decades. It really is one of the best angel food cake recipes I've found. Serve slices plain or dress them up with fresh fruit. \\u2014Marilyn Niemeyer, Doon, Iowa",
+      //     time: "Prep: 15 min. + standing Bake: 35 min. + cooling",
+      //     makes: "16 servings",
+      //     ingredients: [
+      //       "1-1/4 cups egg whites (about 9 large)",
+      //       "1-1/2 cups sugar, divided",
+      //       "1 cup cake flour",
+      //       "1-1/4 teaspoons cream of tartar",
+      //       "1 teaspoon vanilla extract",
+      //       "1/4 teaspoon almond extract",
+      //       "1/4 teaspoon salt",
+      //     ],
+      //     directions: [
+      //       "Place egg whites in a large bowl; let stand at room temperature 30 minutes. Sift 1/2 cup sugar and flour together twice; set aside.",
+      //       "Place oven rack in the lowest position. Preheat oven to 350\\u00b0. Add cream of tartar, extracts and salt to egg whites; beat on medium speed until soft peaks form. Gradually add remaining sugar, about 2 tablespoons at a time, beating on high until stiff peaks form. Gradually fold in flour mixture, about 1/2 cup at a time.",
+      //       "Gently spoon into an ungreased 10-in. tube pan. Cut through batter with a knife to remove air pockets. Bake until lightly browned and entire top appears dry, 35-40 minutes. Immediately invert pan; cool completely, about 1 hour.",
+      //       "Run a knife around side and center tube of pan. Remove cake to a serving plate.",
+      //     ],
+      //     nutrition:
+      //       "1 piece: 115 calories, 0 fat (0 saturated fat), 0 cholesterol, 68mg sodium, 26g carbohydrate (19g sugars, 0 fiber), 3g protein. Diabetic Exchanges: 1-1/2 starch.",
+      //     categories: "Angel Food Cakes",
+      //   },
+      //   images: uploadImages,
+      // };
 
       var config = {
         method: "post",
         url: "http://api.bakarya.com/api/recipe",
         headers: {
           "x-access-token": authCtx.token,
-          // 'Access-Control-Allow-Origin'
         },
         data: data,
       };
 
       const res = await axios(config);
       console.log(res.data);
+      notifyOk(res.data.message);
+      setTimeout(() => {
+        handleQuit();
+      }, 3000);
     } catch (err) {
       console.log(err);
     }
     setIsUploadLoading(false);
   };
+
+  const notifyOk = (message) =>
+    toast.success(message, {
+      position: "top-left",
+      autoClose: 3500,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const checkUploadImagesLength = (toCheckList) =>
     toCheckList.length <= IMAGE_LIMIT;
@@ -328,6 +355,7 @@ export default function FormDialog(props) {
         <Typography variant='button'>want to share your recipe ?</Typography>
       </Button>
       <Dialog open={formOpen} onClose={handleFormClose} maxWidth='sm' fullWidth>
+        <ToastContainer />
         <form onSubmit={handleCreate}>
           <DialogContent>
             <DialogTitle sx={{ margin: 0, padding: 0 }}>New Recipe</DialogTitle>

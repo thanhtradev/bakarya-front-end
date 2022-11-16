@@ -7,6 +7,7 @@ import { Badge, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import Link from "next/link";
+import pic from "../../assets/logo.png";
 import { useRouter } from "next/router";
 const MyBtn = styled(Button)({
   height: "40px",
@@ -47,10 +48,10 @@ function Checkout() {
   };
   return (
     <div
-      id="shop-page"
+      id='shop-page'
       className={`${styles.container} ${styles.sidebar_boxed}`}
       data-open-sidebar
-      data-page-title="Checkout"
+      data-page-title='Checkout'
     >
       {/*Payment Wrapper*/}
       <div className={styles["shop-wrapper"]}>
@@ -59,16 +60,16 @@ function Checkout() {
             <div
               className={`${styles["header-inner"]} ${styles["is-smaller"]}`}
             >
-              <h2 id="checkout-step-title">1. Confirm your order</h2>
+              <h2 id='checkout-step-title'>1. Confirm your order</h2>
               <div className={styles["header-actions"]}>
                 <div className={styles["buttons"]}>
                   <a
-                    id="checkout-back"
+                    id='checkout-back'
                     className={`${styles["button"]} ${styles["is-light"]}`}
                     data-step={0}
                   >
                     <span className={`${styles["icon"]} ${styles["is-small"]}`}>
-                      <i data-feather="arrow-left" />
+                      <i data-feather='arrow-left' />
                     </span>
                     <span>Back</span>
                   </a>
@@ -82,7 +83,7 @@ function Checkout() {
               <div className={`${styles["column"]} ${styles["is-8"]}`}>
                 {/*Checkout section 1*/}
                 <div
-                  id="checkout-section-1"
+                  id='checkout-section-1'
                   className={`${styles["checkout-section"]} ${styles["is-active"]}`}
                 >
                   {/*Table*/}
@@ -101,7 +102,7 @@ function Checkout() {
                       userSlice.map((userSlice, index) => (
                         <div className={styles["flex-table-item"]} key={index}>
                           <div className={styles["product"]}>
-                            <img src={userSlice.img} alt="" />
+                            <img src={userSlice.img} alt='' />
                             <span className={styles["product-name"]}>
                               {userSlice.name}
                             </span>
@@ -143,8 +144,8 @@ function Checkout() {
                           margin: "0 10px",
                         }}
                       >
-                        <Badge badgeContent={0} color="primary">
-                          <Link href="/shopping">
+                        <Badge badgeContent={0} color='primary'>
+                          <Link href='/shopping'>
                             Add some thing to your cart
                           </Link>
                         </Badge>
@@ -154,7 +155,7 @@ function Checkout() {
                 </div>
                 {/*Checkout section*/}
                 <div
-                  id="checkout-section-2"
+                  id='checkout-section-2'
                   className={styles["checkout-section"]}
                 >
                   <div
@@ -166,8 +167,8 @@ function Checkout() {
                       >
                         <input
                           className={styles["address-boxInput"]}
-                          type="radio"
-                          name="shipping_address"
+                          type='radio'
+                          name='shipping_address'
                         />
                         <div className={styles["address-box-inner"]}>
                           <p>Jenna Davis</p>
@@ -183,8 +184,8 @@ function Checkout() {
                       >
                         <input
                           className={styles["address-boxInput"]}
-                          type="radio"
-                          name="shipping_address"
+                          type='radio'
+                          name='shipping_address'
                         />
                         <div className={styles["address-box-inner"]}>
                           <p>Jenna Davis</p>
@@ -197,13 +198,13 @@ function Checkout() {
                   </div>
                   <div className={styles["add-address-link"]}>
                     <a>
-                      <i data-feather="plus" />
+                      <i data-feather='plus' />
                       <span>Add Address</span>
                     </a>
                   </div>
                 </div>
                 <div
-                  id="checkout-section-3"
+                  id='checkout-section-3'
                   className={styles["checkout-section"]}
                 >
                   <div
@@ -213,15 +214,12 @@ function Checkout() {
                       <div className={styles["shipping-box"]}>
                         <input
                           className={styles["shipping-boxInput"]}
-                          type="radio"
-                          name="shipping_method"
+                          type='radio'
+                          name='shipping_method'
                         />
                         <div className={styles["shipping-box-inner"]}>
-                          <img
-                            src="https://play-lh.googleusercontent.com/bDCkDV64ZPT38q44KBEWgicFt2gDHdYPgCHbA3knlieeYpNqbliEqBI90Wr6Tu8YOw"
-                            alt=""
-                          />
-                          <p>paypal</p>
+                          <img src={pic.src} alt='' />
+                          <p>Bakarya Shipping</p>
                         </div>
                       </div>
                     </div>
@@ -229,15 +227,16 @@ function Checkout() {
                       <div className={styles["shipping-box"]}>
                         <input
                           className={styles["shipping-boxInput"]}
-                          type="radio"
-                          name="shipping_method"
+                          type='radio'
+                          name='shipping_method'
                         />
                         <div className={styles["shipping-box-inner"]}>
                           <img
-                            src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
-                            alt=""
+                            src='https://uploads-ssl.webflow.com/5fb85f26f126ce08d792d2d9/62d66b80b43387c88d617c8c_After_kime%402x-100.jpg'
+                            alt=''
+                            style={{ height: "83px", width: "50px" }}
                           />
-                          <p>momo</p>
+                          <p>GHTK</p>
                         </div>
                       </div>
                     </div>
@@ -260,7 +259,7 @@ function Checkout() {
                       <span>Taxes</span>
                       <span>2</span>
                     </div>
-                    <div id="total-amount" className={styles["order-line"]}>
+                    <div id='total-amount' className={styles["order-line"]}>
                       <span className={styles["is-total"]}>Total</span>
                       <span className={styles["is-total"]}>{sum + 2}</span>
                     </div>
@@ -271,7 +270,7 @@ function Checkout() {
                             <>
                               {checkSecond ? (
                                 <button
-                                  id="checkout-button"
+                                  id='checkout-button'
                                   className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
                                   onClick={() => addToPay(sum)}
                                 >
@@ -279,7 +278,7 @@ function Checkout() {
                                 </button>
                               ) : (
                                 <button
-                                  id="checkout-button"
+                                  id='checkout-button'
                                   className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
                                   onClick={sectionSecond}
                                 >
@@ -289,7 +288,7 @@ function Checkout() {
                             </>
                           ) : (
                             <button
-                              id="checkout-button"
+                              id='checkout-button'
                               className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
                               onClick={sectionOne}
                             >
@@ -299,7 +298,7 @@ function Checkout() {
                         </>
                       ) : (
                         <button
-                          id="checkout-button"
+                          id='checkout-button'
                           className={`${styles["button"]} ${styles["is-solid"]} ${styles["primary-button"]} ${styles["raised"]} ${styles["is-fullwidth"]}`}
                           style={{
                             width: "100%",

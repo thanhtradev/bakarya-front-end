@@ -27,9 +27,8 @@ function a11yProps(index) {
   };
 }
 
-const ProfileNav = () => {
+const ProfileNav = ({ userid, showCreatePost }) => {
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -71,7 +70,7 @@ const ProfileNav = () => {
         />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <PersonalPosts />
+        <PersonalPosts userid={userid} showCreatePost={showCreatePost} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Profile />

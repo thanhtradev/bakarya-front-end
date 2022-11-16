@@ -6,11 +6,13 @@ import { useRef, useContext, useState, useEffect } from "react";
 import PostSetting from "./PostSetting";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
+import { useRouter } from "next/router";
 
 const User = (props) => {
   const [isFollow, setIsFollow] = useState(false);
   const followRef = useRef();
   const authCtx = useContext(AuthContext);
+  const router = useRouter();
   const [isLoadingFollow, setIsloadingFollow] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState("");
 
@@ -78,14 +80,23 @@ const User = (props) => {
     setIsloadingFollow(false);
   };
 
+  const toAuthorProfilePage = () => {
+    router.push(`/user/${props.authorID}`);
+  };
+
   const handleGetUserAvatar = () => {};
   return (
     <CardHeader
       avatar={
         <Avatar
           alt="Someone's Avatar"
-          sx={{ width: 40, height: 40 }}
+          sx={{
+            width: 40,
+            height: 40,
+            cursor: "pointer",
+          }}
           src={props.author_avatar}
+          onClick={toAuthorProfilePage}
         >
           TT
         </Avatar>

@@ -196,28 +196,6 @@ function Payment() {
                               height: "16.8px",
                             }}
                           />
-                          {/* <input
-                            className={styles["__PrivateStripeElement-input"]}
-                            aria-hidden="true"
-                            aria-label=" "
-                            autoComplete="false"
-                            maxLength={1}
-                            style={{
-                              border: "none !important",
-                              display: "block !important",
-                              position: "absolute !important",
-                              height: "1px !important",
-                              top: "-1px !important",
-                              left: "0px !important",
-                              padding: "0px !important",
-                              margin: "0px !important",
-                              width: "100% !important",
-                              opacity: "0 !important",
-                              background: "transparent !important",
-                              pointerEvents: "none !important",
-                              fontSize: "16px !important",
-                            }}
-                          /> */}
                         </div>
                       </div>
                       {/* Used to display Element errors */}
